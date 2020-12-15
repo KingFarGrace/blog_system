@@ -11,4 +11,8 @@
     <select id="queryLoginData" parameterType="String" resultType="com.kingfar.blog.entity.UserLoginData">
         SELECT uid, username, age, sex, signature, mail FROM t_user WHERE username=#{username}
     </select>
+
+    <insert id="setSignUpInfo">
+        INSERT INTO t_user(username, password) VALUE (#{usr}, #{pwd})
+    </insert>
 </mapper>

@@ -16,4 +16,9 @@ class UserServiceImplTest {
         System.out.println(userService.verify("ZHANG"));
         System.out.println(userService.getLoginData("ZHANG"));
     }
+
+    @Test
+    void testSignUp() {
+        assertEquals(false, userService.createNewUser("WANG", "123456"));
+    }
 }

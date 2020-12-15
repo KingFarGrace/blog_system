@@ -9,4 +9,5 @@ import com.kingfar.blog.entity.UserVerifyData;
 public interface UserService {
     public UserVerifyData verify(String username);
     public UserLoginData getLoginData(String username);
+    public boolean createNewUser(String username, String password);
 }

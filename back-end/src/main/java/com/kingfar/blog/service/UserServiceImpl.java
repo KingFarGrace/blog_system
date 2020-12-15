@@ -23,4 +23,19 @@ public class UserServiceImpl implements UserService {
     public UserLoginData getLoginData(String username) {
         return userMapper.queryLoginData(username);
     }
+
+    @Override
+    public boolean createNewUser(String username, String password) {
+        try {
+            userMapper.setSignUpInfo(username, password);
+        } catch (Exception e) {
+            /**
+             * fail to sign up because
+             * 1. wrong args type
+             * 2. unique username
+             */
+            return false;
+        }
+        return true;
+    }
 }

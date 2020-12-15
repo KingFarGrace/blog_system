@@ -16,4 +16,9 @@ class UserMapperTest {
         System.out.println(userMapper.selectByUsername("ZHANG"));
     }
 
+    @Test
+    void TestSignUp() {
+        System.out.println(userMapper.setSignUpInfo("WANG", "123456"));
+    }
+
 }

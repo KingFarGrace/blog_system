@@ -2,6 +2,7 @@ package com.kingfar.blog.controller;
 
 import com.kingfar.blog.entity.UserVerifyData;
 import com.kingfar.blog.entity.response.LoginResponse;
+import com.kingfar.blog.entity.response.SignUpResponse;
 import com.kingfar.blog.service.UserService;
 import com.kingfar.blog.entity.response.Response;
 import org.apache.shiro.SecurityUtils;
@@ -36,5 +37,14 @@ public class UserController {
             return new LoginResponse(2, "Wrong password!", null);
         }
         return new LoginResponse(0, "Successfully login!", userService.getLoginData(data.getUsername()));
+    }
+
+    @PostMapping("/signUp")
+    Response signUp(String username, String password) {
+        if(userService.createNewUser(username, password) == true) {
+            return SignUpResponse.successfulResp;
+        } else {
+            return SignUpResponse.failResp;
+        }
     }
 }

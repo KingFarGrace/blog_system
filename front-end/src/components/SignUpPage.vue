@@ -82,14 +82,11 @@ export default {
           .then(res => {
               let code = res.data['code'];
               let msg = res.data['msg'];
-              if(code == 100) {
+              if(code == 200) {
                   alert(msg);
                   this.$router.replace("/mainpage");
               }
-              if(code == 101) {
-                  alert(msg);
-              }
-              if(code == 102) {
+              if(code == 201) {
                   alert(msg);
               }
           });

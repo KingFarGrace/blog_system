@@ -74,11 +74,11 @@ export default {
     submit() {
       if(this.checkUsername(this.signUpForm.username) && this.checkPassword(this.signUpForm.password)){
         if(this.signUpForm.password == this.signUpForm.rePassword){
+          const form = new FormData();
+          form.append('username', this.signUpForm.username);
+          form.append('password', this.signUpForm.password);
           this.$axios
-          .post("http://localhost:8080/user/signUp", {
-            username: this.signUpForm.username,
-            password: this.signUpForm.password,
-          })
+          .post("http://localhost:8080/user/signUp", new URLSearchParams(form))
           .then(res => {
               let code = res.data['code'];
               let msg = res.data['msg'];

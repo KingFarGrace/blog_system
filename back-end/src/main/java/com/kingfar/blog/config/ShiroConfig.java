@@ -7,6 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * @author ZHANGKAIHENG
+ */
 @Configuration
 public class ShiroConfig {
     @Bean
@@ -14,6 +20,8 @@ public class ShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(defaultWebSecurityManager);
         // TODO build filter chain.
+        Map<String, String> filterMap = new LinkedHashMap<>();
+        bean.setFilterChainDefinitionMap(filterMap);
         return bean;
     }
 

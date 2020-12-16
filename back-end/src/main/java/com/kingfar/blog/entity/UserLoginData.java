@@ -7,7 +7,7 @@ import lombok.Data;
  */
 @Data
 public class UserLoginData {
-    private String uid;
+    private long uid;
     private String username;
     private String mail;
     private int age;

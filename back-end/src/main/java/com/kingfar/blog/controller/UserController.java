@@ -27,6 +27,7 @@ public class UserController {
     Response verify(@RequestBody UserVerifyData data) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(data.getUsername(), data.getPassword());
+        token.setRememberMe(true);
         try {
             subject.login(token);
         } catch (UnknownAccountException uae) {
@@ -36,15 +37,25 @@ public class UserController {
             // wrong password, return code 102
             return new LoginResponse(2, "Wrong password!", null);
         }
+        // success, return code 100
         return new LoginResponse(0, "Successfully login!", userService.getLoginData(data.getUsername()));
     }
 
     @PostMapping("/signUp")
     Response signUp(String username, String password) {
         if(userService.createNewUser(username, password) == true) {
+            // success, return code 200
             return SignUpResponse.successfulResp;
         } else {
+            // fail, return code 201
             return SignUpResponse.failResp;
         }
+    }
+
+    @PostMapping("/logout")
+    Response logOut() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return null;
     }
 }

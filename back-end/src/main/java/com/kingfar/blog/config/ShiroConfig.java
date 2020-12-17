@@ -21,7 +21,14 @@ public class ShiroConfig {
         bean.setSecurityManager(defaultWebSecurityManager);
         // TODO build filter chain.
         Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/login", "anon");
+        filterMap.put("/signup", "anon");
+        filterMap.put("/mypage", "authc");
+        filterMap.put("/", "anon");
         bean.setFilterChainDefinitionMap(filterMap);
+        bean.setLoginUrl("/login");
+        bean.setSuccessUrl("/mainpage");
+        bean.setUnauthorizedUrl("/unanth");
         return bean;
     }
 

@@ -43,13 +43,13 @@
 
 <script>
 export default {
-  name: "SignUp",
+  name: 'SignUp',
   data: () => {
     return {
       signUpForm: {
-        username: "",
-        password: "",
-        rePassword: "",
+        username: '',
+        password: '',
+        rePassword: ''
       },
       rules: {
         username: [
@@ -62,21 +62,21 @@ export default {
         ],
         rePassword: [
           { required: true, message: '请再次输入密码', trigger: 'blur' }
-        ],
+        ]
       }
-    };
+    }
   },
   methods: {
-    goBack() {
-      this.$router.go(-1);
-      console.log("go back");
+    goBack () {
+      this.$router.go(-1)
+      console.log('go back')
     },
-    submit() {
-      if(this.checkUsername(this.signUpForm.username) && this.checkPassword(this.signUpForm.password)){
-        if(this.signUpForm.password == this.signUpForm.rePassword){
-          const form = new FormData();
-          form.append('username', this.signUpForm.username);
-          form.append('password', this.signUpForm.password);
+    submit () {
+      if (this.checkUsername(this.signUpForm.username) && this.checkPassword(this.signUpForm.password)) {
+        if (this.signUpForm.password == this.signUpForm.rePassword) {
+          const form = new FormData()
+          form.append('username', this.signUpForm.username)
+          form.append('password', this.signUpForm.password)
           this.$axios
           .post("http://localhost:8080/user/signUp", new URLSearchParams(form))
           .then(res => {
@@ -95,74 +95,74 @@ export default {
                     type: 'error'
                   });
               }
-          });
+            })
         } else {
-          alert("两次输入密码不一致");
+          alert('两次输入密码不一致')
         }
       }
     },
-    clear(formName) {
-      this.$refs[formName].resetFields();
+    clear (formName) {
+      this.$refs[formName].resetFields()
     },
-    checkUsername(str){
-      if(str.length < 4 || str.length > 20){
-        alert("用户名长度须在4-20位之间");
-        return false;
+    checkUsername: function (str) {
+      if (str.length < 4 || str.length > 20) {
+        alert('用户名长度须在4-20位之间')
+        return false
       }
-      var char = 0;
-      var num = 0;
-      for(var i=0; i<str.length; i++){
-        let c = str.charCodeAt(i);
-        if(c >= 97 && c <= 122 || c >= 65 && c <= 90){
-          char = 1;
+      var char = 0
+      var num = 0
+      for (var i = 0; i < str.length; i++) {
+        let c = str.charCodeAt(i)
+        if (c >= 97 && c <= 122 || c >= 65 && c <= 90) {
+          char = 1
         } else {
-          if(c >= 48 && c <= 58){
-            num = 1;
+          if (c >= 48 && c <= 58) {
+            num = 1
           } else {
-            alert("用户名存在非法字符");
-            return false;
+            alert('用户名存在非法字符')
+            return false
           }
         }
       }
-      if(char==1 && num==1){
-        return true;
+      if (char == 1 && num == 1) {
+        return true
       } else {
-        alert("用户名必须由字母和数字组成")
-        return false;
+        alert('用户名必须由字母和数字组成')
+        return false
       }
     },
-    checkPassword(str){
-       if(str.length < 6 || str.length > 20){
-        alert("密码长度须在6-20位之间");
-        return false;
+    checkPassword (str) {
+      if (str.length < 6 || str.length > 20) {
+        alert('密码长度须在6-20位之间')
+        return false
       }
-      var char1 = 0;
-      var char2 = 0;
-      var num = 0;
-      for(var i=0; i<str.length; i++){
-        let c = str.charCodeAt(i);
-        if(c >= 97 && c <= 122){
-          char1 = 1;
+      var char1 = 0
+      var char2 = 0
+      var num = 0
+      for (var i = 0; i < str.length; i++) {
+        let c = str.charCodeAt(i)
+        if (c >= 97 && c <= 122) {
+          char1 = 1
         } else {
-          if(c >= 65 && c <= 90){
-            char2 = 1;
+          if (c >= 65 && c <= 90) {
+            char2 = 1
           } else {
-            if(c >= 48 && c <= 58){
-              num = 1;
+            if (c >= 48 && c <= 58) {
+              num = 1
             } else {
-              alert("密码存在非法字符");
-              return false;
+              alert('密码存在非法字符')
+              return false
             }
           }
         }
       }
-      if(char1==1 && char2==1 && num==1){
-        return true;
+      if (char1 == 1 && char2 == 1 && num == 1) {
+        return true
       } else {
-        alert("密码必须由大小字母和数字组成")
-        return false;
+        alert('密码必须由大小字母和数字组成')
+        return false
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

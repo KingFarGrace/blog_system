@@ -21,9 +21,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submit()"
-                >确认</el-button
-              >
+              <el-button type="primary" @click="submit()">确认</el-button>
               <el-button @click="clear('loginForm')">重置</el-button>
             </el-form-item>
           </el-form>
@@ -38,43 +36,59 @@
 import axios from '../axios'
 
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => {
     return {
       loginForm: {
-        username: "",
-        password: "",
-      },
+        username: '',
+        password: ''
+      }
     }
   },
   methods: {
     goBack() {
       this.$router.go(-1)
-      console.log("go back")
+      console.log('go back')
     },
     submit() {
-      axios.post("http://localhost:8080/user/verify", {
+      axios
+        .post('http://localhost:8080/user/verify', {
           username: this.loginForm.username,
-          password: this.loginForm.password,
+          password: this.loginForm.password
         })
         .then(res => {
-            let code = res.data['code']
-            let msg = res.data['msg']
-            if(code == 100) {
-                alert(msg);
-                this.$router.replace("/mainpage")
-            }
-            if(code == 101) {
-                alert(msg)
-            }
-            if(code == 102) {
-                alert(msg)
-            }
-        });
+          let code = res.data['code']
+          let msg = res.data['msg']
+          let user = res.data['userLoginData']
+          if (code == 100) {
+            this.$message({
+              message: msg,
+              type: 'success'
+            })
+            this.$store.state.isLogin = true
+            this.$store.commit('setUser', user)
+            this.$router.replace('/mainpage')
+          } else if (code == 101) {
+            this.$message({
+              message: msg,
+              type: 'error'
+            })
+          } else if (code == 102) {
+            this.$message({
+              message: msg,
+              type: 'error'
+            })
+          } else {
+            this.$message({
+              message: 'please check your net connection',
+              type: 'error'
+            })
+          }
+        })
     },
     clear(formName) {
       this.$refs[formName].resetFields()
-    },
-  },
+    }
+  }
 }
 </script>

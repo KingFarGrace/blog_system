@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <el-row>
-      <el-col :span="20"
+      <el-col :span="18"
         ><div class="grid-content bg-purple-dark">
           <el-menu
             :default-active="this.$route.path"
@@ -25,7 +25,7 @@
           </el-menu>
         </div></el-col
       >
-      <el-col :span="3" :offset="1"
+      <el-col :span="3" :offset="1" v-if="!$store.state.isLogin"
         ><div class="grid-content bg-purple-dark">
           <el-menu
             :default-active="this.$route.path"
@@ -37,6 +37,21 @@
             <el-menu-item index="/login">登录</el-menu-item>
             <el-menu-item index="/signup">注册</el-menu-item>
           </el-menu>
+        </div>
+      </el-col>
+      <el-col :offset="1" :span="3" v-if="$store.state.isLogin"
+        ><div class="grid-content bg-purple">
+          <el-popover placement="top-start" width="200" trigger="hover">
+            <h4 class="tipck">uid: {{ $store.state.uid }}</h4>
+            <el-button slot="reference"
+              >您好，尊敬的{{ $store.state.username }}</el-button
+            >
+          </el-popover>
+        </div></el-col
+      >
+      <el-col :span="2" v-if="$store.state.isLogin">
+        <div class="grid-content bg-purple">
+          <el-button type="primary" round @click="logout()">登出</el-button>
         </div></el-col
       >
     </el-row>
@@ -45,14 +60,22 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   data: () => {
     return {
-      msg: "Welcome to Your Vue.js App",
-    };
-  },
-};
+      msg: 'Welcome to Your Vue.js App'
+    }
+  }, 
+  methods: {
+    logout: () => {
+      store.commit('removeToken')
+      console.log(store.state.token)
+      console.log(store.state.isLogin)
+    }
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -4,11 +4,12 @@ import router from '../router'
 
 let axios = Axios.create()
 
+axios.defaults.timeout = 6000
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
+
 axios.interceptors.request.use(config => {
   let token = store.state.token
-  if (token) {
-    config.headers['token'] = token
-  }
+  config.headers['token'] = token
   return config
 })
 
@@ -23,10 +24,10 @@ axios.interceptors.response.use(
     if (error.response) {
       if (error.response.status === 401) {
         store.commit('removeToken')
-        if (router.currentRoute.name !== '/login') {
+        if (router.currentRoute.name !== 'Login') {
           router
             .replace({
-              name: '/login',
+              name: 'Login',
               query: { from: router.currentRoute.fullPath }
             })
             .finally(() => Promise.reject(error.response))

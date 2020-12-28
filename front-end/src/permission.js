@@ -7,9 +7,9 @@ router.beforeEach((to, from, next) => {
 
         if(token) {
             if(to.path !== '/login') {
-                next({
-                    path: '/login'
-                })
+                next()
+            } else {
+                
             }
         } else {
             next({

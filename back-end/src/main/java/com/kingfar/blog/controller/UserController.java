@@ -24,6 +24,7 @@ public class UserController {
 
     @PostMapping("/verify")
     Response verify(HttpServletResponse response, @RequestBody UserVerifyData data) {
+        response.setHeader("Access-Control-Expose-Headers", "status, token");
         UserVerifyData verifyData = userService.verify(data.getUsername());
         if(verifyData != null){
             if (Objects.equals(verifyData.getPassword(), data.getPassword())){

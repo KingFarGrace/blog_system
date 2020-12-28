@@ -60,7 +60,6 @@ export default {
         .then(res => {
             let code = res.data['code']
             let msg = res.data['msg']
-            console.log(localStorage.getItem('token'))
             if(code == 100) {
                 alert(msg);
                 this.$router.replace("/mainpage")

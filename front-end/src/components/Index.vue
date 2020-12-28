@@ -68,7 +68,7 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  }, 
+  },
   methods: {
     logout: () => {
       store.commit('removeToken')

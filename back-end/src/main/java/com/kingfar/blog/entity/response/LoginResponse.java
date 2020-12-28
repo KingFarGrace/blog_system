@@ -1,15 +1,15 @@
 package com.kingfar.blog.entity.response;
 
 import com.kingfar.blog.entity.UserLoginData;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
 /**
  * @author ZHANGKAIHENG
  */
 
-@NoArgsConstructor
+@Data
 public class LoginResponse extends Response {
-    private UserLoginData userLoginData = null;
+    private UserLoginData userLoginData;
 
     @Override
     protected int groupCode() {

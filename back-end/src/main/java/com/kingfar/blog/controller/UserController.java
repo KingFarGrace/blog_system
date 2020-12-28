@@ -5,13 +5,12 @@ import com.kingfar.blog.entity.response.LoginResponse;
 import com.kingfar.blog.entity.response.SignUpResponse;
 import com.kingfar.blog.service.UserService;
 import com.kingfar.blog.entity.response.Response;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
+import com.kingfar.blog.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 /**
  * @author ZHANGKAIHENG
@@ -24,21 +23,19 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/verify")
-    Response verify(@RequestBody UserVerifyData data) {
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(data.getUsername(), data.getPassword());
-        token.setRememberMe(true);
-        try {
-            subject.login(token);
-        } catch (UnknownAccountException uae) {
-            // no user matched, return code 101
-            return new LoginResponse(1, "No such user!", null);
-        } catch (IncorrectCredentialsException ice) {
-            // wrong password, return code 102
-            return new LoginResponse(2, "Wrong password!", null);
+    Response verify(HttpServletResponse response, @RequestBody UserVerifyData data) {
+        UserVerifyData verifyData = userService.verify(data.getUsername());
+        if(verifyData != null){
+            if (Objects.equals(verifyData.getPassword(), data.getPassword())){
+                String token = JwtUtils.sign(data.getUsername());
+                response.setHeader("token", token);
+                return new LoginResponse(0, "Successfully login!", userService.getLoginData(data.getUsername()));
+            } else {
+                return new LoginResponse(2, "wrong password", null);
+            }
+        } else {
+            return new LoginResponse(1, "no such user!", null);
         }
-        // success, return code 100
-        return new LoginResponse(0, "Successfully login!", userService.getLoginData(data.getUsername()));
     }
 
     @PostMapping("/signUp")
@@ -50,12 +47,5 @@ public class UserController {
             // fail, return code 201
             return SignUpResponse.failResp;
         }
-    }
-
-    @PostMapping("/logout")
-    Response logOut() {
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        return null;
     }
 }

@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import axios from '../axios'
+
 export default {
   name: "Login",
   data: () => {
@@ -43,37 +45,36 @@ export default {
         username: "",
         password: "",
       },
-    };
+    }
   },
   methods: {
     goBack() {
-      this.$router.go(-1);
-      console.log("go back");
+      this.$router.go(-1)
+      console.log("go back")
     },
     submit() {
-      this.$axios
-        .post("http://localhost:8080/user/verify", {
+      axios.post("http://localhost:8080/user/verify", {
           username: this.loginForm.username,
           password: this.loginForm.password,
         })
         .then(res => {
-            let code = res.data['code'];
-            let msg = res.data['msg'];
+            let code = res.data['code']
+            let msg = res.data['msg']
             if(code == 100) {
                 alert(msg);
-                this.$router.replace("/mainpage");
+                this.$router.replace("/mainpage")
             }
             if(code == 101) {
-                alert(msg);
+                alert(msg)
             }
             if(code == 102) {
-                alert(msg);
+                alert(msg)
             }
         });
     },
     clear(formName) {
-      this.$refs[formName].resetFields();
+      this.$refs[formName].resetFields()
     },
   },
-};
+}
 </script>

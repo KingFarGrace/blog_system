@@ -1,5 +1,5 @@
 <template>
   <div id="mypage">
-    <h1>My Pgae.</h1>
+    <h1>My Page.</h1>
   </div>
 </template>

@@ -4,7 +4,7 @@
       ><el-page-header @back="goBack" content="登录页面"> </el-page-header
     ></el-header>
     <el-row>
-      <el-col :span="12" :offset="6"
+      <el-col :span="12" :offset="6" 
         ><el-main>
           <el-form ref="loginForm" :model="loginForm" label-width="80px">
             <el-form-item label="用户名" prop="username">
@@ -51,7 +51,8 @@ export default {
       console.log('go back')
     },
     submit() {
-      axios
+      if(this.checkUsername(this.loginForm.username) && this.checkPassword(this.loginForm.password)){
+        this.$axios
         .post('http://localhost:8080/user/verify', {
           username: this.loginForm.username,
           password: this.loginForm.password
@@ -85,10 +86,88 @@ export default {
             })
           }
         })
+      }
     },
     clear(formName) {
       this.$refs[formName].resetFields()
-    }
+    },
+    checkUsername(str){
+      if(str.length < 4 || str.length > 20){
+        this.$message ({
+          message: '用户名长度须在4-20位之间',
+          type: 'error'
+        })
+        return false;
+      }
+      var char = 0;
+      var num = 0;
+      for(var i=0; i<str.length; i++){
+        let c = str.charCodeAt(i);
+        if(c >= 97 && c <= 122 || c >= 65 && c <= 90){
+          char = 1;
+        } else {
+          if(c >= 48 && c <= 58){
+            num = 1;
+          } else {
+            this.$message ({
+              message: '用户名存在非法字符',
+              type: 'error'
+            })
+            return false;
+          }
+        }
+      }
+      if(char==1 && num==1){
+        return true;
+      } else {
+        this.$message ({
+          message: '用户名必须由字母和数字组成',
+          type: 'error'
+        })
+        return false;
+      }
+    },
+    checkPassword(str){
+       if(str.length < 6 || str.length > 20){
+        this.$message ({
+          message: '密码长度须在6-20位之间',
+          type: 'error'
+        })
+        return false;
+      }
+      var char1 = 0;
+      var char2 = 0;
+      var num = 0;
+      for(var i=0; i<str.length; i++){
+        let c = str.charCodeAt(i);
+        if(c >= 97 && c <= 122){
+          char1 = 1;
+        } else {
+          if(c >= 65 && c <= 90){
+            char2 = 1;
+          } else {
+            if(c >= 48 && c <= 58){
+              num = 1;
+            } else {
+              this.$message ({
+                message: '密码存在非法字符',
+                type: 'error'
+              })
+              return false;
+            }
+          }
+        }
+      }
+      if(char1==1 && char2==1 && num==1){
+        return true;
+      } else {
+        this.$message ({
+          message: '密码必须由大小字母和数字组成',
+          type: 'error'
+        })
+        return false;
+      }
+    },
   }
 }
 </script>

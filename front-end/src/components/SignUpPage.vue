@@ -83,11 +83,17 @@ export default {
               let code = res.data['code'];
               let msg = res.data['msg'];
               if(code == 200) {
-                  alert(msg);
+                  this.$message({
+                    message: msg,
+                    type: 'success'
+                  });
                   this.$router.replace("/mainpage");
               }
               if(code == 201) {
-                  alert(msg);
+                  this.$message({
+                    message: msg,
+                    type: 'error'
+                  });
               }
           });
         } else {

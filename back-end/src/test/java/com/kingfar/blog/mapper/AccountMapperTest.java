@@ -4,21 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class UserMapperTest {
+class AccountMapperTest {
     @Autowired
-    UserMapper userMapper;
+    AccountMapper accountMapper;
 
     @Test
     void TestMapper() {
-        System.out.println(userMapper.selectByUsername("ZHANG"));
+        System.out.println(accountMapper.selectByUsername("ZHANG"));
     }
 
     @Test
     void TestSignUp() {
-        System.out.println(userMapper.setSignUpInfo("WANG", "123456"));
+
     }
 
 }

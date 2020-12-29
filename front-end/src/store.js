@@ -13,6 +13,7 @@ export default new Vuex.Store({
         sex: localStorage.getItem('sex') ? localStorage.getItem('sex') : '',
         age: localStorage.getItem('age') ? localStorage.getItem('age') : '',
         signature: localStorage.getItem('signature') ? localStorage.getItem('signature') : '',
+        ctime: localStorage.getItem('ctime') ? localStorage.getItem('ctime') : '',
     },
 
     mutations: {
@@ -40,6 +41,8 @@ export default new Vuex.Store({
             localStorage.setItem('sex', user.sex)
             state.signature = user.signature
             localStorage.setItem('signature', user.signature)
+            state.ctime = user.ctime
+            localStorage.setItem('ctime', user.ctime)
         }
     },
 

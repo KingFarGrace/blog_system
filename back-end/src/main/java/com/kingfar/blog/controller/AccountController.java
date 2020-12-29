@@ -3,7 +3,7 @@ package com.kingfar.blog.controller;
 import com.kingfar.blog.entity.UserVerifyData;
 import com.kingfar.blog.entity.response.LoginResponse;
 import com.kingfar.blog.entity.response.SignUpResponse;
-import com.kingfar.blog.service.UserService;
+import com.kingfar.blog.service.AccountService;
 import com.kingfar.blog.entity.response.Response;
 import com.kingfar.blog.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +18,19 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
-public class UserController {
+public class AccountController {
     @Autowired
-    UserService userService;
+    AccountService accountService;
 
     @PostMapping("/verify")
     Response verify(HttpServletResponse response, @RequestBody UserVerifyData data) {
         response.setHeader("Access-Control-Expose-Headers", "status, token");
-        UserVerifyData verifyData = userService.verify(data.getUsername());
+        UserVerifyData verifyData = accountService.verify(data.getUsername());
         if(verifyData != null){
             if (Objects.equals(verifyData.getPassword(), data.getPassword())){
                 String token = JwtUtils.sign(data.getUsername());
                 response.setHeader("token", token);
-                return new LoginResponse(0, "Successfully login!", userService.getLoginData(data.getUsername()));
+                return new LoginResponse(0, "Successfully login!", accountService.getLoginData(data.getUsername()));
             } else {
                 return new LoginResponse(2, "wrong password", null);
             }
@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping("/signUp")
     Response signUp(String username, String password) {
-        if(userService.createNewUser(username, password) == true) {
+        if(accountService.createNewUser(username, password) == true) {
             // success, return code 200
             return SignUpResponse.successfulResp;
         } else {

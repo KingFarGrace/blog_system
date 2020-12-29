@@ -43,6 +43,7 @@
         ><div class="grid-content bg-purple">
           <el-popover placement="top-start" width="200" trigger="hover">
             <h4 class="tipck">uid: {{ $store.state.uid }}</h4>
+            <h5 class="tipck">注册时间: {{ $store.state.ctime }}</h5>
             <el-button slot="reference"
               >您好，尊敬的{{ $store.state.username }}</el-button
             >

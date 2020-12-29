@@ -1,18 +1,18 @@
-import { types } from './types'
+import {types} from './types'
 
 const mutations = {
-  setToken(state, token) {
+  [types.SET_TOKEN](state, token) {
     state.token = token
     localStorage.setItem('token', token)
   },
 
-  removeToken(state) {
+  [types.REMOVE_TOKEN](state) {
     state.token = ''
     localStorage.removeItem('token')
     state.isLogin = false
   },
 
-  setUser(state, user) {
+  [types.SET_USER](state, user) {
     state.uid = user.uid
     localStorage.setItem('uid', user.uid)
     state.username = user.username
@@ -25,9 +25,11 @@ const mutations = {
     localStorage.setItem('sex', user.sex)
     state.signature = user.signature
     localStorage.setItem('signature', user.signature)
+    state.ctime = user.ctime
+    localStorage.setItem('sex', user.ctime)
   },
 
-  removeUser(state, user) {
+  [types.REMOVE_USER](state, user) {
     state.uid = ''
     localStorage.removeItem('uid', user.uid)
     state.username = ''
@@ -40,6 +42,8 @@ const mutations = {
     localStorage.removeItem('sex', user.sex)
     state.signature = ''
     localStorage.removeItem('signature', user.signature)
+    state.ctime = user.ctime
+    localStorage.setItem('ctime', user.ctime)
   }
 }
 

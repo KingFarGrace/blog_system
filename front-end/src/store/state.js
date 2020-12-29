@@ -12,7 +12,8 @@ const state = {
   age: localStorage.getItem('age') ? localStorage.getItem('age') : '',
   signature: localStorage.getItem('signature')
     ? localStorage.getItem('signature')
-    : ''
+    : '',
+  ctime: localStorage.getItem('ctime') ? localStorage.getItem('ctime') : '',
 }
 
 export default state

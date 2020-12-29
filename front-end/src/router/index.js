@@ -34,9 +34,9 @@ export default new Router({
           path: '/mypage',
           name: 'MyPage',
           component: MyPage,
-          meta: {
-            requireAuth: true
-          },
+          // meta: {
+          //   requireAuth: true
+          // },
           redirect:"/mypage/edit",
           children:[
             {

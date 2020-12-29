@@ -36,20 +36,11 @@
     data() {
       return {
         tableData: [
-        //   {
-        //   date: '',
-        //   title: ''
-        // },
           {
-          date: '2016-05-04',
-          title: '论大学生宿舍日常'
-        }, {
-          date: '2016-05-01',
-          title: '论母猪的产后护理'
-        }, {
-          date: '2016-05-03',
-          title: '雨季不再来'
-        }
+          date: '',
+          title: ''
+        },
+
         ],
         search: ''
       }
@@ -64,7 +55,7 @@
         })
       },
       handleDelete(index, row) {
-        axios.delete(''+row.id).then(function (resp) {
+        axios.delete(''+row.id).then(function (resp) {   //应该delete也把表删了
             alert("删除成功")
         })
       }

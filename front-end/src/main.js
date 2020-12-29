@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
-import store from './store'
+import store from './store/index'
 import './permission'
 
 Vue.config.productionTip = false

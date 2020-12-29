@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import store from '../store'
+import store from '../store/index'
 export default {
   name: 'HelloWorld',
   data: () => {
@@ -72,6 +72,7 @@ export default {
   methods: {
     logout: () => {
       store.commit('removeToken')
+      store.commit('removeUser')
       console.log(store.state.token)
       console.log(store.state.isLogin)
     }

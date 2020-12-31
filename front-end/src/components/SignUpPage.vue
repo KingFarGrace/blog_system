@@ -97,17 +97,23 @@ export default {
               }
             })
         } else {
-          alert('两次输入密码不一致')
+          this.$message ({
+            message: '两次输入密码不一致',
+            type: 'error'
+          })
         }
       }
     },
     clear (formName) {
       this.$refs[formName].resetFields()
     },
-    checkUsername: function (str) {
-      if (str.length < 4 || str.length > 20) {
-        alert('用户名长度须在4-20位之间')
-        return false
+    checkUsername(str){
+      if(str.length < 4 || str.length > 20){
+        this.$message ({
+          message: '用户名长度须在4-20位之间',
+          type: 'error'
+        })
+        return false;
       }
       var char = 0
       var num = 0
@@ -119,22 +125,31 @@ export default {
           if (c >= 48 && c <= 58) {
             num = 1
           } else {
-            alert('用户名存在非法字符')
-            return false
+            this.$message ({
+              message: '用户名存在非法字符',
+              type: 'error'
+            })
+            return false;
           }
         }
       }
       if (char == 1 && num == 1) {
         return true
       } else {
-        alert('用户名必须由字母和数字组成')
-        return false
+        this.$message ({
+          message: '用户名必须由字母和数字组成',
+          type: 'error'
+        })
+        return false;
       }
     },
-    checkPassword (str) {
-      if (str.length < 6 || str.length > 20) {
-        alert('密码长度须在6-20位之间')
-        return false
+    checkPassword(str){
+       if(str.length < 6 || str.length > 20){
+        this.$message ({
+          message: '密码长度须在6-20位之间',
+          type: 'error'
+        })
+        return false;
       }
       var char1 = 0
       var char2 = 0
@@ -150,8 +165,11 @@ export default {
             if (c >= 48 && c <= 58) {
               num = 1
             } else {
-              alert('密码存在非法字符')
-              return false
+              this.$message ({
+                message: '密码存在非法字符',
+                type: 'error'
+              })
+              return false;
             }
           }
         }
@@ -159,8 +177,11 @@ export default {
       if (char1 == 1 && char2 == 1 && num == 1) {
         return true
       } else {
-        alert('密码必须由大小字母和数字组成')
-        return false
+        this.$message ({
+          message: '密码必须由大小字母和数字组成',
+          type: 'error'
+        })
+        return false;
       }
     }
   }

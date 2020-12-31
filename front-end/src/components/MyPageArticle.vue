@@ -1,7 +1,8 @@
 <template>
+  <div>
   <el-table
     :data="tableData.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
-    style="width: 100%">
+    style="width: 100%" >
     <el-table-column
       label="Date"
       prop="date">
@@ -10,6 +11,7 @@
       label="Title"
       prop="title">
     </el-table-column>
+
     <el-table-column
       align="right">
       <template slot="header" slot-scope="scope">
@@ -29,18 +31,45 @@
       </template>
     </el-table-column>
   </el-table>
+
+  <el-pagination
+    background
+    layout="prev, pager, next"
+    page-size="6"
+    :total="totalpage"
+    @current-change="pagechange">     //response the paging click
+  </el-pagination>
+  </div>
 </template>
 
 <script>
   export default {
+    created() {
+      const _this = this
+      axios.post('        ').then(function (resp) {     //database request
+        //console.log(resp)
+        //console.log(resp.data)
+        _this.tableData = resp.data.content
+        _this.totalpage = resp.data.totalElements     //need to view the properties of the TotalPage,if the data dosen't came out
+      })
+    },
     data() {
       return {
         tableData: [
+        //   {
+        //   date: '',
+        //   title: ''
+        // },
           {
-          date: '',
-          title: ''
-        },
-
+          date: '2016-05-04',
+          title: '论大学生宿舍日常'
+        }, {
+          date: '2016-05-01',
+          title: '论母猪的产后护理'
+        }, {
+          date: '2016-05-03',
+          title: '雨季不再来'
+        }
         ],
         search: ''
       }
@@ -55,11 +84,23 @@
         })
       },
       handleDelete(index, row) {
-        axios.delete(''+row.id).then(function (resp) {   //应该delete也把表删了
-            alert("删除成功")
-        })
+        // axios.delete(''+row.id).then(function (resp) {
+        //     alert("删除成功")
+        // })
+        this.tableData.splice(index, 1);
+      },
+      pagechange(currentPage){  //Get information on each page
+        alert(currentPage)
+        // const _this = this
+        // axios.post('        '+currentPage+' ' ).then(function (resp) {     //database request
+        //   _this.tableData = resp.data.content
+        //   _this.totalpage = resp.data.totalElement    //Get total pages
+        // })
       }
-    },
+
+
+
+    }
   }
 </script>
 

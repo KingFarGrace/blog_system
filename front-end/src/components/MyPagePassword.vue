@@ -1,5 +1,6 @@
 <template>
   <div >
+    <el-page-header @back="goBack" > </el-page-header>
     <el-row>
       <el-col :span="12" :offset="6"
       ><el-main>
@@ -10,7 +11,7 @@
               placeholder="请输入用户名(4-20位,由数字和字母组成)"
             ></el-input>
           </el-form-item>
-          <el-form-item label="新密码" prop="password">
+          <el-form-item label="密码" prop="password">
             <el-input
               v-model="signUpForm.password"
               placeholder="请输入密码(6-20位,由数字和大小字母组成)"
@@ -26,7 +27,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submit()"
-            >确认修改</el-button
+            >确认</el-button
             >
             <el-button @click="clear('signUpForm')">重置</el-button>
           </el-form-item>
@@ -40,7 +41,6 @@
 
 <script>
   export default {
-    name: 'SignUp',
     data: () => {
       return {
         signUpForm: {
@@ -54,7 +54,7 @@
             { min: 6, max: 20, message: '长度在 4 到 20 位', trigger: ['blur', 'change'] }
           ],
           password: [
-            { required: true, message: '请输入新密码', trigger: 'blur' },
+            { required: true, message: '请输入密码', trigger: 'blur' },
             { min: 6, max: 20, message: '长度在 6 到 20 位', trigger: ['blur', 'change'] }
           ],
           rePassword: [
@@ -75,21 +75,16 @@
             form.append('username', this.signUpForm.username)
             form.append('password', this.signUpForm.password)
             this.$axios
-              .post('http://localhost:8080/user/signUp', new URLSearchParams(form))
+              .post("http://localhost:8080/user/signUp", new URLSearchParams(form))
               .then(res => {
-                let code = res.data['code']
-                let msg = res.data['msg']
-                if (code == 100) {
-                  alert(msg)
-                  this.$router.replace('/mainpage')
+                let code = res.data['code'];
+                let msg = res.data['msg'];
+                if(code == 200) {
+                  alert(msg);
+                  this.$router.replace("/mainpage");
                 }
-                // eslint-disable-next-line eqeqeq
-                if (code == 101) {
-                  alert(msg)
-                }
-                // eslint-disable-next-line eqeqeq
-                if (code === 102) {
-                  alert(msg)
+                if(code == 201) {
+                  alert(msg);
                 }
               })
           } else {

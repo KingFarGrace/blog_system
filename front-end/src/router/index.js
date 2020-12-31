@@ -10,7 +10,7 @@ import MyPageEdit from '@/components/MyPageEdit'
 import MyPageArticle from '@/components/MyPageArticle'
 import MyPageDraft from '@/components/MyPageDraft'
 import MyPagePassword from '@/components/MyPagePassword'
-
+import MyPageBase from "../components/MyPageBase";
 
 Vue.use(Router)
 
@@ -56,8 +56,13 @@ export default new Router({
             },
             {
               path: "/mypage/password",
-              name:"MyPage_Password",
+              name:"MyPagePassword",
               component:MyPagePassword
+            },
+            {
+              path: "/mypage/base",
+              name:"MyPageBase",
+              component:MyPageBase
             }
           ]
         },

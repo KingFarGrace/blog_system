@@ -9,10 +9,10 @@
               <el-menu-item index="/mypage/article" :class="$route.path=='/mypage/article'?'is-active':''">历史文章</el-menu-item>
               <el-menu-item index="/mypage/draft" :class="$route.path=='/mypage/draft'?'is-active':''">草稿箱</el-menu-item>
           </el-submenu>
-          <el-submenu index="2">
-            <template slot="title"><i class="el-icon-message"></i>个人信息</template>
-            <el-menu-item index="/mypage/password" :class="$route.path=='/mypage/password'?'is-active':''">修改密码</el-menu-item>
-          </el-submenu>
+
+            <el-menu-item index="/mypage/base" :class="$route.path=='/mypage/base'?'is-active':''">
+              <i class="el-icon-message"></i>个人信息</el-menu-item>
+
         </el-menu>
       </el-aside>
 
@@ -27,15 +27,4 @@
 
 
 
-<style>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
-
-  .el-aside {
-    color: #333;
-  }
-</style>
 

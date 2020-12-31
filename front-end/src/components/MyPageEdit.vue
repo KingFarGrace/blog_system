@@ -44,7 +44,7 @@
       };
     },
     methods: {
-      submitForm(formName) {
+      submitForm(formName) {  //submit article
         const _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -65,12 +65,12 @@
         this.$refs[formName].resetFields();
       },
       Draft(forName){
-
+        /////////add the article to the draft
       },
       created(){
         const _this = this
         // alert(this.$route.query.id )
-        axios.get('').then(function (resp) {//  Accept the article number from 'MyPageDraft'
+        axios.post('').then(function (resp) {//  Accept the article number from 'MyPageDraft'
           _this.ruleForm = resp.data
         })
       }

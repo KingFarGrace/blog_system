@@ -14,12 +14,12 @@
     <el-form-item label="发表文章数">
       <el-input v-model="form.number" disabled></el-input>
     </el-form-item>
-    <el-form-item label="个性签名">
-      <el-input v-model="form.introduction" autosize></el-input>
-    </el-form-item>
+<!--    <el-form-item label="个性签名">-->
+<!--      <el-input v-model="form.introduction" autosize></el-input>-->
+<!--    </el-form-item>-->
 
       <el-form-item>
-      <el-button type="primary" @click="onSubmit">修改密码</el-button>
+      <el-button type="primary" @click="onPassword">修改密码</el-button>
     </el-form-item>
     </el-col>
 
@@ -41,11 +41,14 @@
       }
     },
     methods: {
-      onSubmit() {
+      onPassword() {
         this.$router.push({
           path:'/mypage/password',
         })
-      }
+      },
+
+      //TODO 缺少从后端获取个人基本信息的函数
+
     }
   }
 </script>

@@ -56,7 +56,7 @@ export default {
       })
     },
     handleDelete(index, row) {
-      // 
+      // TODO 根据表号id删除‘草稿箱’的某篇文章
       // axios.post('http://localhost:8080/article/delDraft'+row.id).then(function (resp) {
       //   alert("删除成功")
       // })

@@ -44,17 +44,18 @@
 
 <script>
   export default {
-    created() {
+    created() {     //database request
       const _this = this
-      axios.post('        ').then(function (resp) {     //database request
+      axios.post('        ').then(function (resp) {  //TODO 填写存储发表文章的数据库url，获取文章的title、body与总页数
         //console.log(resp)
         //console.log(resp.data)
-        _this.tableData = resp.data.content
-        _this.totalpage = resp.data.totalElements     //need to view the properties of the TotalPage,if the data dosen't came out
+        // _this.tableData = resp.data.content
+        // _this.totalpage = resp.data.totalElements     //TODO 获取文章内容和总页数
       })
     },
     data() {
       return {
+        totalpage:null,
         tableData: [
         //   {
         //   date: '',
@@ -79,12 +80,12 @@
         this.$router.push({
           path:'/mypage/edit',
           query:{
-            id : row.id  //id 为数据库的数据号
+            id : row.id
           }
         })
       },
       handleDelete(index, row) {
-        // axios.delete(''+row.id).then(function (resp) {
+        // axios.delete(''+row.id).then(function (resp) { //TODO 根据id删除文章
         //     alert("删除成功")
         // })
         this.tableData.splice(index, 1);
@@ -92,9 +93,8 @@
       pagechange(currentPage){  //Get information on each page
         alert(currentPage)
         // const _this = this
-        // axios.post('        '+currentPage+' ' ).then(function (resp) {     //database request
+        // axios.post('        '+currentPage+' ' ).then(function (resp) {     //TODO 得到‘currentPage’页的信息,语句不知道是否正确
         //   _this.tableData = resp.data.content
-        //   _this.totalpage = resp.data.totalElement    //Get total pages
         // })
       }
 

@@ -48,9 +48,7 @@
         const _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // alert('submit!');
-            // console.log(_this.ruleForm)
-            axios.post('',this.ruleForm).then(function (resp) {
+            axios.post('',this.ruleForm).then(function (resp) { //TODO 提交title、body文本到数据库中的url
               if(resp.data == 'success'){
                 alert("文章上传成功")
               }
@@ -65,13 +63,12 @@
         this.$refs[formName].resetFields();
       },
       Draft(forName){
-        /////////add the article to the draft
+        //TODO 将文章标题、正文提交到‘草稿箱’数据库
       },
       created(){
         const _this = this
-        // alert(this.$route.query.id )
-        axios.post('').then(function (resp) {//  Accept the article number from 'MyPageDraft'
-          _this.ruleForm = resp.data
+        axios.post(''+this.$route.query.id).then(function (resp) {// TODO 取得从‘MyPageDraft’或‘MyPageArticle’传过来的文章id，
+          _this.ruleForm = resp.data                                   //TODO 并读出其内容（title、body）
         })
       }
     }

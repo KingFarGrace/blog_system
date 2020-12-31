@@ -16,7 +16,6 @@ public class ArticleUtils {
     }
 
     public static List<ArticleData> getPage(int currentPage) {
-        // TODO 前端设置页面加载完毕自动请求页面数据（缓冲区容量，页数等等）
         ArticleBuffer buffer = ArticleBuffer.getInstance();
         buffer.setCurrentPage(currentPage);
         buffer.setCurrentIndexOfArticles((currentPage - 1) * buffer.getPageLen());

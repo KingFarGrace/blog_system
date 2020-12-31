@@ -34,7 +34,7 @@
 
     <el-col>
       <el-container>
-        <el-footer>版权信息</el-footer>
+        <el-footer>Copyright © 2020 Software 1802. All rights reserved.</el-footer>
       </el-container>
     </el-col>
     

@@ -1,5 +1,6 @@
 package com.kingfar.blog.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.kingfar.blog.entity.buffer.ArticleBuffer;
 import com.kingfar.blog.service.ArticleService;
 import com.kingfar.blog.util.ArticleUtils;
@@ -21,7 +22,8 @@ public class ArticleController {
     ArticleService articleService;
 
     @PostMapping("/load")
-    Map load(String pageIndex) {
+    Map load(@RequestBody JSONObject jsonObject) {
+        String pageIndex = jsonObject.getString("pageIndex");
         int currentPage = Integer.parseInt(pageIndex);
         ArticleBuffer buffer = ArticleUtils.getBuffer();
         articleService.getResource();

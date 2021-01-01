@@ -21,11 +21,11 @@ const state = {
   /**
    * article data
    */
-  pageNum:sessionStorage.getItem('pageNum') ? sessionStorage.getItem('pageNum') : 1,
-  pageIndex: sessionStorage.getItem('pageIndex') ? sessionStorage.getItem('pageIndex') : 1,
-  pageSize: sessionStorage.getItem('pageSize') ? sessionStorage.getItem('pageSize') : 5,
-  articleNum: sessionStorage.getItem('articleNum') ? sessionStorage.getItem('articleNum') : 0,
-  articleBuf: sessionStorage.getItem('articleBuf') ? sessionStorage.getItem('articleBuf') : []
+  pageNum:localStorage.getItem('pageNum') ? localStorage.getItem('pageNum') : 1,
+  pageIndex: localStorage.getItem('pageIndex') ? localStorage.getItem('pageIndex') : 1,
+  pageSize: localStorage.getItem('pageSize') ? localStorage.getItem('pageSize') : 5,
+  articleNum: localStorage.getItem('articleNum') ? localStorage.getItem('articleNum') : 0,
+  articleBuf: localStorage.getItem('articleBuf') ? localStorage.getItem('articleBuf') : [{"bid":0, "title":"failed to load", "author":"system", "content":"failed to load", "ctime":"0000-00-00 00:00:00"}]
 }
 
 export default state

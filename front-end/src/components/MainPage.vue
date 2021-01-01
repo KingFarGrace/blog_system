@@ -9,7 +9,7 @@
               <el-timeline-item
                 timestamp="2018/4/12"
                 placement="top"
-                :v-for="article in articleBuf"
+                v-for="article in articleBuf"
                 :key="article"
               >
                 <el-card>
@@ -44,6 +44,7 @@
 
 <script>
 import store from '../store'
+
 export default {
   data() {
     return {

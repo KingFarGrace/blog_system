@@ -31,6 +31,9 @@ new Vue({
       .then(res => {
         store.state.articleBuf = res.data['articles']
         store.state.pageNum = parseInt(res.data['buffer-length'] / res.data['page-length']) + 1
+        store.state.pageSize = res.data['page-length']
+        store.state.articleNum = res.data['buffer-length']
+        store.state.pageIndex = res.data['current-page']
       })
     }
   },

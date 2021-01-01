@@ -27,9 +27,10 @@ public class ArticleController {
         int currentPage = Integer.parseInt(pageIndex);
         ArticleBuffer buffer = ArticleUtils.getBuffer();
         articleService.getResource();
-        Map respMap = new HashMap(3);
+        Map respMap = new HashMap(4);
         respMap.put("buffer-length", buffer.getBufferLen());
         respMap.put("page-length", buffer.getPageLen());
+        respMap.put("current-page", buffer.getCurrentPage());
         respMap.put("articles", ArticleUtils.getPage(currentPage));
         return respMap;
     }

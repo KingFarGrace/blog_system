@@ -23,7 +23,9 @@ const state = {
    */
   pageNum:sessionStorage.getItem('pageNum') ? sessionStorage.getItem('pageNum') : 1,
   pageIndex: sessionStorage.getItem('pageIndex') ? sessionStorage.getItem('pageIndex') : 1,
-  articleBuf: sessionStorage.getItem('articleBuf') ? sessionStorage.getItem('articleBuf') : [{}, {}, {}, {}, {}]
+  pageSize: sessionStorage.getItem('pageSize') ? sessionStorage.getItem('pageSize') : 5,
+  articleNum: sessionStorage.getItem('articleNum') ? sessionStorage.getItem('articleNum') : 0,
+  articleBuf: sessionStorage.getItem('articleBuf') ? sessionStorage.getItem('articleBuf') : []
 }
 
 export default state

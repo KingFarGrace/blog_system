@@ -10,7 +10,8 @@ import MyPageEdit from '@/components/MyPageEdit'
 import MyPageArticle from '@/components/MyPageArticle'
 import MyPageDraft from '@/components/MyPageDraft'
 import MyPagePassword from '@/components/MyPagePassword'
-import MyPageBase from "../components/MyPageBase";
+import MyPageBase from "../components/MyPageBase"
+import TextPage from '@/components/TextPage';
 
 Vue.use(Router)
 
@@ -83,7 +84,10 @@ export default new Router({
       name: 'SignUp',
       component: SignUpPage
     },
-
-
+    {
+      path: '/text',
+      name: 'Text',
+      component: TextPage
+    },
   ]
 })

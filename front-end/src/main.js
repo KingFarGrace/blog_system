@@ -20,25 +20,5 @@ new Vue({
   router,
   components: { App },
   template: '<App/>',
-  render: h => h(App),
-
-  methods: {
-    initAriticleList: () => {
-      axios
-      .post('http://localhost:8080/article/load', {
-        pageIndex: store.state.pageIndex
-      })
-      .then(res => {
-        store.state.articleBuf = res.data['articles']
-        store.state.pageNum = parseInt(res.data['buffer-length'] / res.data['page-length']) + 1
-        store.state.pageSize = res.data['page-length']
-        store.state.articleNum = res.data['buffer-length']
-        store.state.pageIndex = res.data['current-page']
-      })
-    }
-  },
-
-  mounted() {
-    this.initAriticleList()
-  },
+  render: h => h(App)
 })

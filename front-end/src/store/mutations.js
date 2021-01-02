@@ -1,4 +1,4 @@
-import {types} from './types'
+import { types } from './types'
 
 const mutations = {
   [types.SET_TOKEN](state, token) {
@@ -44,6 +44,25 @@ const mutations = {
     localStorage.removeItem('signature', user.signature)
     state.ctime = user.ctime
     localStorage.setItem('ctime', user.ctime)
+  },
+
+  setArticle(state, res) {
+    state.articleBuf = res.data['articles']
+    localStorage.setItem("articleBuf", JSON.stringify(state.articleBuf))
+    state.pageNum =
+      parseInt(res.data['buffer-length'] / res.data['page-length']) + 1
+    localStorage.setItem('pageNum', state.pageNum)
+    state.pageSize = res.data['page-length']
+    localStorage.setItem('pageSize', state.pageSize)
+    state.articleNum = res.data['buffer-length']
+    localStorage.setItem('articleNum', state.articleNum)
+    state.pageIndex = res.data['current-page']
+    localStorage.setItem('pageIndex', state.pageIndex)
+  },
+
+  setReadingNow(state, article) {
+    state.readingNow = article
+    localStorage.setItem("readingNow", JSON.stringify(state.readingNow))
   }
 }
 

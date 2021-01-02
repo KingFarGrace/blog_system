@@ -1,7 +1,7 @@
 import { types } from './types'
 
 const state = {
-  /** 
+  /**
    * user data
    */
   isLogin: localStorage.getItem('token') ? true : false,
@@ -21,11 +21,41 @@ const state = {
   /**
    * article data
    */
-  pageNum:localStorage.getItem('pageNum') ? localStorage.getItem('pageNum') : 1,
-  pageIndex: localStorage.getItem('pageIndex') ? localStorage.getItem('pageIndex') : 1,
-  pageSize: localStorage.getItem('pageSize') ? localStorage.getItem('pageSize') : 5,
-  articleNum: localStorage.getItem('articleNum') ? localStorage.getItem('articleNum') : 0,
-  articleBuf: localStorage.getItem('articleBuf') ? localStorage.getItem('articleBuf') : [{"bid":0, "title":"failed to load", "author":"system", "content":"failed to load", "ctime":"0000-00-00 00:00:00"}]
+  pageNum: localStorage.getItem('pageNum')
+    ? localStorage.getItem('pageNum')
+    : 1,
+  pageIndex: localStorage.getItem('pageIndex')
+    ? localStorage.getItem('pageIndex')
+    : 1,
+  pageSize: localStorage.getItem('pageSize')
+    ? localStorage.getItem('pageSize')
+    : 5,
+  articleNum: localStorage.getItem('articleNum')
+    ? localStorage.getItem('articleNum')
+    : 0,
+  articleBuf: localStorage.getItem('articleBuf')
+    ? localStorage.getItem("articleBuf")
+    : [
+        {
+          bid: 0,
+          title: 'failed to load',
+          author: 'system',
+          content: 'failed to load',
+          ctime: '0000-00-00 00:00:00'
+        }
+      ],
+  readingNow:
+    localStorage.getItem('readingNow') !== '[object Object]'
+      ? JSON.parse(localStorage.getItem("readingNow"))
+      : [
+          {
+            bid: 0,
+            title: 'failed to load',
+            author: 'system',
+            content: 'failed to load',
+            ctime: '0000-00-00 00:00:00'
+          }
+        ]
 }
 
 export default state

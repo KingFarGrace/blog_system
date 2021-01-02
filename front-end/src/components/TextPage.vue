@@ -7,22 +7,17 @@
     <el-row>
       <el-col :span="14" :offset="5" id="main">
         <div id="title">
-          <p>题目</p>
+          <p>题目: {{ article.title }}</p>
           <!-- TODO 动态加载文章内容 -->
         </div>
-        <div id="autor">
-          <p>时间</p>
-          <p>作者</p>
+        <div id="author">
+          <p>时间: {{ article.ctime }}</p>
+          <p>作者: {{ article.author }}</p>
           <p>阅读量</p>
           <p>收藏量</p>
         </div>
         <div id="content">
-          <p>
-            这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
-            这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
-            这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
-            这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
-          </p>
+          <p>{{ article.content }}</p>
         </div>
       </el-col>
     </el-row>
@@ -31,18 +26,28 @@
 
 <script>
 import axios from '../axios'
+import store from '../store'
 
 export default {
   name: 'Text',
   data: () => {
-    return {}
+    return {
+      article: store.state.readingNow
+    }
   },
   methods: {
     goBack() {
       this.$router.go(-1)
       console.log('go back')
     },
+    getArticle() {
+      this.article = store.state.readingNow
+      console.log(this.article)
+    }
   },
+  mounted() {
+    this.getArticle()
+  }
 }
 </script>
 

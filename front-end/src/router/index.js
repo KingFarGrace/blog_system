@@ -6,11 +6,11 @@ import MyPage from '@/components/MyPage'
 import About from '@/components/About'
 import LoginPage from '@/components/LoginPage'
 import SignUpPage from '@/components/SignUpPage'
-import MyPageEdit from '@/components/MyPageEdit'
-import MyPageArticle from '@/components/MyPageArticle'
-import MyPageDraft from '@/components/MyPageDraft'
-import MyPagePassword from '@/components/MyPagePassword'
-import MyPageBase from "../components/MyPageBase"
+import MyPageEdit from '@/components/mypage_components/MyPageEdit'
+import MyPageArticle from '@/components/mypage_components/MyPageArticle'
+import MyPageDraft from '@/components/mypage_components/MyPageDraft'
+import MyPagePassword from '@/components/mypage_components/MyPagePassword'
+import MyPageBase from "../components/mypage_components/MyPageBase"
 import TextPage from '@/components/TextPage';
 
 Vue.use(Router)
@@ -85,7 +85,7 @@ export default new Router({
       component: SignUpPage
     },
     {
-      path: '/text',
+      path: '/:blogId',
       name: 'Text',
       component: TextPage
     },

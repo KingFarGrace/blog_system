@@ -7,7 +7,6 @@ import com.kingfar.blog.util.ArticleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +26,10 @@ public class ArticleController {
         int currentPage = Integer.parseInt(pageIndex);
         ArticleBuffer buffer = ArticleUtils.getBuffer();
         articleService.getResource();
-        Map respMap = new HashMap(3);
+        Map respMap = new HashMap(4);
         respMap.put("buffer-length", buffer.getBufferLen());
         respMap.put("page-length", buffer.getPageLen());
+        respMap.put("current-page", buffer.getCurrentPage());
         respMap.put("articles", ArticleUtils.getPage(currentPage));
         return respMap;
     }

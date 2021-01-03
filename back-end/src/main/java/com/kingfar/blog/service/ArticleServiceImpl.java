@@ -3,6 +3,7 @@ package com.kingfar.blog.service;
 import com.kingfar.blog.entity.ArticleData;
 import com.kingfar.blog.entity.buffer.ArticleBuffer;
 import com.kingfar.blog.mapper.ArticleMapper;
+import com.kingfar.blog.util.ArticleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void submit(ArticleData article) {
         Date date = new Date(System.currentTimeMillis());
-        articleMapper.insertArticle(article.getTitle(), article.getContent(), article.getAuthor(),date);
+        article.setCtime(date);
+        ArticleUtils.submit(article);
+        articleMapper.insertArticle(article.getTitle(), article.getContent(), article.getAuthor(), date);
     }
 }

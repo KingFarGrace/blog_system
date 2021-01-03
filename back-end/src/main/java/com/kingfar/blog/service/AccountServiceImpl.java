@@ -30,7 +30,6 @@ public class AccountServiceImpl implements AccountService {
     public boolean createNewUser(String username, String password) {
         try {
             Date date = new Date(System.currentTimeMillis());
-            System.out.println(date);
             accountMapper.setSignUpInfo(username, password, date);
         } catch (Exception e) {
             /**

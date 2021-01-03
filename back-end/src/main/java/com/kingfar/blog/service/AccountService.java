@@ -7,7 +7,9 @@ import com.kingfar.blog.entity.UserVerifyData;
  * @author ZHANGKAIHENG
  */
 public interface AccountService {
-    public UserVerifyData verify(String username);
-    public UserLoginData getLoginData(String username);
-    public boolean createNewUser(String username, String password);
+    UserVerifyData verify(String username);
+
+    UserLoginData getLoginData(String username);
+
+    boolean createNewUser(String username, String password);
 }

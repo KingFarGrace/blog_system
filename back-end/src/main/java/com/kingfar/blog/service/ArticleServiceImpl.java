@@ -6,6 +6,7 @@ import com.kingfar.blog.mapper.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,5 +22,11 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleBuffer buffer = ArticleBuffer.getInstance();
         buffer.setArticles(articleMapper.selectAll());
         buffer.setBufferLen(articleMapper.countArticles());
+    }
+
+    @Override
+    public void submit(ArticleData article) {
+        Date date = new Date(System.currentTimeMillis());
+        articleMapper.insertArticle(article.getTitle(), article.getContent(), article.getAuthor(),date);
     }
 }

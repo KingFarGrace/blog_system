@@ -2,8 +2,10 @@ package com.kingfar.blog.mapper;
 
 import com.kingfar.blog.entity.ArticleData;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,6 +14,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ArticleMapper {
-    public List<ArticleData> selectAll();
-    public int countArticles();
+    List<ArticleData> selectAll();
+
+    int countArticles();
+
+    int insertArticle(@Param("title") String title, @Param("content") String content, @Param("author") String author, @Param("ctime") Date ctime);
 }

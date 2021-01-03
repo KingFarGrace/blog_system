@@ -6,10 +6,14 @@
 <mapper namespace="com.kingfar.blog.mapper.ArticleMapper">
 
     <select id="selectAll" resultType="com.kingfar.blog.entity.ArticleData">
-        SELECT * FROM t_article
+        SELECT * FROM t_article ORDER BY ctime DESC
     </select>
 
     <select id="countArticles" resultType="int">
         SELECT COUNT(*) FROM t_article
     </select>
+
+    <insert id="insertArticle">
+        INSERT INTO t_article(title, content, author, ctime) VALUE (#{title}, #{content}, #{author}, #{ctime})
+    </insert>
 </mapper>

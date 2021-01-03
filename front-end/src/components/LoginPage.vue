@@ -78,7 +78,7 @@ export default {
         this.checkUsername(this.loginForm.username) &&
         this.checkPassword(this.loginForm.password)
       ) {
-        this.$axios
+        axios
           .post('http://localhost:8080/user/verify', {
             username: this.loginForm.username,
             password: this.loginForm.password,
@@ -126,15 +126,12 @@ export default {
         return false
       }
       var char = 0
-      var num = 0
       for (var i = 0; i < str.length; i++) {
         let c = str.charCodeAt(i)
         if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90)) {
           char = 1
         } else {
-          if (c >= 48 && c <= 58) {
-            num = 1
-          } else {
+          if (c < 48 || c > 58) {
             this.$message({
               message: '用户名存在非法字符',
               type: 'error',
@@ -143,11 +140,11 @@ export default {
           }
         }
       }
-      if (char == 1 && num == 1) {
+      if (char == 1) {
         return true
       } else {
         this.$message({
-          message: '用户名必须由字母和数字组成',
+          message: '用户名必须含有字母',
           type: 'error',
         })
         return false

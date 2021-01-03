@@ -14,7 +14,7 @@
           <el-form-item label="用户名" prop="username">
             <el-input
               v-model="signUpForm.username"
-              placeholder="请输入用户名(4-20位,由数字和字母组成)"
+              placeholder="请输入用户名(4-20位,必须含有字母)"
             ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import axios from '../axios'
+
 export default {
   name: 'SignUp',
   data: () => {
@@ -91,7 +93,7 @@ export default {
           const form = new FormData()
           form.append('username', this.signUpForm.username)
           form.append('password', this.signUpForm.password)
-          this.$axios
+          axios
             .post(
               'http://localhost:8080/user/signUp',
               new URLSearchParams(form)
@@ -133,15 +135,12 @@ export default {
         return false
       }
       var char = 0
-      var num = 0
       for (var i = 0; i < str.length; i++) {
         let c = str.charCodeAt(i)
         if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90)) {
           char = 1
         } else {
-          if (c >= 48 && c <= 58) {
-            num = 1
-          } else {
+          if (c < 48 || c > 58) {
             this.$message({
               message: '用户名存在非法字符',
               type: 'error',
@@ -150,11 +149,11 @@ export default {
           }
         }
       }
-      if (char == 1 && num == 1) {
+      if (char == 1) {
         return true
       } else {
         this.$message({
-          message: '用户名必须由字母和数字组成',
+          message: '用户名必须含有字母',
           type: 'error',
         })
         return false

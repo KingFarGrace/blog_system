@@ -28,4 +28,10 @@ public class ArticleUtils {
         return page;
     }
 
+    public static void submit(ArticleData article) {
+        ArticleBuffer buffer = ArticleBuffer.getInstance();
+        buffer.getArticles().add(0, article);
+        System.out.println(buffer.getArticles());
+    }
+
 }

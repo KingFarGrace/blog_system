@@ -14,7 +14,9 @@ import java.util.Date;
 @Mapper
 @Repository
 public interface AccountMapper {
-    public UserVerifyData selectByUsername(String username);
-    public UserLoginData queryLoginData(String username);
-    public int setSignUpInfo(@Param("usr") String username, @Param("pwd") String password, @Param("ctime") Date ctime);
+    UserVerifyData selectByUsername(String username);
+
+    UserLoginData queryLoginData(String username);
+
+    int setSignUpInfo(@Param("usr") String username, @Param("pwd") String password, @Param("ctime") Date ctime);
 }

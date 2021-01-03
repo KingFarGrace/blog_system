@@ -1,6 +1,7 @@
 package com.kingfar.blog.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.kingfar.blog.entity.ArticleData;
 import com.kingfar.blog.entity.buffer.ArticleBuffer;
 import com.kingfar.blog.service.ArticleService;
 import com.kingfar.blog.util.ArticleUtils;
@@ -32,5 +33,18 @@ public class ArticleController {
         respMap.put("current-page", buffer.getCurrentPage());
         respMap.put("articles", ArticleUtils.getPage(currentPage));
         return respMap;
+    }
+
+    @PostMapping("/submit")
+    Map submit(@RequestBody ArticleData article) {
+        Map<String, String> reapMap = new HashMap<>(1);
+        try {
+            articleService.submit(article);
+        } catch (Exception e) {
+            e.printStackTrace();
+            reapMap.put("msg", "failed to submit");
+        }
+        reapMap.put("msg", "success");
+        return reapMap;
     }
 }

@@ -3,9 +3,11 @@ package com.kingfar.blog.service;
 import com.kingfar.blog.entity.ArticleData;
 import com.kingfar.blog.entity.buffer.ArticleBuffer;
 import com.kingfar.blog.mapper.ArticleMapper;
+import com.kingfar.blog.util.ArticleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,5 +23,13 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleBuffer buffer = ArticleBuffer.getInstance();
         buffer.setArticles(articleMapper.selectAll());
         buffer.setBufferLen(articleMapper.countArticles());
+    }
+
+    @Override
+    public void submit(ArticleData article) {
+        Date date = new Date(System.currentTimeMillis());
+        article.setCtime(date);
+        ArticleUtils.submit(article);
+        articleMapper.insertArticle(article.getTitle(), article.getContent(), article.getAuthor(), date);
     }
 }

@@ -10,6 +10,7 @@ import com.kingfar.blog.util.ArticleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +74,35 @@ public class ArticleController {
         respMap.put("current-page", 1);
         respMap.put("articles", articles);
         return new ArticleResponse(0, "success!", respMap);
+    }
+
+    @PostMapping("/deleteHistoryBlog")
+    Response deleteHistoryBlog(@RequestBody JSONObject jsonObject) {
+        String title = jsonObject.getString("title");
+        try {
+            articleService.delete(title);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArticleResponse(6, "failed to delete", ArticleResponse.emptyMap);
+        }
+        return new ArticleResponse(0, "success!", ArticleResponse.emptyMap);
+    }
+
+    @PostMapping("/getHistoryBlog")
+    Response getHistoryBlog(@RequestBody JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
+        List<ArticleData> articles;
+        try {
+            articles = articleService.getHistory(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArticleResponse(5, "failed to load history blogs", ArticleResponse.emptyMap);
+        }
+        Map respMap = new HashMap(4);
+        respMap.put("buffer-length", articles.size());
+        respMap.put("page-length", 10);
+        respMap.put("current-page", 1);
+        respMap.put("articles", articles);
+        return new ArticleResponse(0, "success", respMap);
     }
 }

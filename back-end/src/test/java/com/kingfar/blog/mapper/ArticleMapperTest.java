@@ -31,6 +31,6 @@ class ArticleMapperTest {
 
     @Test
     void testSearch() {
-        System.out.println(articleMapper.search("a"));
+        System.out.println(articleMapper.searchByTitle("a"));
     }
 }

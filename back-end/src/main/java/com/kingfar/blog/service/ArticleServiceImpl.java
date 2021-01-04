@@ -35,6 +35,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleData> search(String title) {
-        return articleMapper.search(title);
+        return articleMapper.searchByTitle(title);
+    }
+
+    @Override
+    public void delete(String title) {
+        articleMapper.deleteByTitle(title);
+    }
+
+    @Override
+    public List<ArticleData> getHistory(String username) {
+        return articleMapper.searchByUsername(username);
     }
 }

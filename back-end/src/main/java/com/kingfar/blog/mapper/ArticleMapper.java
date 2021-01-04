@@ -20,5 +20,9 @@ public interface ArticleMapper {
 
     int insertArticle(@Param("title") String title, @Param("content") String content, @Param("author") String author, @Param("ctime") Date ctime);
 
-    List<ArticleData> search(String title);
+    List<ArticleData> searchByTitle(String title);
+
+    List<ArticleData> searchByUsername(String username);
+
+    int deleteByTitle(String title);
 }

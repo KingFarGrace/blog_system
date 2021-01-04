@@ -13,4 +13,8 @@ public interface ArticleService {
     void submit(ArticleData article);
 
     List<ArticleData> search(String title);
+
+    void delete(String title);
+
+    List<ArticleData> getHistory(String username);
 }

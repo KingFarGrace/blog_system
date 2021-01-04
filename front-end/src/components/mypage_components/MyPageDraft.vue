@@ -3,13 +3,12 @@
     <el-table-column fixed prop="date" label="Date"> </el-table-column>
     <el-table-column fixed prop="title" label="Title"> </el-table-column>
     <el-table-column fixed="right" label="Action" width="100">
-      <div slot-scope="scope">
+     <div slot-scope="scope">  <!--   //- 这里取到当前单元格-->
         <el-button
           @click="handleEdit(scope.$index, scope.row)"
           type="text"
           size="small"
-          >Edit</el-button
-        >
+          >Edit</el-button>        <!--  handleEdit(scope.$index, scope.row) (拿到每一行的index，拿到每行的数据)-->
         <el-button
           @click="handleDelete(scope.$index, scope.row)"
           type="text"

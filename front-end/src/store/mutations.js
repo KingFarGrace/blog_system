@@ -1,18 +1,18 @@
 import { types } from './types'
 
 const mutations = {
-  [types.SET_TOKEN](state, token) {
+  setToken(state, token) {
     state.token = token
     localStorage.setItem('token', token)
   },
 
-  [types.REMOVE_TOKEN](state) {
+  removeToken(state) {
     state.token = ''
     localStorage.removeItem('token')
     state.isLogin = false
   },
 
-  [types.SET_USER](state, user) {
+  setUser(state, user) {
     state.uid = user.uid
     localStorage.setItem('uid', user.uid)
     state.username = user.username
@@ -29,7 +29,7 @@ const mutations = {
     localStorage.setItem('sex', user.ctime)
   },
 
-  [types.REMOVE_USER](state, user) {
+  removeUser(state, user) {
     state.uid = ''
     localStorage.removeItem('uid', user.uid)
     state.username = ''

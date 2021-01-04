@@ -63,7 +63,7 @@ export default {
       articleBuf: store.state.articleBuf,
       pageSize: store.state.pageSize,
       articleNum: store.state.articleNum,
-      pageIndex: store.state.pageIndex,
+      pageIndex: store.state.pageIndex
     }
   },
   methods: {
@@ -72,9 +72,9 @@ export default {
       store.commit('setCurrentPage', currentPage)
       axios
         .post('http://localhost:8080/article/load', {
-          pageIndex: store.state.pageIndex,
+          pageIndex: store.state.pageIndex
         })
-        .then((res) => {
+        .then(res => {
           if (res.data['code'] === 300) {
             let respMap = res.data['respMap']
             // data => store
@@ -89,7 +89,7 @@ export default {
           } else {
             this.$message({
               message: res.data['msg'],
-              type: 'error',
+              type: 'error'
             })
           }
         })
@@ -104,13 +104,13 @@ export default {
       var that = this
       axios
         .post('http://localhost:8080/article/search', {
-          key: this.inputSearchArticle,
+          key: this.inputSearchArticle
         })
-        .then((res) => {
+        .then(res => {
           let code = res.data['code']
           let msg = res.data['msg']
           if (code == 300) {
-            let respMap = res.data['respMap'] 
+            let respMap = res.data['respMap']
             // data => page
             that.articleBuf = respMap['articles']
             that.pageNum =
@@ -120,21 +120,21 @@ export default {
             that.pageIndex = respMap['current-page']
             this.$message({
               message: msg,
-              type: 'success',
+              type: 'success'
             })
           } else {
             if (code == 302) {
               this.$message({
                 message: msg,
-                type: 'error',
+                type: 'error'
               })
             }
           }
         })
-    },
+    }
   },
   mounted() {
     this.getPage(store.state.pageIndex)
-  },
+  }
 }
 </script>

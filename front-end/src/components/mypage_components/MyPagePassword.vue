@@ -62,19 +62,20 @@
           if (this.signUpForm.password == this.signUpForm.rePassword) {
             const form = new FormData()
             form.append('password', this.signUpForm.password)
-            this.$axios
-              .post("http://localhost:8080/user/signUp", new URLSearchParams(form))
-              .then(res => {
-                let code = res.data['code'];
-                let msg = res.data['msg'];
-                if(code == 200) {
-                  alert(msg);
-                  this.$router.replace("/mainpage");
-                }
-                if(code == 201) {
-                  alert(msg);
-                }
-              })
+            // 后端接口：修改密码
+            // this.$axios
+            //   .post("http://localhost:8080/user/signUp", new URLSearchParams(form))
+            //   .then(res => {
+            //     let code = res.data['code'];
+            //     let msg = res.data['msg'];
+            //     if(code == 200) {
+            //       alert(msg);
+            //       this.$router.replace("/mainpage");
+            //     }
+            //     if(code == 201) {
+            //       alert(msg);
+            //     }
+            //   })
           } else {
             alert('两次输入密码不一致')
           }

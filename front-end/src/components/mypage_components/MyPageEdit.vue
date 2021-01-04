@@ -8,7 +8,7 @@
                 v-model="ruleForm.title"
       ></el-input>
     </el-form-item>
-
+<!-- 添加markdown编辑器 -->
     <el-form-item label="正文" prop="body">
       <el-input type="textarea"
                 :autosize="{ minRows: 18, maxRows: 40}"
@@ -27,6 +27,7 @@
 
 <script>
   export default {
+    // 添加，修改字段
     data() {
       return {
         ruleForm: {
@@ -45,9 +46,11 @@
     },
     methods: {
       submitForm(formName) {  //submit article
+      // 所有的alert都改成elementui提供的提示框
         const _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            // post格式修改
             axios.post('',this.ruleForm).then(function (resp) { //TODO 提交title、body文本到数据库中的url
               if(resp.data == 'success'){
                 alert("文章上传成功")
@@ -64,12 +67,6 @@
       },
       Draft(forName){
         //TODO 将文章标题、正文提交到‘草稿箱’数据库
-      },
-      created(){
-        const _this = this
-        axios.post(''+this.$route.query.id).then(function (resp) {// TODO 取得从‘MyPageDraft’或‘MyPageArticle’传过来的文章id，
-          _this.ruleForm = resp.data                                   //TODO 并读出其内容（title、body）
-        })
       }
     }
   }

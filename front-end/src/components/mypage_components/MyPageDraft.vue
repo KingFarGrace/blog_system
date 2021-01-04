@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
+      // 添加回显逻辑显示到编辑页面上
       this.$router.push({
         path: '/mypage/edit',
         query: {
@@ -55,6 +56,8 @@ export default {
       })
     },
     handleDelete(index, row) {
+      // 1.发送后端删除请求
+      // 2.回调函数修改data重新渲染页面
       // TODO 根据表号id删除‘草稿箱’的某篇文章
       // axios.post('http://localhost:8080/article/delDraft'+row.id).then(function (resp) {
       //   alert("删除成功")

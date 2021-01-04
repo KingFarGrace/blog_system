@@ -5,18 +5,18 @@
     </el-row>
 
     <el-row>
-      <el-col :span="14" :offset="5" id="main">
-        <div id="title">
+      <el-col :span="14" :offset="5" id="textpage-main">
+        <div id="textpage-title">
           <p>题目: {{ article.title }}</p>
           <!-- TODO 动态加载文章内容 -->
         </div>
-        <div id="author">
+        <div id="textpage-author">
           <p>时间: {{ article.ctime }}</p>
-          <p>作者: {{ article.author }}</p>
+          <p @click="toWriter(article.author)">作者: {{ article.author }}</p>
           <p>阅读量</p>
           <p>收藏量</p>
         </div>
-        <div id="content">
+        <div id="textpage-content">
           <p>{{ article.content }}</p>
         </div>
       </el-col>
@@ -31,11 +31,13 @@
         <el-col :span="2" :offset="1"
           ><el-button type="primary" round>发表</el-button></el-col
         >
-        <div id="textpage-comment" v-for="item in commentList" :key="item.id">
-          <p>{{ item.text }}</p>
-          <p>{{ item.time }}</p>
-          <p>{{ item.writer }}</p>
-        </div>
+        <el-col>
+          <div id="textpage-comment" v-for="item in commentList" :key="item.id">
+            <p>{{ item.text }}</p>
+            <p>{{ item.time }}</p>
+            <p @click="toWriter(item.writer)">{{ item.writer }}</p>
+          </div>
+        </el-col>
       </el-col>
     </el-row>
   </div>
@@ -67,11 +69,14 @@ export default {
     getArticle() {
       this.article = store.state.readingNow
       console.log(this.article)
-    }
+    },
+    toWriter(writer) {
+      // TODO 转跳到作者
+    },
   },
   mounted() {
     this.getArticle()
-  }
+  },
 }
 </script>
 
@@ -96,7 +101,7 @@ export default {
   font-size: 30px;
 }
 
-#textpage-autor {
+#textpage-author {
   background-color: #e9eef3;
   text-align: end;
   font-size: 18px;
@@ -107,16 +112,24 @@ export default {
 
 #textpage-content {
   margin: 10px;
+  padding: 10px;
+  border: 5px solid #777777;
+  text-indent: 2em;
+  line-height: 2em;
 }
 
 #textpage-comment {
-  margin-top: 50px;
+  margin-top: 15px;
+  padding: 20px;
+  border: 2px solid #777777;
+  border-radius: 10px;
 }
 
-p {
+#textpage-author p {
   display: inline;
 }
 
 #textpage-comment p {
+  display: inline;
 }
 </style>

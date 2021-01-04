@@ -2,10 +2,17 @@
   <div id="articlelist">
     <el-row>
       <el-col :span="5" :offset="18"
-        ><el-input v-model="input_searchArticle" placeholder="搜索文章"></el-input
+        ><el-input
+          v-model="inputSearchArticle"
+          placeholder="搜索文章"
+        ></el-input
       ></el-col>
       <el-col :span="1" :offset="0"
-        ><el-button icon="el-icon-search" circle @click="searchArticle"></el-button
+        ><el-button
+          icon="el-icon-search"
+          circle
+          @click="searchArticle"
+        ></el-button
       ></el-col>
     </el-row>
     <el-row
@@ -52,7 +59,7 @@ export default {
   name: 'article-list',
   data() {
     return {
-      input_searchArticle: '',
+      inputSearchArticle: '',
       articleBuf: store.state.articleBuf,
       pageSize: store.state.pageSize,
       articleNum: store.state.articleNum,
@@ -67,8 +74,8 @@ export default {
         .post('http://localhost:8080/article/load', {
           pageIndex: store.state.pageIndex,
         })
-        .then(res => {
-          if(res.data['code'] === 300) {
+        .then((res) => {
+          if (res.data['code'] === 300) {
             let respMap = res.data['respMap']
             // data => store
             store.commit('setArticle', respMap)
@@ -82,7 +89,7 @@ export default {
           } else {
             this.$message({
               message: res.data['msg'],
-              type: 'error'
+              type: 'error',
             })
           }
         })
@@ -94,27 +101,35 @@ export default {
     },
 
     searchArticle() {
-      this.$message({
+      var that = this
+      axios
+        .post('http://localhost:8080/article/search', {
+          key: this.inputSearchArticle,
+        })
+        .then((res) => {
+          let code = res.data['code']
+          let msg = res.data['msg']
+          if (code == 300) {
+            let respMap = res.data['respMap'] 
+            // data => page
+            that.articleBuf = respMap['articles']
+            that.pageNum =
+              parseInt(respMap['buffer-length'] / respMap['page-length']) + 1
+            that.pageSize = respMap['page-length']
+            that.articleNum = respMap['buffer-length']
+            that.pageIndex = respMap['current-page']
+            this.$message({
               message: msg,
               type: 'success',
             })
-      axios
-        .post('http://localhost:8080/user/verify', {
-          key: this.input_searchArticle,
-        })
-        .then((res) => {
-          // let code = res.data['code']
-          // let msg = res.data['msg']
-          // let user = res.data['userLoginData']
-          // if (code == 100) {
-          //   this.$message({
-          //     message: msg,
-          //     type: 'success',
-          //   })
-          //   this.$store.state.isLogin = true
-          //   this.$store.commit('setUser', user)
-          //   this.$router.replace('/mainpage')
-          // }
+          } else {
+            if (code == 302) {
+              this.$message({
+                message: msg,
+                type: 'error',
+              })
+            }
+          }
         })
     },
   },

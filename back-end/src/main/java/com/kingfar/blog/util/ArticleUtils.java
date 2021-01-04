@@ -34,4 +34,9 @@ public class ArticleUtils {
         System.out.println(buffer.getArticles());
     }
 
+    public static void setCurrentPage(int currentPage) {
+        ArticleBuffer buffer = ArticleBuffer.getInstance();
+        buffer.setCurrentPage(currentPage);
+    }
+
 }

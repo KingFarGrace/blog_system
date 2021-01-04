@@ -53,6 +53,7 @@ export default {
   methods: {
     getPage(currentPage) {
       var that = this
+      store.commit('setCurrentPage', currentPage)
       axios
         .post('http://localhost:8080/article/load', {
           pageIndex: store.state.pageIndex

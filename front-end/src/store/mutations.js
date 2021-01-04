@@ -46,6 +46,11 @@ const mutations = {
     localStorage.setItem('ctime', user.ctime)
   },
 
+  setCurrentPage(state, pageIndex) {
+    state.pageIndex = pageIndex
+    localStorage.setItem('pageIndex', pageIndex)
+  },
+
   setArticle(state, respMap) {
     state.articleBuf = respMap['articles']
     localStorage.setItem("articleBuf", JSON.stringify(state.articleBuf))

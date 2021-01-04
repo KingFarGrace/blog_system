@@ -27,8 +27,6 @@ export default {
 .el-aside {
   background-color: #d3dce6;
   color: #333;
-  text-align: center;
-  line-height: 200px;
 }
 
 .el-main {

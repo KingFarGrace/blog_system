@@ -32,8 +32,9 @@ public class ArticleController {
         try {
             articleService.getResource();
         } catch (Exception e) {
-            return new ArticleResponse(1, "failed to load resource", null);
+            return new ArticleResponse(1, "failed to load resource", ArticleResponse.emptyMap);
         }
+        ArticleUtils.setCurrentPage(currentPage);
         Map respMap = new HashMap(4);
         respMap.put("buffer-length", buffer.getBufferLen());
         respMap.put("page-length", buffer.getPageLen());
@@ -48,9 +49,9 @@ public class ArticleController {
             articleService.submit(article);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArticleResponse(3, "failed to submit", null);
+            return new ArticleResponse(2, "failed to submit", ArticleResponse.emptyMap);
         }
-        return new ArticleResponse(0, "success!", null);
+        return new ArticleResponse(0, "success!", ArticleResponse.emptyMap);
     }
 
     @PostMapping("/search")
@@ -59,8 +60,11 @@ public class ArticleController {
         List<ArticleData> articles;
         try {
             articles = articleService.search(title);
+            if(articles.size() == 0) {
+                return new ArticleResponse(3, "no results matched", ArticleResponse.emptyMap);
+            }
         } catch (Exception e) {
-            return new ArticleResponse(2, "no results matched", null);
+            return new ArticleResponse(4, "failed to search article", ArticleResponse.emptyMap);
         }
         ArticleBuffer buffer = ArticleUtils.getBuffer();
         Map respMap = new HashMap(4);

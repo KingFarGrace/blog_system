@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="friend-head">
-      <section class="city-search">
-        <van-icon class="search-icon" name="search" />
-        <input  placeholder="请输入好友名字关键字" v-model="KeyWord">
-        <van-icon class="clear-icon" name="clear" v-show="KeyWord"  />
-      </section>
+
 
       <el-dropdown>
         <el-button class="friend-add" plain size="mini" >
@@ -25,7 +21,7 @@
           <el-form-item label="分组" :label-width="formLabelWidth" prop="value">
             <el-select v-model="Addfriendform.value" placeholder="请选择">
               <el-option
-                v-for="item in Addgroupform"
+                v-for="item in group"
                 :key="item.value"
                 :label="item.name"
                 :value="item.value">

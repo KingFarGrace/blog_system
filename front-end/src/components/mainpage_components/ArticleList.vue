@@ -58,17 +58,24 @@ export default {
           pageIndex: store.state.pageIndex
         })
         .then(res => {
-          // data => store
-          store.commit('setArticle', res)
-          // data => page
-          that.articleBuf = res.data['articles']
-          that.pageNum =
-            parseInt(res.data['buffer-length'] / res.data['page-length']) + 1
-          that.pageSize = res.data['page-length']
-          that.articleNum = res.data['buffer-length']
-          that.pageIndex = res.data['current-page']
+          if(res.data['code'] === 300) {
+            let respMap = res.data['respMap']
+            // data => store
+            store.commit('setArticle', respMap)
+            // data => page
+            that.articleBuf = respMap['articles']
+            that.pageNum =
+              parseInt(respMap['buffer-length'] / respMap['page-length']) + 1
+            that.pageSize = respMap['page-length']
+            that.articleNum = respMap['buffer-length']
+            that.pageIndex = respMap['current-page']
+          } else {
+            this.$message({
+              message: res.data['msg'],
+              type: 'error'
+            })
+          }
         })
-        console.log(store.state)
     },
 
     setArticle(article) {

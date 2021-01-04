@@ -32,4 +32,9 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleUtils.submit(article);
         articleMapper.insertArticle(article.getTitle(), article.getContent(), article.getAuthor(), date);
     }
+
+    @Override
+    public List<ArticleData> search(String title) {
+        return articleMapper.search(title);
+    }
 }

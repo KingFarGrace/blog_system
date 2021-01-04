@@ -28,4 +28,9 @@ class ArticleMapperTest {
         Date date = new Date(System.currentTimeMillis());
         System.out.println(articleMapper.insertArticle("Test submit", "can I submit this article?", "ZHANG", date));
     }
+
+    @Test
+    void testSearch() {
+        System.out.println(articleMapper.search("a"));
+    }
 }

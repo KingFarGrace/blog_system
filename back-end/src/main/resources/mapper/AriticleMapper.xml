@@ -16,4 +16,8 @@
     <insert id="insertArticle">
         INSERT INTO t_article(title, content, author, ctime) VALUE (#{title}, #{content}, #{author}, #{ctime})
     </insert>
+
+    <select id="search" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
+        SELECT * FROM t_article WHERE title LIKE concat('%',#{title},'%') ORDER BY ctime DESC
+    </select>
 </mapper>

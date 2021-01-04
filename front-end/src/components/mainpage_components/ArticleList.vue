@@ -1,5 +1,13 @@
 <template>
   <div id="articlelist">
+    <el-row>
+      <el-col :span="5" :offset="18"
+        ><el-input v-model="input_searchArticle" placeholder="搜索文章"></el-input
+      ></el-col>
+      <el-col :span="1" :offset="0"
+        ><el-button icon="el-icon-search" circle @click="searchArticle"></el-button
+      ></el-col>
+    </el-row>
     <el-row
       ><div class="block">
         <el-timeline>
@@ -44,10 +52,11 @@ export default {
   name: 'article-list',
   data() {
     return {
+      input_searchArticle: '',
       articleBuf: store.state.articleBuf,
       pageSize: store.state.pageSize,
       articleNum: store.state.articleNum,
-      pageIndex: store.state.pageIndex
+      pageIndex: store.state.pageIndex,
     }
   },
   methods: {
@@ -56,7 +65,7 @@ export default {
       store.commit('setCurrentPage', currentPage)
       axios
         .post('http://localhost:8080/article/load', {
-          pageIndex: store.state.pageIndex
+          pageIndex: store.state.pageIndex,
         })
         .then(res => {
           if(res.data['code'] === 300) {
@@ -82,10 +91,35 @@ export default {
     setArticle(article) {
       store.commit('setReadingNow', article)
       this.$router.push({ name: 'Text', params: { blogId: article.bid } })
-    }
+    },
+
+    searchArticle() {
+      this.$message({
+              message: msg,
+              type: 'success',
+            })
+      axios
+        .post('http://localhost:8080/user/verify', {
+          key: this.input_searchArticle,
+        })
+        .then((res) => {
+          // let code = res.data['code']
+          // let msg = res.data['msg']
+          // let user = res.data['userLoginData']
+          // if (code == 100) {
+          //   this.$message({
+          //     message: msg,
+          //     type: 'success',
+          //   })
+          //   this.$store.state.isLogin = true
+          //   this.$store.commit('setUser', user)
+          //   this.$router.replace('/mainpage')
+          // }
+        })
+    },
   },
   mounted() {
     this.getPage(store.state.pageIndex)
-  }
+  },
 }
 </script>

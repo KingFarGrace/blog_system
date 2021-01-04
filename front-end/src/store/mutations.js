@@ -46,17 +46,17 @@ const mutations = {
     localStorage.setItem('ctime', user.ctime)
   },
 
-  setArticle(state, res) {
-    state.articleBuf = res.data['articles']
+  setArticle(state, respMap) {
+    state.articleBuf = respMap['articles']
     localStorage.setItem("articleBuf", JSON.stringify(state.articleBuf))
     state.pageNum =
-      parseInt(res.data['buffer-length'] / res.data['page-length']) + 1
+      parseInt(respMap['buffer-length'] / respMap['page-length']) + 1
     localStorage.setItem('pageNum', state.pageNum)
-    state.pageSize = res.data['page-length']
+    state.pageSize = respMap['page-length']
     localStorage.setItem('pageSize', state.pageSize)
-    state.articleNum = res.data['buffer-length']
+    state.articleNum = respMap['buffer-length']
     localStorage.setItem('articleNum', state.articleNum)
-    state.pageIndex = res.data['current-page']
+    state.pageIndex = respMap['current-page']
     localStorage.setItem('pageIndex', state.pageIndex)
   },
 

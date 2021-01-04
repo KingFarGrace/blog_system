@@ -97,7 +97,7 @@ export default {
 
     setArticle(article) {
       store.commit('setReadingNow', article)
-      this.$router.push({ name: 'Text', params: { blogId: article.bid } })
+      this.$router.push({ name: 'Text' })
     },
 
     searchArticle() {

@@ -8,12 +8,11 @@
       <el-col :span="14" :offset="5" id="textpage-main">
         <div id="textpage-title">
           <p>题目: {{ article.title }}</p>
-          <!-- TODO 动态加载文章内容 -->
         </div>
         <div id="textpage-author">
           <p>时间: {{ article.ctime }}</p>
           <p @click="toWriter(article.author)">作者: {{ article.author }}</p>
-          <p>阅读量</p>
+          <!-- TODO 收藏量 -->
           <p>收藏量</p>
         </div>
         <div id="textpage-content">

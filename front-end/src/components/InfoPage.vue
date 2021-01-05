@@ -4,10 +4,66 @@
       <el-page-header @back="goBack" content="个人页面"> </el-page-header>
     </el-row>
     <el-row>
-      <el-col :span="16" :offset="4" id="infoPage-author"> 
-        
+      <el-col :span="12" :offset="5" id="infoPage-author">
+        <el-card class="box-card">
+        <el-form ref="form" :model="form" label-width="100px">
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="昵称">
+                <div>{{form.name}}</div>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
+              <el-form-item label="ID">
+                <div>{{form.id}}</div>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="发表文章数">
+                <div>{{form.number}}</div>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="性别">
+                <div>{{form.gender}}</div>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="年龄">
+                <div>{{form.age}}</div>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="邮箱">
+                <div>{{form.mailAddress}}</div>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
+              <el-form-item label="注册时间">
+                <div>{{form.date}}</div>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="15">
+              <el-form-item label="个性签名">
+                <div>{{form.signature}}</div>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        </el-card>
       </el-col>
     </el-row>
+
+
+
     <el-row>
       <el-col :span="16" :offset="4" id="infoPage-main">
         <el-row>
@@ -73,7 +129,16 @@ export default {
   name: 'article-list',
   data() {
     return {
-      username: '',                                       //查看的人的名字
+      form: {                                 //要改
+          name: '',
+          id: '',
+          age: '',
+          number: '',
+          date: '',
+          gender: '',
+          mailAddress: '',
+          signature: '',
+        },
       inputSearchArticle: '',
       articleBuf: '',
       pageSize: '',
@@ -82,7 +147,8 @@ export default {
     }
   },
   methods: {
-    getPage() {
+    getPage(currentPage) {
+      store.commit('setCurrentPage', currentPage)
       var that = this
       axios
         .post('http://localhost:8080/article/load', {
@@ -116,7 +182,8 @@ export default {
     searchArticle() {
       var that = this
       axios
-        .post('http://localhost:8080/article/search', {               //要改
+        .post('http://localhost:8080/article/search', {
+          //要改
           key: this.inputSearchArticle,
         })
         .then((res) => {
@@ -150,7 +217,7 @@ export default {
     },
   },
   mounted() {
-    this.getPage()
+    this.getPage('1')
   },
 }
 </script>
@@ -167,7 +234,6 @@ export default {
   padding: 20px;
   box-shadow: 10px 10px 30px #777777;
   margin-bottom: 50px;
-  height: 500px;
 }
 #infoPage-main {
   background-color: #e9eef3;

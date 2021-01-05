@@ -4,14 +4,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author WUHAIYUAN
+ */
 @Data
-public class MessageData {
+public class MessageData implements Serializable {
 
     private int mid;
-    private String fromuser;
-    private String touser;
+    private String fromUser;
+    private String toUser;
     private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")

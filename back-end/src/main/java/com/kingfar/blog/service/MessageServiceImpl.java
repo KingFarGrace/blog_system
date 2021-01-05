@@ -15,11 +15,11 @@ public class MessageServiceImpl implements MessageService{
 
     @Override
     public void sendMessage(MessageData messageData) {
-        messageMapper.insertMessage(messageData.getFromuser(),messageData.getContent(),messageData.getTouser());
+        messageMapper.insertMessage(messageData.getFromUser(),messageData.getContent(),messageData.getToUser());
     }
 
     @Override
-    public List<MessageData> disMessage(String fromuser, String touser) {
-        return messageMapper.queryMessageByToAndFrom(fromuser,touser);
+    public List<MessageData> disMessage(String fromUser, String toUser) {
+        return messageMapper.queryMessageByToAndFrom(fromUser,toUser);
     }
 }

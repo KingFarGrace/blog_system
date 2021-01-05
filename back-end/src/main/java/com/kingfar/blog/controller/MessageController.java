@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author WUHAIYUAN
+ */
 @Controller
 @RequestMapping("/message")
 public class MessageController {
@@ -26,10 +29,10 @@ public class MessageController {
     Response display(@RequestBody JSONObject jsonObject){
         List<MessageData> messageDataList;
         try {
-            String fromuser = jsonObject.getString("fromuser");
-            String touser = jsonObject.getString("touser");
+            String fromUser = jsonObject.getString("fromUser");
+            String toUser = jsonObject.getString("toUser");
 
-            messageDataList = messageService.disMessage(fromuser, touser);
+            messageDataList = messageService.disMessage(fromUser, toUser);
         } catch (Exception e) {
             e.printStackTrace();
             return new MessageResponse(4,"failed to display message!",null);

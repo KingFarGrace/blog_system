@@ -4,6 +4,9 @@ import com.kingfar.blog.entity.MessageData;
 
 import java.util.List;
 
+/**
+ * @author WUHAIYUAN
+ */
 public class MessageResponse extends  Response{
 
     private List<MessageData> messageDataList;

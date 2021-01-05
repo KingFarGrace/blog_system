@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--suppress ALL -->
+<mapper namespace="com.kingfar.blog.mapper.GroupMapper">
+
+    <resultMap id="groupMap" type="com.kingfar.blog.entity.GroupData">
+        <id column="gid" property="gid"></id>
+        <result column="gname" property="gname"></result>
+        <collection property="friends" ofType="java.lang.String" javaType="arraylist">
+            <id column="friend" property="friend"></id>
+        </collection>
+    </resultMap>
+
+    <select id="getGroups" resultMap="groupMap">
+        SELECT
+                t_group.gid gid,
+                t_group.gname gname,
+                t_friend.friend friend
+        FROM
+                t_group,
+                t_friend
+        WHERE
+                t_group.gid=t_friend.gid
+          AND
+                owner=#{username}
+    </select>
+</mapper>

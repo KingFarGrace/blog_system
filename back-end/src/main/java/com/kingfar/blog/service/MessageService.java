@@ -8,5 +8,5 @@ public interface MessageService {
 
     void sendMessage(MessageData messageData);
 
-    List<MessageData> disMessage(String fromuser,String touser);
+    List<MessageData> disMessage(String fromUser,String toUser);
 }

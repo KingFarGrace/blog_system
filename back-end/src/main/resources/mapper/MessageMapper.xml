@@ -6,11 +6,27 @@
 <mapper namespace="com.kingfar.blog.mapper.MessageMapper">
 
     <select id="queryMessageByToAndFrom" resultType="com.kingfar.blog.entity.MessageData">
-        select * from t_message where fromuser = #{fromuser}|#{touser} and touser = #{touser}|#{fromuser} order by mtime;
+        SELECT
+                *
+        FROM
+                t_message
+        WHERE
+                fromuser = #{fromUser}|#{toUser}
+          AND
+                touser = #{toUser}|#{fromUser}
+        ORDER BY
+                mtime
     </select>
 
     <insert id="insertMessage">
-        insert into t_message(fromuser,content,touser) values(#{fromuser},#{content},#{touser});
+        INSERT INTO
+                t_message(fromuser,
+                          content,
+                          touser)
+        VALUES
+                (#{fromUser},
+                 #{content},
+                 #{toUser})
     </insert>
 
 </mapper>

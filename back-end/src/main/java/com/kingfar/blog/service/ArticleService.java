@@ -14,7 +14,13 @@ public interface ArticleService {
 
     List<ArticleData> search(String title);
 
-    void delete(String title);
+    void deleteHistoryBlog(int bid);
 
     List<ArticleData> getHistory(String username);
+
+    void saveAsDraft(ArticleData article);
+
+    void deleteDraft(int bid);
+
+    List<ArticleData> getDrafts(String username);
 }

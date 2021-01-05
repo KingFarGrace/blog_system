@@ -17,6 +17,7 @@ const state = {
     ? localStorage.getItem('signature')
     : '',
   ctime: localStorage.getItem('ctime') ? localStorage.getItem('ctime') : '',
+  blogCount: localStorage.getItem('blogCount') ? localStorage.getItem('blogCount') : 0,
 
   /**
    * article data
@@ -34,7 +35,7 @@ const state = {
     ? localStorage.getItem('articleNum')
     : 0,
   articleBuf: localStorage.getItem('articleBuf')
-    ? localStorage.getItem("articleBuf")
+    ? localStorage.getItem('articleBuf')
     : [
         {
           bid: 0,
@@ -46,7 +47,19 @@ const state = {
       ],
   readingNow:
     localStorage.getItem('readingNow') !== '[object Object]'
-      ? JSON.parse(localStorage.getItem("readingNow"))
+      ? JSON.parse(localStorage.getItem('readingNow'))
+      : [
+          {
+            bid: 0,
+            title: 'failed to load',
+            author: 'system',
+            content: 'failed to load',
+            ctime: '0000-00-00 00:00:00'
+          }
+        ],
+  editingNow:
+    localStorage.getItem('editingNow')
+      ? JSON.parse(localStorage.getItem('editingNow'))
       : [
           {
             bid: 0,

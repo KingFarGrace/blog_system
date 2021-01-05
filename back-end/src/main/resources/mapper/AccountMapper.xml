@@ -5,14 +5,71 @@
 <!--suppress ALL -->
 <mapper namespace="com.kingfar.blog.mapper.AccountMapper">
     <select id="selectByUsername" parameterType="String" resultType="com.kingfar.blog.entity.UserVerifyData">
-        SELECT username, password FROM t_user WHERE username=#{username}
+        SELECT
+                username,
+                password
+        FROM
+                t_user
+        WHERE
+                username=#{username}
     </select>
 
     <select id="queryLoginData" parameterType="String" resultType="com.kingfar.blog.entity.UserLoginData">
-        SELECT uid, username, age, sex, signature, mail, ctime FROM t_user WHERE username=#{username}
+        SELECT
+                uid,
+                username,
+                age,
+                sex,
+                signature,
+                mail,
+                t_user.ctime ctime,
+                COUNT(*) blogCount
+        FROM
+                t_user,
+                t_article
+        WHERE
+                username=#{username}
+          AND
+                author=username
     </select>
 
     <insert id="setSignUpInfo">
-        INSERT INTO t_user(username, password, age, sex, signature, mail, ctime) VALUE (#{usr}, #{pwd}, 0, '男', '这个人很懒，什么也没有写~', '空', #{ctime})
+        INSERT INTO
+                t_user(username,
+                       password,
+                       age,
+                       sex,
+                       signature,
+                       mail,
+                       ctime)
+                VALUE (#{usr},
+                       #{pwd},
+                       0,
+                       '男',
+                       '这个人很懒，什么也没有写~',
+                       '空',
+                       #{ctime})
     </insert>
+
+    <update id="updatePublicInfo">
+        UPDATE
+                t_user
+        SET
+                username=#{username},
+                sex=#{sex},
+                age=#{age},
+                mail=#{mail},
+                signature=#{signature}
+        WHERE
+                uid=#{uid}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE
+                t_user
+        SET
+                password=#{password}
+        WHERE
+                username=#{username}
+    </update>
 </mapper>

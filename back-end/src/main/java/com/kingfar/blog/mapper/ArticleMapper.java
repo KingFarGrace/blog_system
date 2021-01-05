@@ -18,11 +18,31 @@ public interface ArticleMapper {
 
     int countArticles();
 
-    int insertArticle(@Param("title") String title, @Param("content") String content, @Param("author") String author, @Param("ctime") Date ctime);
+    int insertArticle(@Param("title") String title,
+                      @Param("content") String content,
+                      @Param("author") String author,
+                      @Param("ctime") Date ctime);
 
     List<ArticleData> searchByTitle(String title);
 
     List<ArticleData> searchByUsername(String username);
 
-    int deleteByTitle(String title);
+    int deleteBlog(int bid);
+
+    int saveDraft(@Param("title") String title,
+                  @Param("content") String content,
+                  @Param("author") String author,
+                  @Param("ctime") Date ctime);
+
+    ArticleData findDraft(int bid);
+
+    int coverDraft(@Param("bid") int bid,
+                   @Param("title") String title,
+                   @Param("content") String content,
+                   @Param("author") String author,
+                   @Param("ctime") Date ctime);
+
+    int deleteDraft(int bid);
+
+    List<ArticleData> getDraftsByUsername(String username);
 }

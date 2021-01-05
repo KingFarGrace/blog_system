@@ -12,4 +12,10 @@ public interface AccountService {
     UserLoginData getLoginData(String username);
 
     boolean createNewUser(String username, String password);
+
+    void updatePublicInfo(UserLoginData userLoginData);
+
+    void updatePassword(String username, String password);
+
+    boolean passwordValidator(String oldPwd, String newPwd);
 }

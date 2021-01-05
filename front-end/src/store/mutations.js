@@ -1,18 +1,18 @@
 import { types } from './types'
 
 const mutations = {
-  [types.SET_TOKEN](state, token) {
+  setToken(state, token) {
     state.token = token
     localStorage.setItem('token', token)
   },
 
-  [types.REMOVE_TOKEN](state) {
+  removeToken(state) {
     state.token = ''
     localStorage.removeItem('token')
     state.isLogin = false
   },
 
-  [types.SET_USER](state, user) {
+  setUser(state, user) {
     state.uid = user.uid
     localStorage.setItem('uid', user.uid)
     state.username = user.username
@@ -26,24 +26,43 @@ const mutations = {
     state.signature = user.signature
     localStorage.setItem('signature', user.signature)
     state.ctime = user.ctime
-    localStorage.setItem('sex', user.ctime)
+    localStorage.setItem('ctime', user.ctime)
+    state.blogCount = user.blogCount
+    localStorage.setItem('blogCount', user.blogCount)
   },
 
-  [types.REMOVE_USER](state, user) {
+  updateUser(state, form) {
+    state.uid = form.id,
+    localStorage.setItem('uid', state.uid)
+    state.username = form.name,
+    localStorage.setItem('username', state.username)
+    state.sex = form.gender,
+    localStorage.setItem('sex', state.sex)
+    state.age = form.age,
+    localStorage.setItem('age', state.age)
+    state.mail = form.mailAddress,
+    localStorage.setItem('mail', state.mail)
+    state.signature = form.signature
+    localStorage.setItem('signature', state.signature)
+  },
+
+  removeUser(state, user) {
     state.uid = ''
-    localStorage.removeItem('uid', user.uid)
+    localStorage.removeItem('uid')
     state.username = ''
-    localStorage.removeItem('username', user.username)
+    localStorage.removeItem('username')
     state.mail = ''
-    localStorage.removeItem('mail', user.mail)
+    localStorage.removeItem('mail')
     state.age = ''
-    localStorage.removeItem('age', user.age)
+    localStorage.removeItem('age')
     state.sex = ''
-    localStorage.removeItem('sex', user.sex)
+    localStorage.removeItem('sex')
     state.signature = ''
-    localStorage.removeItem('signature', user.signature)
-    state.ctime = user.ctime
-    localStorage.setItem('ctime', user.ctime)
+    localStorage.removeItem('signature')
+    state.ctime = ''
+    localStorage.removeItem('ctime')
+    state.blogCount = ''
+    localStorage.removeItem('blogCount')
   },
 
   setCurrentPage(state, pageIndex) {
@@ -68,6 +87,11 @@ const mutations = {
   setReadingNow(state, article) {
     state.readingNow = article
     localStorage.setItem("readingNow", JSON.stringify(state.readingNow))
+  },
+
+  setEditingNow(state, row) {
+    state.editingNow = row
+    localStorage.setItem("editingNow", JSON.stringify(state.editingNow))
   }
 }
 

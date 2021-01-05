@@ -37,6 +37,7 @@
 
 <script>
 import axios from '../axios'
+import store from '../store'
 
 export default {
   name: 'Login',
@@ -92,8 +93,8 @@ export default {
                 message: msg,
                 type: 'success',
               })
-              this.$store.state.isLogin = true
-              this.$store.commit('setUser', user)
+              store.state.isLogin = true
+              store.commit('setUser', user)
               this.$router.replace('/mainpage')
             } else if (code == 101) {
               this.$message({

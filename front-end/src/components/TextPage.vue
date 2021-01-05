@@ -20,13 +20,13 @@
         </div>
       </el-col>
     </el-row>
-
+<!-- 
     <el-row>
       <el-col :span="14" :offset="5" id="textpage-main">
         <el-col :span="21"
           ><el-input v-model="input" placeholder="发表你的评论"></el-input
         ></el-col>
-        <!-- TODO 记录登录的人发表的评论 -->
+            TODO 记录登录的人发表的评论
         <el-col :span="2" :offset="1"
           ><el-button type="primary" round>发表</el-button></el-col
         >
@@ -39,6 +39,7 @@
         </el-col>
       </el-col>
     </el-row>
+     -->
   </div>
 </template>
 
@@ -117,18 +118,18 @@ export default {
   line-height: 2em;
 }
 
-#textpage-comment {
+/* #textpage-comment {
   margin-top: 15px;
   padding: 20px;
   border: 2px solid #777777;
   border-radius: 10px;
-}
+} */
 
 #textpage-author p {
   display: inline;
 }
 
-#textpage-comment p {
+/* #textpage-comment p {
   display: inline;
-}
+} */
 </style>

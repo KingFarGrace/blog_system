@@ -5,12 +5,6 @@
       <el-col :span="12" :offset="6"
       ><el-main>
         <el-form ref="signUpForm" :model="signUpForm" :rules="rules" label-width="80px">
-          <el-form-item label="用户名" prop="username">
-            <el-input
-              v-model="signUpForm.username"
-              placeholder="请输入用户名(4-20位,由数字和字母组成)"
-            ></el-input>
-          </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input
               v-model="signUpForm.password"
@@ -44,15 +38,10 @@
     data: () => {
       return {
         signUpForm: {
-          username: '',
           password: '',
           rePassword: ''
         },
         rules: {
-          username: [
-            { required: true, message: '请输入用户名', trigger: 'blur'},
-            { min: 6, max: 20, message: '长度在 4 到 20 位', trigger: ['blur', 'change'] }
-          ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
             { min: 6, max: 20, message: '长度在 6 到 20 位', trigger: ['blur', 'change'] }
@@ -72,7 +61,6 @@
         if (this.checkUsername(this.signUpForm.username) && this.checkPassword(this.signUpForm.password)) {
           if (this.signUpForm.password == this.signUpForm.rePassword) {
             const form = new FormData()
-            form.append('username', this.signUpForm.username)
             form.append('password', this.signUpForm.password)
             this.$axios
               .post("http://localhost:8080/user/signUp", new URLSearchParams(form))
@@ -94,33 +82,6 @@
       },
       clear (formName) {
         this.$refs[formName].resetFields()
-      },
-      checkUsername: function (str) {
-        if (str.length < 4 || str.length > 20) {
-          alert('用户名长度须在4-20位之间')
-          return false
-        }
-        var char = 0
-        var num = 0
-        for (var i = 0; i < str.length; i++) {
-          let c = str.charCodeAt(i)
-          if (c >= 97 && c <= 122 || c >= 65 && c <= 90) {
-            char = 1
-          } else {
-            if (c >= 48 && c <= 58) {
-              num = 1
-            } else {
-              alert('用户名存在非法字符')
-              return false
-            }
-          }
-        }
-        if (char == 1 && num == 1) {
-          return true
-        } else {
-          alert('用户名必须由字母和数字组成')
-          return false
-        }
       },
       checkPassword (str) {
         if (str.length < 6 || str.length > 20) {

@@ -67,19 +67,6 @@
     <div>
       <el-scrollbar style="height: 100%">
         <el-collapse v-model="activeName" accordion>
-          <!-- 待删除 -->
-          <!-- <el-collapse-item
-            v-for="item in group"
-            :title="item.name"
-            :key="item"
-          >
-            <div v-for="i in friend" :key="i">
-              <div v-if="item.value == i.value">
-                {{ i.name }}
-              </div>
-            </div>
-          </el-collapse-item> -->
-
           <el-collapse-item
             v-for="item in friendList"
             :title="item.gname"
@@ -106,43 +93,6 @@ export default {
       AddGroup: false,
 
       friendList: '',
-
-      // friend: [
-      //   {
-      //     name: '蒹葭',
-      //     value: '1',
-      //   },
-      //   {
-      //     name: '白鹭',
-      //     value: '2',
-      //   },
-      //   {
-      //     name: '伊人',
-      //     value: '3',
-      //   },
-      //   {
-      //     name: '水方',
-      //     value: '1',
-      //   },
-      // ],
-      // group: [
-      //   {
-      //     name: '我的好友',
-      //     value: '1',
-      //   },
-      //   {
-      //     name: '家人',
-      //     value: '2',
-      //   },
-      //   {
-      //     name: '朋友',
-      //     value: '3',
-      //   },
-      //   {
-      //     name: '黑名单',
-      //     value: '4',
-      //   },
-      // ],
 
       Addfriendform: {
         name: '',

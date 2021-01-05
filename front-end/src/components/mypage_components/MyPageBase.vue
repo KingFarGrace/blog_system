@@ -72,7 +72,6 @@ import axios from '../../axios'
 import store from '../../store'
 
   export default {
-    // 字段添加
     data() {
       return {
         form: {
@@ -140,9 +139,3 @@ import store from '../../store'
     }
   }
 </script>
-
-
-<style>
-
-
-</style>

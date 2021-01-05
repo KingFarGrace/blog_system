@@ -14,7 +14,6 @@
         v-model="ruleForm.title"
       ></el-input>
     </el-form-item>
-    <!-- 添加markdown编辑器 -->
     <el-form-item label="正文" prop="body">
       <mavon-editor v-model="ruleForm.body"></mavon-editor>
     </el-form-item>
@@ -31,7 +30,6 @@ import axios from '../../axios'
 import store from '../../store'
 
 export default {
-  // 添加，修改字段
   data() {
     return {
       ruleForm: {
@@ -50,7 +48,6 @@ export default {
       const _this = this
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // post格式修改
           axios
             .post('http://localhost:8080/article/submit', {
               title: this.ruleForm.title,

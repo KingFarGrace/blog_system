@@ -4,6 +4,11 @@
       <el-page-header @back="goBack" content="个人页面"> </el-page-header>
     </el-row>
     <el-row>
+      <el-col :span="16" :offset="4" id="infoPage-author"> 
+        
+      </el-col>
+    </el-row>
+    <el-row>
       <el-col :span="16" :offset="4" id="infoPage-main">
         <el-row>
           <el-col :span="5" :offset="18"
@@ -43,7 +48,7 @@
             </el-timeline>
           </div></el-row
         >
-        <el-row                                          
+        <el-row
           ><el-pagination
             background
             :page-size="pageSize"
@@ -57,7 +62,6 @@
         </el-row>
       </el-col>
     </el-row>
-        
   </div>
 </template>
 
@@ -69,6 +73,7 @@ export default {
   name: 'article-list',
   data() {
     return {
+      username: '',                                       //查看的人的名字
       inputSearchArticle: '',
       articleBuf: '',
       pageSize: '',
@@ -77,12 +82,12 @@ export default {
     }
   },
   methods: {
-    getPage(currentPage) {
+    getPage() {
       var that = this
-      store.commit('setCurrentPage', currentPage)
       axios
-        .post('http://localhost:8080/article/load', {       //要改
-          pageIndex: store.state.pageIndex,               
+        .post('http://localhost:8080/article/load', {
+          //要改
+          pageIndex: store.state.pageIndex,
         })
         .then((res) => {
           if (res.data['code'] === 300) {
@@ -105,13 +110,13 @@ export default {
 
     setArticle(article) {
       store.commit('setReadingNow', article)
-      this.$router.push({ name: 'Text', params: { blogId: article.bid } })
+      this.$router.push({ name: 'Text' })
     },
 
     searchArticle() {
       var that = this
       axios
-        .post('http://localhost:8080/article/search', {
+        .post('http://localhost:8080/article/search', {               //要改
           key: this.inputSearchArticle,
         })
         .then((res) => {
@@ -145,7 +150,7 @@ export default {
     },
   },
   mounted() {
-    this.getPage(store.state.pageIndex)
+    this.getPage()
   },
 }
 </script>
@@ -157,7 +162,13 @@ export default {
   line-height: 50px;
   margin-bottom: 30px;
 }
-
+#infoPage-author {
+  background-color: #e9eef3;
+  padding: 20px;
+  box-shadow: 10px 10px 30px #777777;
+  margin-bottom: 50px;
+  height: 500px;
+}
 #infoPage-main {
   background-color: #e9eef3;
   padding: 20px;

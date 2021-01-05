@@ -122,13 +122,16 @@ export default {
               message: msg,
               type: 'success'
             })
-          } else {
-            if (code == 302) {
-              this.$message({
-                message: msg,
-                type: 'error'
-              })
-            }
+          } else if (code === 304) {
+            this.$message({
+              message: msg,
+              type: 'error',
+            })
+          } else if (code === 303) {
+            this.$message({
+              message: msg,
+              type: 'warning',
+            })
           }
         })
     }

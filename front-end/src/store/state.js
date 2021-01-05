@@ -17,6 +17,7 @@ const state = {
     ? localStorage.getItem('signature')
     : '',
   ctime: localStorage.getItem('ctime') ? localStorage.getItem('ctime') : '',
+  blogCount: localStorage.getItem('blogCount') ? localStorage.getItem('blogCount') : 0,
 
   /**
    * article data

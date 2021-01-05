@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author ZHANGKAIHENG
@@ -40,5 +41,27 @@ public class AccountServiceImpl implements AccountService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void updatePublicInfo(UserLoginData userLoginData) {
+        accountMapper
+                .updatePublicInfo(
+                        userLoginData.getUid(),
+                        userLoginData.getUsername(),
+                        userLoginData.getSex(),
+                        userLoginData.getAge(),
+                        userLoginData.getMail(),
+                        userLoginData.getSignature());
+    }
+
+    @Override
+    public void updatePassword(String username, String password) {
+        accountMapper.updatePassword(username, password);
+    }
+
+    @Override
+    public boolean passwordValidator(String oldPwd, String newPwd) {
+        return Objects.equals(oldPwd, newPwd) ? true : false;
     }
 }

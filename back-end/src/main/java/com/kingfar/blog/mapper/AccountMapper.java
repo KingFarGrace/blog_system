@@ -18,5 +18,17 @@ public interface AccountMapper {
 
     UserLoginData queryLoginData(String username);
 
-    int setSignUpInfo(@Param("usr") String username, @Param("pwd") String password, @Param("ctime") Date ctime);
+    int setSignUpInfo(@Param("usr") String username,
+                      @Param("pwd") String password,
+                      @Param("ctime") Date ctime);
+
+    int updatePublicInfo(@Param("uid") long uid,
+                         @Param("username") String username,
+                         @Param("sex") String sex,
+                         @Param("age") int age,
+                         @Param("mail") String mail,
+                         @Param("signature") String signature);
+
+    int updatePassword(@Param("username") String username,
+                       @Param("password") String password);
 }

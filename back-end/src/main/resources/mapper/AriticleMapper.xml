@@ -6,46 +6,106 @@
 <mapper namespace="com.kingfar.blog.mapper.ArticleMapper">
 
     <select id="selectAll" resultType="com.kingfar.blog.entity.ArticleData">
-        SELECT * FROM t_article ORDER BY ctime DESC
+        SELECT
+                *
+        FROM
+                t_article
+        ORDER BY
+                ctime DESC
     </select>
 
     <select id="countArticles" resultType="int">
-        SELECT COUNT(*) FROM t_article
+        SELECT
+                COUNT(*)
+        FROM
+                t_article
     </select>
 
     <insert id="insertArticle">
-        INSERT INTO t_article(title, content, author, ctime) VALUE (#{title}, #{content}, #{author}, #{ctime})
+        INSERT INTO
+                t_article(title,
+                          content,
+                          author,
+                          ctime)
+                VALUE (#{title},
+                       #{content},
+                       #{author},
+                       #{ctime})
     </insert>
 
     <select id="searchByTitle" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
-        SELECT * FROM t_article WHERE title LIKE concat('%',#{title},'%') ORDER BY ctime DESC
+        SELECT
+                *
+        FROM
+                t_article
+        WHERE
+                title LIKE concat('%',#{title},'%')
+        ORDER BY
+                ctime DESC
     </select>
 
     <delete id="deleteBlog">
-        DELETE FROM t_article WHERE bid=#{bid}
+        DELETE FROM
+                t_article
+        WHERE
+                bid=#{bid}
     </delete>
 
     <select id="searchByUsername" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
-        SELECT * FROM t_article WHERE author=#{username}
+        SELECT
+                *
+        FROM
+                t_article
+        WHERE
+                author=#{username}
     </select>
 
     <insert id="saveDraft">
-        INSERT INTO t_draft(title, content, author, ctime) VALUE (#{title}, #{content}, #{author}, #{ctime})
+        INSERT INTO
+                t_draft(title,
+                        content,
+                        author,
+                        ctime)
+                VALUE (#{title},
+                       #{content},
+                       #{author},
+                       #{ctime})
     </insert>
 
     <delete id="deleteDraft">
-        DELETE FROM t_draft WHERE bid=#{bid}
+        DELETE FROM
+                t_draft
+        WHERE
+                bid=#{bid}
     </delete>
 
     <select id="getDraftsByUsername" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
-        SELECT * FROM t_draft WHERE author=#{username}
+        SELECT
+                *
+        FROM
+                t_draft
+        WHERE
+                author=#{username}
     </select>
 
     <select id="findDraft" parameterType="int" resultType="com.kingfar.blog.entity.ArticleData">
-        SELECT * FROM t_draft WHERE bid=#{bid}
+        SELECT
+                *
+        FROM
+                t_draft
+        WHERE
+                bid=#{bid}
     </select>
 
     <update id="coverDraft">
-        UPDATE t_draft SET title=#{title}, content=#{content}, author=#{author}, ctime=#{ctime} WHERE bid=#{bid}
+        UPDATE
+                t_draft
+        SET
+                title=#{title},
+                content=#{content},
+                author=#{author},
+                ctime=#{ctime}
+        WHERE
+                bid=#{bid}
     </update>
 </mapper>

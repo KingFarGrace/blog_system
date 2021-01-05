@@ -18,7 +18,10 @@ public interface ArticleMapper {
 
     int countArticles();
 
-    int insertArticle(@Param("title") String title, @Param("content") String content, @Param("author") String author, @Param("ctime") Date ctime);
+    int insertArticle(@Param("title") String title,
+                      @Param("content") String content,
+                      @Param("author") String author,
+                      @Param("ctime") Date ctime);
 
     List<ArticleData> searchByTitle(String title);
 
@@ -26,11 +29,18 @@ public interface ArticleMapper {
 
     int deleteBlog(int bid);
 
-    int saveDraft(@Param("title") String title, @Param("content") String content, @Param("author") String author, @Param("ctime") Date ctime);
+    int saveDraft(@Param("title") String title,
+                  @Param("content") String content,
+                  @Param("author") String author,
+                  @Param("ctime") Date ctime);
 
     ArticleData findDraft(int bid);
 
-    int coverDraft(@Param("bid") int bid, @Param("title") String title, @Param("content") String content, @Param("author") String author, @Param("ctime") Date ctime);
+    int coverDraft(@Param("bid") int bid,
+                   @Param("title") String title,
+                   @Param("content") String content,
+                   @Param("author") String author,
+                   @Param("ctime") Date ctime);
 
     int deleteDraft(int bid);
 

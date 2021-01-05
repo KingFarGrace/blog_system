@@ -11,5 +11,4 @@ import java.io.Serializable;
 public class UserVerifyData implements Serializable {
     private String username;
     private String password;
-    private String perms;
 }

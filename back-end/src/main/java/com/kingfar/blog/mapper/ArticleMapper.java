@@ -25,4 +25,10 @@ public interface ArticleMapper {
     List<ArticleData> searchByUsername(String username);
 
     int deleteByTitle(String title);
+
+    int saveDraft(@Param("title") String title, @Param("content") String content, @Param("author") String author, @Param("ctime") Date ctime);
+
+    int deleteDraft(String title);
+
+    List<ArticleData> getDraftsByUsername(String username);
 }

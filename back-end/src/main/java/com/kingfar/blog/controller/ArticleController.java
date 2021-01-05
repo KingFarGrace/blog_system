@@ -1,5 +1,6 @@
 package com.kingfar.blog.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.kingfar.blog.entity.ArticleData;
 import com.kingfar.blog.entity.buffer.ArticleBuffer;
@@ -10,13 +11,23 @@ import com.kingfar.blog.util.ArticleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author ZHANGKAIHENG
+ *
+ * ArticleResponse code
+ * 300: success
+ * 301: load error -> failed to load resource
+ * 302: submit error -> failed to submit
+ * 303: search error -> no results matched
+ * 304: search error -> failed to search article
+ * 305: getHistoryBlog error -> failed to load history blog
+ * 306: deleteHistoryBlog error -> failed to delete history blog
+ * 307: saveAsDraft error -> failed to save
+ * 308: deleteDraft error -> failed to delete
  */
 @RestController
 @RequestMapping("/article")
@@ -52,7 +63,7 @@ public class ArticleController {
             e.printStackTrace();
             return new ArticleResponse(2, "failed to submit", ArticleResponse.emptyMap);
         }
-        return new ArticleResponse(0, "success!", ArticleResponse.emptyMap);
+        return new ArticleResponse(0, "success", ArticleResponse.emptyMap);
     }
 
     @PostMapping("/search")
@@ -73,19 +84,19 @@ public class ArticleController {
         respMap.put("page-length", buffer.getPageLen());
         respMap.put("current-page", 1);
         respMap.put("articles", articles);
-        return new ArticleResponse(0, "success!", respMap);
+        return new ArticleResponse(0, "success", respMap);
     }
 
     @PostMapping("/deleteHistoryBlog")
     Response deleteHistoryBlog(@RequestBody JSONObject jsonObject) {
         String title = jsonObject.getString("title");
         try {
-            articleService.delete(title);
+            articleService.deleteHistoryBlog(title);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArticleResponse(6, "failed to delete", ArticleResponse.emptyMap);
+            return new ArticleResponse(6, "failed to delete history blog", ArticleResponse.emptyMap);
         }
-        return new ArticleResponse(0, "success!", ArticleResponse.emptyMap);
+        return new ArticleResponse(0, "success", ArticleResponse.emptyMap);
     }
 
     @PostMapping("/getHistoryBlog")
@@ -99,6 +110,47 @@ public class ArticleController {
             return new ArticleResponse(5, "failed to load history blogs", ArticleResponse.emptyMap);
         }
         Map respMap = new HashMap(4);
+        respMap.put("buffer-length", articles.size());
+        respMap.put("page-length", 10);
+        respMap.put("current-page", 1);
+        respMap.put("articles", articles);
+        return new ArticleResponse(0, "success", respMap);
+    }
+
+    @PostMapping("/saveAsDraft")
+    Response saveAsDraft(@RequestBody ArticleData article) {
+        try {
+            articleService.saveAsDraft(article);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArticleResponse(7, "failed to save", ArticleResponse.emptyMap);
+        }
+        return new ArticleResponse(0, "success!", ArticleResponse.emptyMap);
+    }
+
+    @PostMapping("/deleteDraft")
+    Response deleteDraft(@RequestBody JSONObject jsonObject) {
+        String title = jsonObject.getString("title");
+        try {
+            articleService.deleteDraft(title);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArticleResponse(8, "failed to delete", ArticleResponse.emptyMap);
+        }
+        return new ArticleResponse(0, "success", ArticleResponse.emptyMap);
+    }
+
+    @PostMapping("/getDrafts")
+    Response getDrafts(@RequestBody JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
+        List<ArticleData> articles;
+        try {
+            articles = articleService.getDrafts(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArticleResponse(9, "failed to load drafts", ArticleResponse.emptyMap);
+        }
+        Map<String, Object> respMap = new HashMap<>(4);
         respMap.put("buffer-length", articles.size());
         respMap.put("page-length", 10);
         respMap.put("current-page", 1);

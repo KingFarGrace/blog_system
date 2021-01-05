@@ -21,8 +21,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">上传</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
-      <el-button @click="Draft('ruleForm')">草稿</el-button>
+      <el-button @click="draft('ruleForm')">保存草稿</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -47,8 +46,6 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      //submit article
-      // 所有的alert都改成elementui提供的提示框
       const _this = this
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -83,11 +80,40 @@ export default {
         }
       })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    },
-    Draft(forName) {
-      //TODO 将文章标题、正文提交到‘草稿箱’数据库
+    draft(formName) {
+      const _this = this
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          // post格式修改
+          axios
+            .post('http://localhost:8080/article/saveAsDraft', {
+              title: this.ruleForm.title,
+              content: this.ruleForm.body,
+              author: store.state.username,
+              ctime: ''
+            })
+            .then(res => {
+              let code = res.data.code
+              let msg = res.data.msg
+              if (code === 300) {
+                this.$message({
+                  message: msg,
+                  type: 'success'
+                })
+              } else {
+                this.$message({
+                  message: msg,
+                  type: 'error'
+                })
+              }
+            })
+        } else {
+          this.$message({
+            message: '输入有误',
+            type: 'error'
+          })
+        }
+      })
     }
   }
 }

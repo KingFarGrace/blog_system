@@ -39,12 +39,29 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void delete(String title) {
+    public void deleteHistoryBlog(String title) {
         articleMapper.deleteByTitle(title);
     }
 
     @Override
     public List<ArticleData> getHistory(String username) {
         return articleMapper.searchByUsername(username);
+    }
+
+    @Override
+    public void saveAsDraft(ArticleData article) {
+        Date date = new Date(System.currentTimeMillis());
+        article.setCtime(date);
+        articleMapper.saveDraft(article.getTitle(), article.getContent(), article.getAuthor(), date);
+    }
+
+    @Override
+    public void deleteDraft(String title) {
+        articleMapper.deleteDraft(title);
+    }
+
+    @Override
+    public List<ArticleData> getDrafts(String username) {
+        return articleMapper.getDraftsByUsername(username);
     }
 }

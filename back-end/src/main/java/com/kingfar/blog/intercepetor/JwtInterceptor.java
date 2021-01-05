@@ -19,6 +19,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
+        System.out.println(token);
         String json = null;
         response.setContentType("application/json; charset=UTF-8");
         // TODO attach TokenResponse to Response (revise those prints)

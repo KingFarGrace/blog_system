@@ -28,4 +28,16 @@
     <select id="searchByUsername" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
         SELECT * FROM t_article WHERE author=#{username}
     </select>
+
+    <insert id="saveDraft">
+        INSERT INTO t_draft(title, content, author, ctime) VALUE (#{title}, #{content}, #{author}, #{ctime})
+    </insert>
+
+    <delete id="deleteDraft">
+        DELETE FROM t_draft WHERE title=#{title}
+    </delete>
+
+    <select id="getDraftsByUsername" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
+        SELECT * FROM t_draft WHERE author=#{username}
+    </select>
 </mapper>

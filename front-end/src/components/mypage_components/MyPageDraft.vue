@@ -1,14 +1,17 @@
 <template>
   <el-table :data="tableData" border style="width: 100%">
-    <el-table-column fixed prop="date" label="Date"> </el-table-column>
+    <el-table-column fixed prop="ctime" label="Date"> </el-table-column>
     <el-table-column fixed prop="title" label="Title"> </el-table-column>
     <el-table-column fixed="right" label="Action" width="100">
-     <div slot-scope="scope">  <!--   //- 这里取到当前单元格-->
+      <div slot-scope="scope">
+        <!--   //- 这里取到当前单元格-->
         <el-button
           @click="handleEdit(scope.$index, scope.row)"
           type="text"
           size="small"
-          >Edit</el-button>        <!--  handleEdit(scope.$index, scope.row) (拿到每一行的index，拿到每行的数据)-->
+          >Edit</el-button
+        >
+        <!--  handleEdit(scope.$index, scope.row) (拿到每一行的index，拿到每行的数据)-->
         <el-button
           @click="handleDelete(scope.$index, scope.row)"
           type="text"
@@ -21,27 +24,13 @@
 </template>
 
 <script>
+import axios from '../../axios'
+import store from '../../store'
+
 export default {
   data() {
     return {
-      tableData: [
-        //   {
-        //   date: '',
-        //   title: ''
-        // },
-        {
-          date: '2016-05-04',
-          title: '论大学生宿舍日常'
-        },
-        {
-          date: '2016-05-01',
-          title: '论母猪的产后护理'
-        },
-        {
-          date: '2016-05-03',
-          title: '雨季不再来'
-        }
-      ],
+      tableData: [],
       search: ''
     }
   },
@@ -56,14 +45,55 @@ export default {
       })
     },
     handleDelete(index, row) {
-      // 1.发送后端删除请求
-      // 2.回调函数修改data重新渲染页面
-      // TODO 根据表号id删除‘草稿箱’的某篇文章
-      // axios.post('http://localhost:8080/article/delDraft'+row.id).then(function (resp) {
-      //   alert("删除成功")
-      // })
+      var that = this
+      axios
+        .post('http://localhost:8080/article/deleteDraft', {
+          title: row.title
+        })
+        .then(res => {
+          let code = res.data.code
+          let msg = res.data.msg
+          if (code === 300) {
+            this.$message({
+              message: msg,
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: msg,
+              type: 'error'
+            })
+          }
+        })
       this.tableData.splice(index, 1)
+    },
+    load() {
+      var that = this
+      axios
+        .post('http://localhost:8080/article/getDrafts', {
+          username: store.state.username
+        })
+        .then(res => {
+          let code = res.data['code']
+          let msg = res.data['msg']
+          if (code == 300) {
+            let respMap = res.data['respMap']
+            that.tableData = respMap['articles']
+            this.$message({
+              message: msg,
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: msg,
+              type: 'error'
+            })
+          }
+        })
     }
+  },
+  mounted() {
+    this.load()
   }
 }
 </script>

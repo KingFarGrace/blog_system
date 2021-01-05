@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       ruleForm: {
+        bid: '',
         title: '',
         body: ''
       },
@@ -84,9 +85,9 @@ export default {
       const _this = this
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // post格式修改
           axios
             .post('http://localhost:8080/article/saveAsDraft', {
+              bid: this.ruleForm.bid,
               title: this.ruleForm.title,
               content: this.ruleForm.body,
               author: store.state.username,
@@ -114,7 +115,15 @@ export default {
           })
         }
       })
+    },
+    editDraft() {
+      this.ruleForm.bid = store.state.editingNow.bid
+      this.ruleForm.title = store.state.editingNow.title
+      this.ruleForm.body = store.state.editingNow.content
     }
-  }
+  },
+  mounted() {
+    this.editDraft()
+  },
 }
 </script>

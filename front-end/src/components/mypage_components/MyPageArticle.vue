@@ -9,13 +9,12 @@
       "
       style="width: 100%"
     >
+      <el-table-column label="BlogId" prop="bid"> </el-table-column>
       <el-table-column label="Date" prop="ctime"> </el-table-column>
       <el-table-column label="Title" prop="title"> </el-table-column>
 
       <el-table-column align="right">
         <template slot-scope="scope" slot="header">
-          <!-- 只要输入就会自动进行搜索 -->
-          <!-- 可能还需要加确认按钮 -->
           <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
         </template>
         <template slot-scope="scope">
@@ -43,16 +42,11 @@ export default {
     }
   },
   methods: {
-    handleEdit(index, row) {
-      this.$router.push({
-        name: 'Text'
-      })
-    },
     handleDelete(index, row) {
       var that = this
       axios
         .post('http://localhost:8080/article/deleteHistoryBlog', {
-          title: row.title
+          bid: row.bid
         })
         .then(res => {
           let code = res.data.code

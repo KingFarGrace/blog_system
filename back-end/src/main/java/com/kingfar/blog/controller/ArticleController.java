@@ -89,9 +89,9 @@ public class ArticleController {
 
     @PostMapping("/deleteHistoryBlog")
     Response deleteHistoryBlog(@RequestBody JSONObject jsonObject) {
-        String title = jsonObject.getString("title");
+        int bid = jsonObject.getInteger("bid");
         try {
-            articleService.deleteHistoryBlog(title);
+            articleService.deleteHistoryBlog(bid);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArticleResponse(6, "failed to delete history blog", ArticleResponse.emptyMap);
@@ -130,9 +130,9 @@ public class ArticleController {
 
     @PostMapping("/deleteDraft")
     Response deleteDraft(@RequestBody JSONObject jsonObject) {
-        String title = jsonObject.getString("title");
+        int bid = jsonObject.getInteger("bid");
         try {
-            articleService.deleteDraft(title);
+            articleService.deleteDraft(bid);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArticleResponse(8, "failed to delete", ArticleResponse.emptyMap);

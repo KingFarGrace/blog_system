@@ -39,8 +39,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void deleteHistoryBlog(String title) {
-        articleMapper.deleteByTitle(title);
+    public void deleteHistoryBlog(int bid) {
+        articleMapper.deleteBlog(bid);
     }
 
     @Override
@@ -52,12 +52,17 @@ public class ArticleServiceImpl implements ArticleService {
     public void saveAsDraft(ArticleData article) {
         Date date = new Date(System.currentTimeMillis());
         article.setCtime(date);
-        articleMapper.saveDraft(article.getTitle(), article.getContent(), article.getAuthor(), date);
+        System.out.println(article.getBid());
+        if (articleMapper.findDraft(article.getBid()) != null) {
+            articleMapper.coverDraft(article.getBid(), article.getTitle(), article.getContent(), article.getAuthor(), date);
+        } else {
+            articleMapper.saveDraft(article.getTitle(), article.getContent(), article.getAuthor(), date);
+        }
     }
 
     @Override
-    public void deleteDraft(String title) {
-        articleMapper.deleteDraft(title);
+    public void deleteDraft(int bid) {
+        articleMapper.deleteDraft(bid);
     }
 
     @Override

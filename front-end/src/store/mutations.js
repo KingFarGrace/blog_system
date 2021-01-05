@@ -68,6 +68,11 @@ const mutations = {
   setReadingNow(state, article) {
     state.readingNow = article
     localStorage.setItem("readingNow", JSON.stringify(state.readingNow))
+  },
+
+  setEditingNow(state, row) {
+    state.editingNow = row
+    localStorage.setItem("editingNow", JSON.stringify(state.editingNow))
   }
 }
 

@@ -21,8 +21,8 @@
         SELECT * FROM t_article WHERE title LIKE concat('%',#{title},'%') ORDER BY ctime DESC
     </select>
 
-    <delete id="deleteByTitle">
-        DELETE FROM t_article WHERE title=#{title}
+    <delete id="deleteBlog">
+        DELETE FROM t_article WHERE bid=#{bid}
     </delete>
 
     <select id="searchByUsername" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
@@ -34,10 +34,18 @@
     </insert>
 
     <delete id="deleteDraft">
-        DELETE FROM t_draft WHERE title=#{title}
+        DELETE FROM t_draft WHERE bid=#{bid}
     </delete>
 
     <select id="getDraftsByUsername" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
         SELECT * FROM t_draft WHERE author=#{username}
     </select>
+
+    <select id="findDraft" parameterType="int" resultType="com.kingfar.blog.entity.ArticleData">
+        SELECT * FROM t_draft WHERE bid=#{bid}
+    </select>
+
+    <update id="coverDraft">
+        UPDATE t_draft SET title=#{title}, content=#{content}, author=#{author}, ctime=#{ctime} WHERE bid=#{bid}
+    </update>
 </mapper>

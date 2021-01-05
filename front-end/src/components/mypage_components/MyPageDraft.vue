@@ -1,24 +1,34 @@
 <template>
-  <el-table :data="tableData" border style="width: 100%">
+  <el-table
+    :data="
+      tableData.filter(
+        data =>
+          !search || data.title.toLowerCase().includes(search.toLowerCase())
+      )
+    "
+    style="width: 100%"
+  >
+    <el-table-column fixed prop="bid" label="BlogId"> </el-table-column>
     <el-table-column fixed prop="ctime" label="Date"> </el-table-column>
     <el-table-column fixed prop="title" label="Title"> </el-table-column>
-    <el-table-column fixed="right" label="Action" width="100">
-      <div slot-scope="scope">
-        <!--   //- 这里取到当前单元格-->
+    <el-table-column fixed="right" label="Action" width="100%">
+      <template slot-scope="scope" slot="header">
+        <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+      </template>
+      <template slot-scope="scope">
         <el-button
           @click="handleEdit(scope.$index, scope.row)"
           type="text"
           size="small"
           >Edit</el-button
         >
-        <!--  handleEdit(scope.$index, scope.row) (拿到每一行的index，拿到每行的数据)-->
         <el-button
           @click="handleDelete(scope.$index, scope.row)"
           type="text"
           size="small"
           >Delete</el-button
         >
-      </div>
+      </template>
     </el-table-column>
   </el-table>
 </template>
@@ -36,19 +46,16 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      // 添加回显逻辑显示到编辑页面上
+      store.commit('setEditingNow', row)
       this.$router.push({
-        path: '/mypage/edit',
-        query: {
-          id: row.id //id 为数据库的数据号
-        }
+        path: '/mypage/edit'
       })
     },
     handleDelete(index, row) {
       var that = this
       axios
         .post('http://localhost:8080/article/deleteDraft', {
-          title: row.title
+          bid: row.bid
         })
         .then(res => {
           let code = res.data.code
@@ -79,10 +86,6 @@ export default {
           if (code == 300) {
             let respMap = res.data['respMap']
             that.tableData = respMap['articles']
-            this.$message({
-              message: msg,
-              type: 'success'
-            })
           } else {
             this.$message({
               message: msg,

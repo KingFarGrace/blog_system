@@ -8,6 +8,7 @@
               <el-menu-item index="/mypage/edit" :class="$route.path=='/mypage/edit'?'is-active':''">编辑文章</el-menu-item>
               <el-menu-item index="/mypage/article" :class="$route.path=='/mypage/article'?'is-active':''">历史文章</el-menu-item>
               <el-menu-item index="/mypage/draft" :class="$route.path=='/mypage/draft'?'is-active':''">草稿箱</el-menu-item>
+              <el-menu-item index="/mypage/favor" :class="$route.path=='/mypage/favor'?'is-active':''">收藏文章</el-menu-item>
           </el-submenu>
 
             <el-menu-item index="/mypage/base" :class="$route.path=='/mypage/base'?'is-active':''">

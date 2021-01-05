@@ -1,43 +1,41 @@
 <template>
   <div id="mainpage">
-
-
     <el-container>
-      <el-aside class="aside-friend" width="220px">
+      <el-aside>
         <Friend></Friend>
       </el-aside>
       <el-main>
         <article-list></article-list>
       </el-main>
-
-
     </el-container>
-    <el-container>
-      <el-footer>版权信息</el-footer>
-    </el-container>
+    <el-footer>Copyright © 2020 Software 1802. All rights reserved.</el-footer>
   </div>
 </template>
 
 
 <script>
-  import ArticleList from './mainpage_components/ArticleList'
-  import MainFriend from "./MainFriend";
+import ArticleList from './mainpage_components/ArticleList'
+import MainFriend from './MainFriend'
 
-  export default {
-    components: {
-      ArticleList,
-      'Friend': MainFriend,
-    }
-  }
+export default {
+  components: {
+    ArticleList,
+    Friend: MainFriend,
+  },
+}
 </script>
 
 
 <style>
-
-  .aside-friend {
-    height: 500px;
-    background-color: #ffffff;
-  }
-
+.el-aside {
+  max-width: 220px;
+  background-color: #ffffff;
+}
+.el-container {
+  height:1100px;
+}
+.el-main {
+  background-color: #e9eef3;
+}
 </style>
 

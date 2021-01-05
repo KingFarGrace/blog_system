@@ -8,36 +8,16 @@
       <el-col :span="14" :offset="5" id="textpage-main">
         <div id="textpage-title">
           <p>题目: {{ article.title }}</p>
-          <!-- TODO 动态加载文章内容 -->
         </div>
         <div id="textpage-author">
           <p>时间: {{ article.ctime }}</p>
           <p @click="toWriter(article.author)">作者: {{ article.author }}</p>
-          <p>阅读量</p>
-          <p>收藏量</p>
+          <!-- TODO 收藏 -->
+          <p>收藏</p>
         </div>
         <div id="textpage-content">
           <p>{{ article.content }}</p>
         </div>
-      </el-col>
-    </el-row>
-
-    <el-row>
-      <el-col :span="14" :offset="5" id="textpage-main">
-        <el-col :span="21"
-          ><el-input v-model="input" placeholder="发表你的评论"></el-input
-        ></el-col>
-        <!-- TODO 记录登录的人发表的评论 -->
-        <el-col :span="2" :offset="1"
-          ><el-button type="primary" round>发表</el-button></el-col
-        >
-        <el-col>
-          <div id="textpage-comment" v-for="item in commentList" :key="item.id">
-            <p>{{ item.text }}</p>
-            <p>{{ item.time }}</p>
-            <p @click="toWriter(item.writer)">{{ item.writer }}</p>
-          </div>
-        </el-col>
       </el-col>
     </el-row>
   </div>
@@ -118,18 +98,7 @@ export default {
   line-height: 2em;
 }
 
-#textpage-comment {
-  margin-top: 15px;
-  padding: 20px;
-  border: 2px solid #777777;
-  border-radius: 10px;
-}
-
 #textpage-author p {
-  display: inline;
-}
-
-#textpage-comment p {
   display: inline;
 }
 </style>

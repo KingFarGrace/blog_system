@@ -59,7 +59,7 @@
           username: [
             {required: true, message: '请输入用户名', trigger: 'blur'},
             {
-              min: 6,
+              min: 4,
               max: 20,
               message: '长度在 4 到 20 位',
               trigger: ['blur', 'change'],

@@ -15,11 +15,6 @@
           >
             <el-menu-item index="/mainpage">主页</el-menu-item>
             <el-menu-item index="/mypage">个人中心</el-menu-item>
-            <el-submenu index="">
-              <template slot="title">我的收藏</template>
-              <el-menu-item index="">收藏的博文</el-menu-item>
-              <el-menu-item index="">收藏的资源</el-menu-item>
-            </el-submenu>
             <el-menu-item index="" disabled>消息中心</el-menu-item>
             <el-menu-item index="/about">关于博客</el-menu-item>
           </el-menu>

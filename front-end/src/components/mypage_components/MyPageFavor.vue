@@ -1,0 +1,93 @@
+<template>
+  <div>
+    <el-table
+      :data="
+        tableData.filter(
+          data =>
+            !search || data.title.toLowerCase().includes(search.toLowerCase())
+        )
+      "
+      style="width: 100%"
+    >
+      <el-table-column label="BlogId" prop="bid"> </el-table-column>
+      <el-table-column label="Date" prop="ctime"> </el-table-column>
+      <el-table-column label="Title" prop="title"> </el-table-column>
+
+      <el-table-column align="right">
+        <template slot-scope="scope" slot="header">
+          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+        </template>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+            >Delete</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+import axios from '../../axios'
+import store from '../../store'
+
+export default {
+  data() {
+    return {
+      tableData: [],
+      search: ''
+    }
+  },
+  methods: {
+    handleDelete(index, row) {
+      var that = this
+      axios
+        .post('http://localhost:8080/article/deleteHistoryBlog', {                                  //要改
+          bid: row.bid
+        })
+        .then(res => {
+          let code = res.data.code
+          let msg = res.data.msg
+          if (code === 300) {
+            this.$message({
+              message: msg,
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: msg,
+              type: 'error'
+            })
+          }
+        })
+      this.tableData.splice(index, 1)
+    },
+    init() {
+      var that = this
+      axios
+        .post('http://localhost:8080/article/getHistoryBlog', {                         //要改
+          username: store.state.username
+        })
+        .then(res => {
+          let code = res.data.code
+          let msg = res.data.msg
+          let respMap = res.data.respMap
+          if (code === 300) {
+            that.tableData = respMap.articles
+          } else {
+            this.$message({
+              message: msg,
+              type: 'error'
+            })
+          }
+        })
+    }
+  },
+  mounted() {
+    this.init()
+  }
+}
+</script>

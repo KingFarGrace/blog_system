@@ -47,11 +47,9 @@
     </el-col>
 
     <el-col>
-      <el-container>
-        <el-footer
-          >Copyright © 2020 Software 1802. All rights reserved.</el-footer
-        >
-      </el-container>
+      <el-footer
+        >Copyright © 2020 Software 1802. All rights reserved.</el-footer
+      >
     </el-col>
   </div>
 </template>

@@ -11,7 +11,9 @@ import MyPageArticle from '@/components/mypage_components/MyPageArticle'
 import MyPageDraft from '@/components/mypage_components/MyPageDraft'
 import MyPagePassword from '@/components/mypage_components/MyPagePassword'
 import MyPageBase from "../components/mypage_components/MyPageBase"
-import TextPage from '@/components/TextPage';
+import TextPage from '@/components/TextPage'
+import InfoPage from '@/components/InfoPage'
+import MyPageFavor from '@/components/mypage_components/MyPageFavor';
 
 Vue.use(Router)
 
@@ -64,7 +66,12 @@ export default new Router({
               path: "/mypage/base",
               name:"MyPageBase",
               component:MyPageBase
-            }
+            },
+            {
+              path: "/mypage/favor",
+              name:"MyPageFavor",
+              component:MyPageFavor
+            },
           ]
         },
         {
@@ -85,7 +92,12 @@ export default new Router({
       component: SignUpPage
     },
     {
-      path: '/:blogId',
+      path: '/info',
+      name: 'Info',
+      component: InfoPage
+    },
+    {
+      path: '/text',
       name: 'Text',
       component: TextPage
     },

@@ -130,7 +130,7 @@ export default {
   data() {
     return {
       form: {                                 //要改
-          name: '',
+          name: this.$route.query.username,
           id: '',
           age: '',
           number: '',

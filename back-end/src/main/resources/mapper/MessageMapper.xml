@@ -29,4 +29,25 @@
                  #{toUser})
     </insert>
 
+    <select id="getSenders" resultType="java.lang.String">
+        SELECT DISTINCT
+                fromuser
+        FROM
+                t_message
+        WHERE
+                touser=#{receiver}
+          AND
+                is_read=0
+    </select>
+
+    <update id="changeIsReadState">
+        UPDATE
+                t_message
+        SET
+                is_read=1
+        WHERE
+                fromuser=#{sender}
+          AND
+                touser=#{receiver}
+    </update>
 </mapper>

@@ -1,23 +1,24 @@
 package com.kingfar.blog.entity.response;
 
-import com.kingfar.blog.entity.MessageData;
+import lombok.Data;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author WUHAIYUAN
  */
+@Data
 public class MessageResponse extends  Response{
 
-    private List<MessageData> messageDataList;
+    private Map<String, Object> respMap;
 
     @Override
     protected int groupCode() {
         return 5;
     }
 
-    public MessageResponse(int code, String msg, List<MessageData> messageDataList) {
+    public MessageResponse(int code, String msg, Map<String, Object> respMap) {
         super(code, msg);
-        this.messageDataList = messageDataList;
+        this.respMap = respMap;
     }
 }

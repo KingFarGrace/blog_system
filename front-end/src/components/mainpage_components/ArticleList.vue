@@ -29,7 +29,8 @@
                 <h1>
                   {{ article.title }}
                 </h1>
-                <p>{{ article.content }}</p>
+                <el-divider></el-divider>
+                <p class="markdown-body" v-html="require('markdown-it')().render(article.content)" style="max-height: 10px"></p>
               </el-card></el-button
             >
           </el-timeline-item>
@@ -54,6 +55,7 @@
 <script>
 import store from '../../store'
 import axios from '../../axios'
+import 'github-markdown-css'
 
 export default {
   name: 'article-list',

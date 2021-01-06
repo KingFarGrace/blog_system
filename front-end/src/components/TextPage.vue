@@ -16,7 +16,7 @@
           <p>收藏</p>
         </div>
         <div id="textpage-content">
-          <p>{{ article.content }}</p>
+          <p class="markdown-body" v-html="article.content"></p>
         </div>
       </el-col>
     </el-row>
@@ -26,6 +26,7 @@
 <script>
 import axios from '../axios'
 import store from '../store'
+import 'github-markdown-css'
 
 export default {
   name: 'Text',
@@ -48,7 +49,9 @@ export default {
     },
     getArticle() {
       this.article = store.state.readingNow
-      console.log(this.article)
+      var markdown = require('markdown-it')
+      var md = new markdown()
+      this.article.content = md.render(this.article.content);
     },
     toWriter(writer) {
       // TODO 转跳到作者
@@ -92,7 +95,7 @@ export default {
 
 #textpage-content {
   margin: 10px;
-  padding: 10px;
+  padding: 30px;
   border: 5px solid #777777;
   text-indent: 2em;
   line-height: 2em;

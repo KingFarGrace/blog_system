@@ -11,9 +11,9 @@
         FROM
                 t_message
         WHERE
-                (fromuser = #{fromUser} OR fromuser = #{toUser})
+                fromuser = #{fromUser}|#{toUser}
           AND
-                (touser = #{toUser} OR touser = #{fromUser})
+                touser = #{toUser}|#{fromUser}
         ORDER BY
                 mtime
     </select>

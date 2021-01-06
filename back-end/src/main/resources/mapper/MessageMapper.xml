@@ -22,11 +22,13 @@
         INSERT INTO
                 t_message(fromuser,
                           content,
-                          touser)
+                          touser,
+                          is_read)
         VALUE
                 (#{fromUser},
                  #{content},
-                 #{toUser})
+                 #{toUser},
+                 0)
     </insert>
 
     <select id="getSenders" resultType="java.lang.String">

@@ -1,25 +1,27 @@
 <template>
   <div>
     <div class="friend-head">
-      <el-dropdown>
-        <el-button class="friend-add" plain size="mini">
-          <i class="el-icon-plus"></i>
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="AddFriend = true"
-            >添加关注</el-dropdown-item
-          >
-          <el-dropdown-item @click.native="AddGroup = true"
-            >创建分组</el-dropdown-item
-          >
-          <el-dropdown-item @click.native="ManageGroup = true"
-            >管理分组</el-dropdown-item
-          >
-          <el-dropdown-item @click.native="DeleteGroup = true"
-            >删除分组</el-dropdown-item
-          >
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-row>
+        <el-col :offset="3">
+          <el-dropdown>
+            <el-button icon="el-icon-circle-plus"> </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="AddFriend = true"
+                >添加关注</el-dropdown-item
+              >
+              <el-dropdown-item @click.native="AddGroup = true"
+                >创建分组</el-dropdown-item
+              >
+              <el-dropdown-item @click.native="ManageGroup = true"
+                >管理分组</el-dropdown-item
+              >
+              <el-dropdown-item @click.native="DeleteGroup = true"
+                >删除分组</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-col>
+      </el-row>
     </div>
     <el-dialog
       width="28%"
@@ -147,25 +149,46 @@
 
     <el-dialog
       width="50%"
-      title="聊天界面"
+      :title="this.chatWith"
       :visible.sync="Chat"
       @close="closeDialog"
     >
-      <el-form :model="ChatForm">
-        <div v-for="item in this.ChatForm" :key="item">
-          <!-- TODO 改样子 -->
-          <div v-if="item.fromUser == username" :key="item.mid">
-            我发的{{ item.content }}
+      <el-form :model="ChatForm" style="height: 400px" id="messageBackground">
+        <el-scrollbar style="height: 100%">
+          <div v-for="item in this.ChatForm" :key="item">
+            <div id="messagesTime">{{ item.mtime }}</div>
+            <div v-if="item.fromUser == username" :key="item.mid">
+              <el-row>
+                <el-col :span="14" :offset="10">
+                  <div id="sendMessages">
+                    {{ item.content }}
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+            <div v-if="item.fromUser != username" :key="item.mid">
+              <el-row>
+                <el-col :span="14" :offset="0">
+                  <div id="receiveMessages">{{ item.content }}</div>
+                </el-col>
+              </el-row>
+            </div>
           </div>
-          <div v-if="item.fromUser != username" :key="item.mid">
-            他发的{{ item.content }}
-          </div>
-        </div>
+        </el-scrollbar>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="Chat = false">取 消</el-button>
-        <el-button type="primary">确 定</el-button>
-      </div>
+      <el-row>
+        <el-input
+          v-model="inputMessage"
+          placeholder="请输入聊天内容"
+          type="textarea"
+          :rows="5"
+        ></el-input>
+        <el-col :span="2" :offset="22"
+          ><el-button type="primary" @click="sendMessages()"
+            >发送</el-button
+          ></el-col
+        >
+      </el-row>
     </el-dialog>
 
     <div>
@@ -192,6 +215,7 @@
                       chatWith = i
                       chat(i)
                     "
+                    style="background-color: cornflowerblue"
                   ></el-button
                 ></el-col>
                 <el-col :span="5">
@@ -222,6 +246,7 @@ export default {
       oldGid: '',
       username: store.state.username,
       chatWith: '',
+      inputMessage: '',
 
       AddFriend: false,
       AddGroup: false,
@@ -303,6 +328,15 @@ export default {
     },
 
     groupsubmit(Addgroupform) {
+      for (var i of this.friendList) {
+        if (i.gname === Addgroupform.gname) {
+          this.$message({
+            message: '存在相同组名',
+            type: 'error',
+          })
+          return
+        }
+      }
       var that = this
       axios
         .post('http://localhost:8080/group/addGroup', {
@@ -500,6 +534,29 @@ export default {
           }
         })
     },
+    sendMessages() {
+      var that = this
+      axios
+        .post('http://localhost:8080/message/send', {
+          fromUser: store.state.username,
+          toUser: that.chatWith,
+          content: that.inputMessage,
+        })
+        .then((res) => {
+          let code = res.data['code']
+          let msg = res.data['msg']
+          if (res.data['code'] === 500) {
+            // data => page
+            that.inputMessage = ''
+            that.chat(that.chatWith)
+          } else {
+            this.$message({
+              message: res.data['msg'],
+              type: 'error',
+            })
+          }
+        })
+    },
   },
   mounted() {
     this.getFriendList()
@@ -516,12 +573,34 @@ export default {
   padding-right: 0;
   background-color: #f9f9f9;
 }
-.friend-add {
-  background-color: transparent;
-  border-style: none;
-}
 #friendLabel {
   margin-top: 10px;
   padding-left: 5px;
+}
+#messageBackground {
+  background-color: #e9eef3;
+  line-height: 25px;
+  border-radius: 5px;
+}
+#sendMessages {
+  color: #ffffff;
+  background: cornflowerblue;
+  font-size: 17px;
+  padding: 10px;
+  margin: 10px;
+  float: right;
+  border-radius: 15px;
+}
+#receiveMessages {
+  color: #000000;
+  background: #ffffff;
+  font-size: 17px;
+  padding: 10px;
+  margin: 10px;
+  float: left;
+  border-radius: 15px;
+}
+#messagesTime {
+  text-align: center;
 }
 </style>

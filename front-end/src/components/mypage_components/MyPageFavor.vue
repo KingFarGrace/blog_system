@@ -3,11 +3,12 @@
     <el-table
       :data="
         tableData.filter(
-          data =>
+          (data) =>
             !search || data.title.toLowerCase().includes(search.toLowerCase())
         )
       "
       style="width: 100%"
+      @row-click="(row, column, e) => setArticle(row)"
     >
       <el-table-column label="BlogId" prop="bid"> </el-table-column>
       <el-table-column label="Date" prop="ctime"> </el-table-column>
@@ -38,28 +39,29 @@ export default {
   data() {
     return {
       tableData: [],
-      search: ''
+      search: '',
     }
   },
   methods: {
     handleDelete(index, row) {
       var that = this
       axios
-        .post('http://localhost:8080/article/deleteHistoryBlog', {                                  //要改
-          bid: row.bid
+        .post('http://localhost:8080/article/deleteFavor', {
+          username: store.state.username,
+          bid: row.bid,
         })
-        .then(res => {
+        .then((res) => {
           let code = res.data.code
           let msg = res.data.msg
           if (code === 300) {
             this.$message({
               message: msg,
-              type: 'success'
+              type: 'success',
             })
           } else {
             this.$message({
               message: msg,
-              type: 'error'
+              type: 'error',
             })
           }
         })
@@ -68,10 +70,10 @@ export default {
     init() {
       var that = this
       axios
-        .post('http://localhost:8080/article/getHistoryBlog', {                         //要改
-          username: store.state.username
+        .post('http://localhost:8080/article/getFavors', {
+          username: store.state.username,
         })
-        .then(res => {
+        .then((res) => {
           let code = res.data.code
           let msg = res.data.msg
           let respMap = res.data.respMap
@@ -80,14 +82,18 @@ export default {
           } else {
             this.$message({
               message: msg,
-              type: 'error'
+              type: 'error',
             })
           }
         })
-    }
+    },
+    setArticle(article) {
+      store.commit('setReadingNow', article)
+      this.$router.push({ name: 'Text' })
+    },
   },
   mounted() {
     this.init()
-  }
+  },
 }
 </script>

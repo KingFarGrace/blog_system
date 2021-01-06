@@ -10,12 +10,12 @@
             <el-row>
               <el-col :span="10">
                 <el-form-item label="昵称">
-                  <div>{{ form.name }}</div>
+                  <div>{{ form.username }}</div>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
                 <el-form-item label="ID">
-                  <div>{{ form.id }}</div>
+                  <div>{{ form.uid }}</div>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -23,12 +23,12 @@
             <el-row>
               <el-col :span="10">
                 <el-form-item label="发表文章数">
-                  <div>{{ form.number }}</div>
+                  <div>{{ form.blogCount }}</div>
                 </el-form-item>
               </el-col>
               <el-col :span="5">
                 <el-form-item label="性别">
-                  <div>{{ form.gender }}</div>
+                  <div>{{ form.sex }}</div>
                 </el-form-item>
               </el-col>
               <el-col :span="5">
@@ -41,12 +41,12 @@
             <el-row>
               <el-col :span="10">
                 <el-form-item label="邮箱">
-                  <div>{{ form.mailAddress }}</div>
+                  <div>{{ form.mail }}</div>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
                 <el-form-item label="注册时间">
-                  <div>{{ form.date }}</div>
+                  <div>{{ form.ctime }}</div>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -65,20 +65,9 @@
     <el-row>
       <el-col :span="16" :offset="4" id="infoPage-main">
         <el-row>
-          <el-col :span="5" :offset="18"
-            ><el-input
-              v-model="inputSearchArticle"
-              placeholder="搜索文章"
-            ></el-input
-          ></el-col>
-          <el-col :span="1" :offset="0"
-            ><el-button
-              icon="el-icon-search"
-              circle
-              @click="searchArticle"
-            ></el-button
-          ></el-col>
+          <h1 style="color: #777777">历史博文</h1>
         </el-row>
+        <el-divider></el-divider>
         <el-row
           ><div class="block">
             <el-timeline>
@@ -132,14 +121,13 @@ export default {
   data() {
     return {
       form: {
-        //要改
-        name: this.$route.query.username,
-        id: '',
+        username: this.$route.query.username,
+        uid: '',
         age: '',
-        number: '',
-        date: '',
-        gender: '',
-        mailAddress: '',
+        blogCount: '',
+        ctime: '',
+        sex: '',
+        mail: '',
         signature: '',
       },
       inputSearchArticle: '',
@@ -155,7 +143,7 @@ export default {
       var that = this
       axios
         .post('http://localhost:8080/article/getHistoryBlog', {
-          username: this.form.name,
+          username: this.form.username,
         })
         .then((res) => {
           let code = res.data.code
@@ -172,6 +160,27 @@ export default {
           } else {
             this.$message({
               message: res.data['msg'],
+              type: 'error',
+            })
+          }
+        })
+      axios
+        .post('http://localhost:8080/user/getUser', {
+          username: that.form.username,
+        })
+        .then((res) => {
+          let code = res.data['code']
+          let msg = res.data['msg']
+          if (code == 100) {
+            that.form = res.data['userLoginData']
+          } else if (code == 103) {
+            this.$message({
+              message: msg,
+              type: 'error',
+            })
+          } else if (code == 104) {
+            this.$message({
+              message: msg,
               type: 'error',
             })
           }
@@ -242,6 +251,10 @@ export default {
   padding: 20px;
   box-shadow: 10px 10px 30px #777777;
   margin-bottom: 50px;
+  font-weight: 600;
+}
+#infoPage-author div {
+  font-size: 20px;
 }
 #infoPage-main {
   background-color: #e9eef3;

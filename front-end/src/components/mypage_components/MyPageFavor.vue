@@ -8,7 +8,7 @@
         )
       "
       style="width: 100%"
-      @row-click="(row, column, e) => setArticle(row)"
+      @row-dblclick="(row, column, e) => setArticle(row)"
     >
       <el-table-column label="BlogId" prop="bid"> </el-table-column>
       <el-table-column label="Date" prop="ctime"> </el-table-column>
@@ -44,28 +44,34 @@ export default {
   },
   methods: {
     handleDelete(index, row) {
-      var that = this
-      axios
-        .post('http://localhost:8080/article/deleteFavor', {
-          username: store.state.username,
-          bid: row.bid,
-        })
-        .then((res) => {
-          let code = res.data.code
-          let msg = res.data.msg
-          if (code === 300) {
-            this.$message({
-              message: msg,
-              type: 'success',
-            })
-          } else {
-            this.$message({
-              message: msg,
-              type: 'error',
-            })
-          }
-        })
-      this.tableData.splice(index, 1)
+      this.$confirm('是否取消收藏该文章?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        var that = this
+        axios
+          .post('http://localhost:8080/article/deleteFavor', {
+            username: store.state.username,
+            bid: row.bid,
+          })
+          .then((res) => {
+            let code = res.data.code
+            let msg = res.data.msg
+            if (code === 300) {
+              this.$message({
+                message: msg,
+                type: 'success',
+              })
+            } else {
+              this.$message({
+                message: msg,
+                type: 'error',
+              })
+            }
+          })
+        this.tableData.splice(index, 1)
+      })
     },
     init() {
       var that = this

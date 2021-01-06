@@ -2,7 +2,7 @@
   <el-table
     :data="
       tableData.filter(
-        data =>
+        (data) =>
           !search || data.title.toLowerCase().includes(search.toLowerCase())
       )
     "
@@ -41,46 +41,52 @@ export default {
   data() {
     return {
       tableData: [],
-      search: ''
+      search: '',
     }
   },
   methods: {
     handleEdit(index, row) {
       store.commit('setEditingNow', row)
       this.$router.push({
-        path: '/mypage/edit'
+        path: '/mypage/edit',
       })
     },
     handleDelete(index, row) {
-      var that = this
-      axios
-        .post('http://localhost:8080/article/deleteDraft', {
-          bid: row.bid
-        })
-        .then(res => {
-          let code = res.data.code
-          let msg = res.data.msg
-          if (code === 300) {
-            this.$message({
-              message: msg,
-              type: 'success'
-            })
-          } else {
-            this.$message({
-              message: msg,
-              type: 'error'
-            })
-          }
-        })
-      this.tableData.splice(index, 1)
+      this.$confirm('是否永久删除该草稿?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        var that = this
+        axios
+          .post('http://localhost:8080/article/deleteDraft', {
+            bid: row.bid,
+          })
+          .then((res) => {
+            let code = res.data.code
+            let msg = res.data.msg
+            if (code === 300) {
+              this.$message({
+                message: msg,
+                type: 'success',
+              })
+            } else {
+              this.$message({
+                message: msg,
+                type: 'error',
+              })
+            }
+          })
+        this.tableData.splice(index, 1)
+      })
     },
     load() {
       var that = this
       axios
         .post('http://localhost:8080/article/getDrafts', {
-          username: store.state.username
+          username: store.state.username,
         })
-        .then(res => {
+        .then((res) => {
           let code = res.data['code']
           let msg = res.data['msg']
           if (code == 300) {
@@ -89,14 +95,14 @@ export default {
           } else {
             this.$message({
               message: msg,
-              type: 'error'
+              type: 'error',
             })
           }
         })
-    }
+    },
   },
   mounted() {
     this.load()
-  }
+  },
 }
 </script>

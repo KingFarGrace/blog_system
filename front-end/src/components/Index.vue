@@ -15,7 +15,11 @@
           >
             <el-menu-item index="/mainpage">主页</el-menu-item>
             <el-menu-item index="/mypage">个人中心</el-menu-item>
-            <el-menu-item index="" disabled>消息中心</el-menu-item>
+            <el-submenu>
+              <template slot="title" style="cursor: pointer">消息中心</template>
+              <!-- 加载新消息 -->
+              <el-menu-item>消息</el-menu-item>
+            </el-submenu>
             <el-menu-item index="/about">关于博客</el-menu-item>
           </el-menu>
         </div></el-col
@@ -61,7 +65,7 @@ export default {
   name: 'HelloWorld',
   data: () => {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
     }
   },
   methods: {
@@ -70,8 +74,8 @@ export default {
       store.commit('removeUser')
       console.log(store.state.token)
       console.log(store.state.isLogin)
-    }
-  }
+    },
+  },
 }
 </script>
 

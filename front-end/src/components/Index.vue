@@ -71,7 +71,7 @@
                   v-for="item in senders"
                   :key="item"
                   @click.native="changeState(item)"
-                  >{{ item }}</el-menu-item
+                  >{{ item }} 发来新消息</el-menu-item
                 >
               </div>
             </el-submenu>

@@ -238,6 +238,7 @@
 <script>
 import axios from '../../axios'
 import store from '../../store'
+
 export default {
   data() {
     return {
@@ -408,10 +409,6 @@ export default {
 
     chat(toUser) {
       var that = this
-      this.$message({
-              message: toUser,
-              type: 'error'
-            })
       axios
         .post('http://localhost:8080/message/display', {
           fromUser: store.state.username,

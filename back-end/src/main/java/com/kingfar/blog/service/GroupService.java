@@ -11,4 +11,14 @@ public interface GroupService {
 
     List<GroupData> getGroups(String username);
 
+    void addGroup(String owner, String gname);
+
+    void addFriend(String owner, String username);
+
+    void deleteGroup(int gid);
+
+    void deleteFriend(int gid, String username);
+
+    void changeGroup(int oldGid, int newGid, String username);
+
 }

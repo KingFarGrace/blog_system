@@ -26,4 +26,58 @@
           AND
                 owner=#{username}
     </select>
+
+    <insert id="addGroup">
+        INSERT INTO
+                t_group(owner,
+                        gname)
+                VALUE (#{owner},
+                       #{gname})
+    </insert>
+
+    <insert id="addFriend">
+        INSERT INTO
+                t_friend(gid,
+                         friend)
+                VALUE (#{gid},
+                       #{username})
+    </insert>
+
+    <delete id="deleteGroup">
+        DELETE FROM
+                t_group
+        WHERE
+                gid=#{gid}
+    </delete>
+
+    <delete id="deleteFriend">
+        DELETE FROM
+                t_friend
+        WHERE
+                gid=#{gid}
+          AND
+                friend=#{username}
+    </delete>
+
+    <update id="changeGroup">
+        UPDATE
+                t_friend
+        SET
+                gid=#{new}
+        WHERE
+                gid=#{old}
+          AND
+                friend=#{username}
+    </update>
+
+    <select id="getDefaultGid" resultType="int">
+        SELECT
+                gid
+        FROM
+                t_group
+        WHERE
+                gname='我的关注'
+          AND
+                owner=#{owner}
+    </select>
 </mapper>

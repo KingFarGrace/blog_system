@@ -22,4 +22,14 @@ public class MessageServiceImpl implements MessageService{
     public List<MessageData> disMessage(String fromUser, String toUser) {
         return messageMapper.queryMessageByToAndFrom(fromUser,toUser);
     }
+
+    @Override
+    public List<String> notify(String receiver) {
+        return messageMapper.getSenders(receiver);
+    }
+
+    @Override
+    public void changeState(String sender, String receiver) {
+        messageMapper.changeIsReadState(sender, receiver);
+    }
 }

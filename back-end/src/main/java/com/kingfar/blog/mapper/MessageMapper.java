@@ -11,7 +11,15 @@ import java.util.List;
 @Repository
 public interface MessageMapper {
 
-    List<MessageData> queryMessageByToAndFrom(@Param("fromUser") String fromUser,@Param("toUser") String toUser);
+    List<MessageData> queryMessageByToAndFrom(@Param("fromUser") String fromUser,
+                                              @Param("toUser") String toUser);
 
-    int insertMessage(@Param("fromUser") String fromUser,@Param("content") String content,@Param("toUser") String touser);
+    int insertMessage(@Param("fromUser") String fromUser,
+                      @Param("content") String content,
+                      @Param("toUser") String touser);
+
+    List<String> getSenders(String receiver);
+
+    int changeIsReadState(@Param("sender") String sender,
+                          @Param("receiver") String receiver);
 }

@@ -12,8 +12,7 @@
         <div id="textpage-author">
           <p>时间: {{ article.ctime }}</p>
           <p @click="toAuthor(article.author)">作者: {{ article.author }}</p>
-          <!-- TODO 收藏 -->
-          <p @click="toFavor(article.title)">收藏</p>
+          <p @click="toFavor(article.bid)">收藏</p>
         </div>
         <div id="textpage-content">
           <p class="markdown-body" v-html="article.content"></p>
@@ -61,8 +60,28 @@ export default {
         },
       })
     },
-    toFavor(title){
-      //收藏功能
+    toFavor(bid){
+      var that = this
+      axios
+        .post('http://localhost:8080/article/addFavor', {
+          username: store.state.username,
+          bid: bid
+        })
+        .then(res => {
+          let code = res.data.code
+          let msg = res.data.msg
+          if (code === 300) {
+            this.$message({
+              message: msg,
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: msg,
+              type: 'error'
+            })
+          }
+        })
     }
   },
   mounted() {

@@ -8,7 +8,7 @@
         )
       "
       style="width: 100%"
-      @row-click="(row,column,e)=>setArticle(row)"
+      @row-click="(row, column, e) => setArticle(row)"
     >
       <el-table-column label="BlogId" prop="bid"> </el-table-column>
       <el-table-column label="Date" prop="ctime"> </el-table-column>

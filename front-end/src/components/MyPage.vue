@@ -32,7 +32,7 @@
   background-color: #ffffff;
 }
 .el-container {
-  height:1100px;
+  height:1250px;
 }
 .el-main {
   background-color: #e9eef3;

@@ -3,7 +3,7 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
 #    open this annotation only when test / debug
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscope-to-camel-case: true
 
 spring:

@@ -18,7 +18,11 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<GroupData> getGroups(String username) {
-        return groupMapper.getGroups(username);
+        List<GroupData> groups = groupMapper.getGroups(username);
+        for (GroupData group : groups) {
+            group.setFriends(groupMapper.getFriends(group.getGid()));
+        }
+        return groups;
     }
 
     @Override

@@ -15,6 +15,8 @@ import java.util.List;
 public interface GroupMapper {
     List<GroupData> getGroups(String username);
 
+    List<String> getFriends(int gid);
+
     int addGroup(@Param("owner") String owner,
                  @Param("gname") String gname);
 

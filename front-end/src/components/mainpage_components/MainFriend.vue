@@ -236,9 +236,8 @@
 </template>
 
 <script>
-import axios from '../axios'
-import store from '../store'
-
+import axios from '../../axios'
+import store from '../../store'
 export default {
   data() {
     return {
@@ -247,33 +246,26 @@ export default {
       username: store.state.username,
       chatWith: '',
       inputMessage: '',
-
       AddFriend: false,
       AddGroup: false,
       ManageGroup: false,
       DeleteGroup: false,
       Chat: false,
-
       friendList: '',
-
       Addfriendform: {
         name: '',
         gid: '',
       },
-
       Addgroupform: {
         gname: '',
       },
-
       ManageGroupForm: {
         name: '',
         gid: '',
       },
-
       DeleteGroupForm: {
         gid: '',
       },
-
       ChatForm: {
         mid: '',
         fromUser: '',
@@ -281,12 +273,10 @@ export default {
         content: '',
         mtime: '',
       },
-
       addRules: {
         name: [{ required: true, message: '不能为空', trigger: 'blur' }],
         gname: [{ required: true, message: '请选择', trigger: 'blur' }],
       },
-
       groudRules: {
         gname: [{ required: true, message: '不能为空', trigger: 'blur' }],
       },
@@ -301,7 +291,6 @@ export default {
       this.ManageGroupForm.gid = ''
       this.DeleteGroupForm.gid = ''
     },
-
     addsubmit(AddForm) {
       var that = this
       axios
@@ -326,7 +315,6 @@ export default {
           }
         })
     },
-
     groupsubmit(Addgroupform) {
       for (var i of this.friendList) {
         if (i.gname === Addgroupform.gname) {
@@ -359,7 +347,6 @@ export default {
           }
         })
     },
-
     getFriendList() {
       var that = this
       axios

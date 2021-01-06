@@ -3,11 +3,12 @@
     <el-table
       :data="
         tableData.filter(
-          data =>
+          (data) =>
             !search || data.title.toLowerCase().includes(search.toLowerCase())
         )
       "
       style="width: 100%"
+      @row-click="(row,column,e)=>setArticle(row)"
     >
       <el-table-column label="BlogId" prop="bid"> </el-table-column>
       <el-table-column label="Date" prop="ctime"> </el-table-column>
@@ -38,7 +39,7 @@ export default {
   data() {
     return {
       tableData: [],
-      search: ''
+      search: '',
     }
   },
   methods: {
@@ -46,20 +47,20 @@ export default {
       var that = this
       axios
         .post('http://localhost:8080/article/deleteHistoryBlog', {
-          bid: row.bid
+          bid: row.bid,
         })
-        .then(res => {
+        .then((res) => {
           let code = res.data.code
           let msg = res.data.msg
           if (code === 300) {
             this.$message({
               message: msg,
-              type: 'success'
+              type: 'success',
             })
           } else {
             this.$message({
               message: msg,
-              type: 'error'
+              type: 'error',
             })
           }
         })
@@ -69,9 +70,9 @@ export default {
       var that = this
       axios
         .post('http://localhost:8080/article/getHistoryBlog', {
-          username: store.state.username
+          username: store.state.username,
         })
-        .then(res => {
+        .then((res) => {
           let code = res.data.code
           let msg = res.data.msg
           let respMap = res.data.respMap
@@ -80,14 +81,18 @@ export default {
           } else {
             this.$message({
               message: msg,
-              type: 'error'
+              type: 'error',
             })
           }
         })
-    }
+    },
+    setArticle(article) {
+      store.commit('setReadingNow', article)
+      this.$router.push({ name: 'Text' })
+    },
   },
   mounted() {
     this.init()
-  }
+  },
 }
 </script>

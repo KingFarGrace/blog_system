@@ -26,6 +26,19 @@
   </div>
 </template>
 
+<style>
+.el-aside {
+  max-width: 220px;
+  background-color: #ffffff;
+}
+.el-container {
+  height:1100px;
+}
+.el-main {
+  background-color: #e9eef3;
+}
+</style>
+
 
 
 

@@ -4,10 +4,64 @@
       <el-page-header @back="goBack" content="个人页面"> </el-page-header>
     </el-row>
     <el-row>
-      <el-col :span="16" :offset="4" id="infoPage-author"> 
-        
+      <el-col :span="12" :offset="5" id="infoPage-author">
+        <el-card class="box-card">
+          <el-form ref="form" :model="form" label-width="100px">
+            <el-row>
+              <el-col :span="10">
+                <el-form-item label="昵称">
+                  <div>{{ form.name }}</div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-form-item label="ID">
+                  <div>{{ form.id }}</div>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row>
+              <el-col :span="10">
+                <el-form-item label="发表文章数">
+                  <div>{{ form.number }}</div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="5">
+                <el-form-item label="性别">
+                  <div>{{ form.gender }}</div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="5">
+                <el-form-item label="年龄">
+                  <div>{{ form.age }}</div>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row>
+              <el-col :span="10">
+                <el-form-item label="邮箱">
+                  <div>{{ form.mailAddress }}</div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-form-item label="注册时间">
+                  <div>{{ form.date }}</div>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="15">
+                <el-form-item label="个性签名">
+                  <div>{{ form.signature }}</div>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </el-card>
       </el-col>
     </el-row>
+
     <el-row>
       <el-col :span="16" :offset="4" id="infoPage-main">
         <el-row>
@@ -41,13 +95,16 @@
                     <h1>
                       {{ article.title }}
                     </h1>
-                    <p>{{ article.content }}</p>
-                  </el-card></el-button
-                >
+                    <el-divider></el-divider>
+                    <p
+                      class="markdown-body"
+                      v-html="require('markdown-it')().render(article.content)"
+                      style="max-height: 10px"
+                    ></p> </el-card
+                ></el-button>
               </el-timeline-item>
-            </el-timeline>
-          </div></el-row
-        >
+            </el-timeline></div
+        ></el-row>
         <el-row
           ><el-pagination
             background
@@ -68,12 +125,23 @@
 <script>
 import store from '../store'
 import axios from '../axios'
+import 'github-markdown-css'
 
 export default {
   name: 'article-list',
   data() {
     return {
-      username: '',                                       //查看的人的名字
+      form: {
+        //要改
+        name: this.$route.query.username,
+        id: '',
+        age: '',
+        number: '',
+        date: '',
+        gender: '',
+        mailAddress: '',
+        signature: '',
+      },
       inputSearchArticle: '',
       articleBuf: '',
       pageSize: '',
@@ -82,14 +150,16 @@ export default {
     }
   },
   methods: {
-    getPage() {
+    getPage(currentPage) {
+      store.commit('setCurrentPage', currentPage)
       var that = this
       axios
-        .post('http://localhost:8080/article/load', {
-          //要改
-          pageIndex: store.state.pageIndex,
+        .post('http://localhost:8080/article/getHistoryBlog', {
+          username: this.form.name,
         })
         .then((res) => {
+          let code = res.data.code
+          let msg = res.data.msg
           if (res.data['code'] === 300) {
             let respMap = res.data['respMap']
             // data => page
@@ -116,7 +186,8 @@ export default {
     searchArticle() {
       var that = this
       axios
-        .post('http://localhost:8080/article/search', {               //要改
+        .post('http://localhost:8080/article/search', {
+          //要改
           key: this.inputSearchArticle,
         })
         .then((res) => {
@@ -148,9 +219,13 @@ export default {
           }
         })
     },
+    goBack() {
+      this.$router.go(-1)
+      console.log('go back')
+    },
   },
   mounted() {
-    this.getPage()
+    this.getPage('1')
   },
 }
 </script>
@@ -167,13 +242,11 @@ export default {
   padding: 20px;
   box-shadow: 10px 10px 30px #777777;
   margin-bottom: 50px;
-  height: 500px;
 }
 #infoPage-main {
   background-color: #e9eef3;
   padding: 20px;
   box-shadow: 10px 10px 30px #777777;
   margin-bottom: 10px;
-  height: 1200px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="text">
+  <div id="textpage">
     <el-row>
       <el-page-header @back="goBack" content="文章页面"> </el-page-header>
     </el-row>
@@ -11,9 +11,9 @@
         </div>
         <div id="textpage-author">
           <p>时间: {{ article.ctime }}</p>
-          <p @click="toWriter(article.author)">作者: {{ article.author }}</p>
+          <p @click="toAuthor(article.author)">作者: {{ article.author }}</p>
           <!-- TODO 收藏 -->
-          <p>收藏</p>
+          <p @click="toFavor(article.title)">收藏</p>
         </div>
         <div id="textpage-content">
           <p class="markdown-body" v-html="article.content"></p>
@@ -53,9 +53,17 @@ export default {
       var md = new markdown()
       this.article.content = md.render(this.article.content);
     },
-    toWriter(writer) {
-      // TODO 转跳到作者
+    toAuthor(author) {
+      this.$router.push({
+        name: 'Info',
+        query: {
+          username: author,
+        },
+      })
     },
+    toFavor(title){
+      //收藏功能
+    }
   },
   mounted() {
     this.getArticle()

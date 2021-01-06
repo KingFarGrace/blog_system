@@ -72,7 +72,7 @@
             :title="item.gname"
             :key="item"
           >
-            <div v-for="i in item.username" :key="i">
+            <div v-for="i in item.friends" :key="i">
               {{ i }}
             </div>
           </el-collapse-item>
@@ -84,6 +84,9 @@
 </template>
 
 <script>
+import axios from '../axios'
+import store from '../store'
+
 export default {
   data() {
     return {
@@ -175,18 +178,13 @@ export default {
     getFriendList() {
       var that = this
       axios
-        .post('http://localhost:8080/article/load', {       //地址要改
+        .post('http://localhost:8080/group/load', {       //地址要改
           username: store.state.username,
         })
         .then((res) => {
-          if (res.data['code'] === 300) {                     //code要改
-            let respMap = res.data['respMap']
+          if (res.data['code'] === 600) {                     //code要改
             // data => page
-            that.friendList = respMap['friendList']
-            this.$message({
-              message: res.data['msg'],
-              type: 'success',
-            })
+            that.friendList = res.data['groups']
           } else {
             this.$message({
               message: res.data['msg'],

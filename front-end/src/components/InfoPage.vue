@@ -245,6 +245,6 @@ export default {
   padding: 20px;
   box-shadow: 10px 10px 30px #777777;
   margin-bottom: 10px;
-  height: 1200px;
+  max-height: 1200px;
 }
 </style>

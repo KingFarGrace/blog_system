@@ -88,4 +88,13 @@ a,
   text-align: center;
   font-size: 20px;
 }
+.el-footer {
+  background-color: #b3c0d1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+  width: 99%;
+  position: absolute;
+  bottom: 0;
+}
 </style>

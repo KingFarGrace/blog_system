@@ -37,5 +37,9 @@ export default {
 .el-main {
   background-color: #e9eef3;
 }
+body {
+  background: url(../assets/background.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
 </style>
 

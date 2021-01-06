@@ -262,4 +262,8 @@ export default {
   box-shadow: 10px 10px 30px #777777;
   margin-bottom: 10px;
 }
+body {
+  background: url(../assets/background.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
 </style>

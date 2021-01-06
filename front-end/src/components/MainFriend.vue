@@ -42,7 +42,7 @@
               v-for="item in friendList"
               :key="item"
               :label="item.gname"
-              :value="item.gname"
+              :value="item.gid"
             >
             </el-option>
           </el-select>
@@ -82,7 +82,6 @@
       @close="closeDialog"
     >
       <el-form :model="ManageGroupForm">
-        <!-- TODO 管理分组操作 -->
         <el-form-item label="用户名" :label-width="'100px'" prop="name">
           <el-select
             v-model="ManageGroupForm.name"
@@ -107,7 +106,7 @@
                 v-if="item.gname != oldGroup"
                 :key="item"
                 :label="item.gname"
-                :value="item.gname"
+                :value="item.gid"
               >
               </el-option>
             </div>
@@ -116,7 +115,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="ManageGroup = false">取 消</el-button>
-        <el-button type="primary">确 定</el-button>
+        <el-button type="primary" @click="changeGroup(ManageGroupForm)">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -135,7 +134,7 @@
                 v-if="item.gname != '我的关注'"
                 :key="item"
                 :label="item.gname"
-                :value="item.gname"
+                :value="item.gid"
               >
               </el-option>
             </div>
@@ -164,11 +163,15 @@
       :visible.sync="Chat"
       @close="closeDialog"
     >
-      <el-form :model="ChatForm"> 
+      <el-form :model="ChatForm">
         <div v-for="item in this.ChatForm" :key="item">
           <!-- TODO 改样子 -->
-          <div v-if="item.fromUser == username" :key="item.mid">我发的{{item.content}}</div>
-          <div v-if="item.fromUser != username" :key="item.mid">他发的{{item.content}}</div>
+          <div v-if="item.fromUser == username" :key="item.mid">
+            我发的{{ item.content }}
+          </div>
+          <div v-if="item.fromUser != username" :key="item.mid">
+            他发的{{ item.content }}
+          </div>
         </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -208,6 +211,7 @@
                     type="danger"
                     icon="el-icon-delete"
                     circle
+                    @click="deleteFriend(i)"
                   ></el-button
                 ></el-col>
               </el-row>
@@ -294,18 +298,15 @@ export default {
     addsubmit(Addform) {
       var that = this
       axios
-        .post('http://localhost:8080/article/load', {
-          //地址要改
+        .post('http://localhost:8080/group/addFriend', {
           username: store.state.username,
-          gname: this.Addfriendform.gname,
+          gid: this.Addfriendform.gid,
           name: this.Addfriendform.name,
         })
         .then((res) => {
-          if (res.data['code'] === 300) {
-            //code要改
-            let respMap = res.data['respMap']
+          if (res.data['code'] === 600) {
             // data => page
-            that.friendList = respMap['friendList']
+            that.friendList = res.data['groups']
             this.$message({
               message: res.data['msg'],
               type: 'success',
@@ -322,17 +323,14 @@ export default {
     groupsubmit(Addgroupform) {
       var that = this
       axios
-        .post('http://localhost:8080/article/load', {
-          //地址要改
+        .post('http://localhost:8080/group/addGroup', {
           username: store.state.username,
           gname: this.Addgroupform.gname,
         })
         .then((res) => {
-          if (res.data['code'] === 300) {
-            //code要改
-            let respMap = res.data['respMap']
+          if (res.data['code'] === 600) {
             // data => page
-            that.friendList = respMap['friendList']
+            that.friendList = res.data['groups']
             this.$message({
               message: res.data['msg'],
               type: 'success',
@@ -395,6 +393,55 @@ export default {
           }
         })
     },
+    deleteFriend(name) {
+      var that = this
+      axios
+        .post('http://localhost:8080/group/deleteFriend', {
+          username: store.state.username,
+          gid: that.Addgroupform.gid,
+          name: name,
+        })
+        .then((res) => {
+          if (res.data['code'] === 600) {
+            // data => page
+            that.friendList = res.data['groups']
+            this.$message({
+              message: res.data['msg'],
+              type: 'success',
+            })
+          } else {
+            this.$message({
+              message: res.data['msg'],
+              type: 'error',
+            })
+          }
+        })
+    },
+    changeGroup(ManageGroupForm) {
+      var that = this
+      axios
+        .post('http://localhost:8080/group/deleteFriend', {
+          username: store.state.username,
+          name: name,
+          oldGid: '',
+          newGid: '',
+        })
+        .then((res) => {
+          if (res.data['code'] === 600) {
+            // data => page
+            that.friendList = res.data['groups']
+            this.$message({
+              message: res.data['msg'],
+              type: 'success',
+            })
+          } else {
+            this.$message({
+              message: res.data['msg'],
+              type: 'error',
+            })
+          }
+        })
+    }
   },
   mounted() {
     this.getFriendList()

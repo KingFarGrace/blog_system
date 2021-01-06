@@ -151,11 +151,12 @@ export default {
       store.commit('setCurrentPage', currentPage)
       var that = this
       axios
-        .post('http://localhost:8080/article/load', {
-          //要改
-          pageIndex: store.state.pageIndex,
+        .post('http://localhost:8080/article/getHistoryBlog', {
+          username: this.form.name,
         })
         .then((res) => {
+          let code = res.data.code
+            let msg = res.data.msg
           if (res.data['code'] === 300) {
             let respMap = res.data['respMap']
             // data => page
@@ -214,6 +215,10 @@ export default {
             })
           }
         })
+    },
+    goBack() {
+      this.$router.go(-1)
+      console.log('go back')
     },
   },
   mounted() {

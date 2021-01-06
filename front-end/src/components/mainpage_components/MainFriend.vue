@@ -66,7 +66,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="AddGroup = false">取 消</el-button>
-        <el-button type="primary" @click="groupsubmit(Addgroupform)"
+        <el-button type="primary" @click="groupSubmit(Addgroupform)"
           >确 定</el-button
         >
       </div>
@@ -254,34 +254,35 @@ export default {
       friendList: '',
       Addfriendform: {
         name: '',
-        gid: '',
+        gid: ''
       },
       Addgroupform: {
-        gname: '',
+        gname: ''
       },
       ManageGroupForm: {
         name: '',
-        gid: '',
+        gid: ''
       },
       DeleteGroupForm: {
-        gid: '',
+        gid: ''
       },
       ChatForm: {
         mid: '',
         fromUser: '',
         toUser: '',
         content: '',
-        mtime: '',
+        mtime: ''
       },
       addRules: {
         name: [{ required: true, message: '不能为空', trigger: 'blur' }],
-        gname: [{ required: true, message: '请选择', trigger: 'blur' }],
+        gname: [{ required: true, message: '请选择', trigger: 'blur' }]
       },
       groudRules: {
-        gname: [{ required: true, message: '不能为空', trigger: 'blur' }],
-      },
+        gname: [{ required: true, message: '不能为空', trigger: 'blur' }]
+      }
     }
   },
+
   methods: {
     closeDialog() {
       this.Addfriendform.name = ''
@@ -291,80 +292,40 @@ export default {
       this.ManageGroupForm.gid = ''
       this.DeleteGroupForm.gid = ''
     },
-    addsubmit(AddForm) {
+
+    friendAxios(url, json) {
       var that = this
-      axios
-        .post('http://localhost:8080/group/addFriend', {
-          username: store.state.username,
-          gid: AddForm.gid,
-          name: AddForm.name,
-        })
-        .then((res) => {
-          if (res.data['code'] === 600) {
-            // data => page
-            that.friendList = res.data['groups']
-            this.$message({
-              message: res.data['msg'],
-              type: 'success',
-            })
-          } else {
-            this.$message({
-              message: res.data['msg'],
-              type: 'error',
-            })
-          }
-        })
-    },
-    groupsubmit(Addgroupform) {
-      for (var i of this.friendList) {
-        if (i.gname === Addgroupform.gname) {
+      axios.post(url, json).then(res => {
+        if (res.data['code'] === 600) {
+          // data => page
+          that.friendList = res.data['groups']
           this.$message({
-            message: '存在相同组名',
-            type: 'error',
+            message: res.data['msg'],
+            type: 'success'
           })
-          return
+        } else {
+          this.$message({
+            message: res.data['msg'],
+            type: 'error'
+          })
         }
-      }
-      var that = this
-      axios
-        .post('http://localhost:8080/group/addGroup', {
-          username: store.state.username,
-          gname: Addgroupform.gname,
-        })
-        .then((res) => {
-          if (res.data['code'] === 600) {
-            // data => page
-            that.friendList = res.data['groups']
-            this.$message({
-              message: res.data['msg'],
-              type: 'success',
-            })
-          } else {
-            this.$message({
-              message: res.data['msg'],
-              type: 'error',
-            })
-          }
-        })
+      })
     },
+
+    addsubmit(AddForm) {
+      this.friendAxios('http://localhost:8080/group/addFriend', {
+        username: store.state.username,
+        gid: AddForm.gid,
+        name: AddForm.name
+      })
+    },
+
     getFriendList() {
-      var that = this
-      axios
-        .post('http://localhost:8080/group/load', {
-          username: store.state.username,
-        })
-        .then((res) => {
-          if (res.data['code'] === 600) {
-            // data => page
-            that.friendList = res.data['groups']
-          } else {
-            this.$message({
-              message: res.data['msg'],
-              type: 'error',
-            })
-          }
-        })
+      this.friendAxios('http://localhost:8080/group/load', {
+        username: store.state.username
+      })
     },
+
     getOldGid(name) {
       for (var i of this.friendList) {
         for (var j of i.friends) {
@@ -374,58 +335,28 @@ export default {
         }
       }
     },
-    chat(toUser) {
-      var that = this
-      axios
-        .post('http://localhost:8080/message/display', {
-          fromUser: store.state.username,
-          toUser: toUser,
-        })
-        .then((res) => {
-          let code = res.data['code']
-          let msg = res.data['msg']
-          if (res.data['code'] === 500) {
-            // data => page
-            let respMap = res.data['respMap']
-            that.ChatForm = respMap.messages
-          } else {
-            this.$message({
-              message: res.data['msg'],
-              type: 'error',
-            })
-          }
-        })
+
+    groupSubmit(Addgroupform) {
+      for (var i of this.friendList) {
+        if (i.gname === Addgroupform.gname) {
+          this.$message({
+            message: '存在相同组名',
+            type: 'error'
+          })
+          return
+        }
+      }
+      this.friendAxios('http://localhost:8080/group/addGroup', {
+        username: store.state.username,
+        gname: Addgroupform.gname
+      })
     },
-    deleteFriend(name) {
-      this.getOldGid(name)
-      var that = this
-      axios
-        .post('http://localhost:8080/group/deleteFriend', {
-          username: store.state.username,
-          gid: that.oldGid,
-          name: name,
-        })
-        .then((res) => {
-          if (res.data['code'] === 600) {
-            // data => page
-            that.friendList = res.data['groups']
-            this.$message({
-              message: res.data['msg'],
-              type: 'success',
-            })
-          } else {
-            this.$message({
-              message: res.data['msg'],
-              type: 'error',
-            })
-          }
-        })
-    },
+
     deleteGroup(DeleteGroupForm) {
       this.$confirm('是否删除该分组?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning',
+        type: 'warning'
       }).then(() => {
         var checkNull = 0
         for (var i of this.friendList) {
@@ -435,101 +366,82 @@ export default {
             } else {
               this.$message({
                 message: '分组不为空',
-                type: 'error',
+                type: 'error'
               })
             }
           }
         }
         if (checkNull === 1) {
-          var that = this
-          axios
-            .post('http://localhost:8080/group/deleteGroup', {
-              username: store.state.username,
-              gid: DeleteGroupForm.gid,
-            })
-            .then((res) => {
-              if (res.data['code'] === 600) {
-                // data => page
-                that.friendList = res.data['groups']
-                this.$message({
-                  message: res.data['msg'],
-                  type: 'success',
-                })
-              } else {
-                this.$message({
-                  message: res.data['msg'],
-                  type: 'error',
-                })
-              }
-            })
+          this.friendAxios('http://localhost:8080/group/deleteGroup', {
+            username: store.state.username,
+            gid: DeleteGroupForm.gid
+          })
         }
       })
     },
+
     deleteFriend(name) {
       this.$confirm('是否取消关注?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning',
+        type: 'warning'
       }).then(() => {
         this.getOldGid(name)
-        var that = this
-        axios
-          .post('http://localhost:8080/group/deleteFriend', {
-            username: store.state.username,
-            gid: that.oldGid,
-            name: name,
-          })
-          .then((res) => {
-            if (res.data['code'] === 600) {
-              // data => page
-              that.friendList = res.data['groups']
-              this.$message({
-                message: res.data['msg'],
-                type: 'success',
-              })
-            } else {
-              this.$message({
-                message: res.data['msg'],
-                type: 'error',
-              })
-            }
-          })
+        this.friendAxios('http://localhost:8080/group/deleteFriend', {
+          username: store.state.username,
+          gid: this.oldGid,
+          name: name
+        })
       })
     },
+
     changeGroup(ManageGroupForm) {
+      this.friendAxios('http://localhost:8080/group/changeGroup', {
+        username: store.state.username,
+        name: ManageGroupForm.name,
+        oldGid: this.oldGid,
+        newGid: ManageGroupForm.gid
+      })
+    },
+
+    //// friends axios ↑----↓ message axios ////
+
+    chat(toUser) {
       var that = this
-      axios
-        .post('http://localhost:8080/group/changeGroup', {
-          username: store.state.username,
-          name: ManageGroupForm.name,
-          oldGid: that.oldGid,
-          newGid: ManageGroupForm.gid,
-        })
-        .then((res) => {
-          if (res.data['code'] === 600) {
-            // data => page
-            that.friendList = res.data['groups']
-            this.$message({
-              message: res.data['msg'],
-              type: 'success',
+      this.$message({
+              message: toUser,
+              type: 'error'
             })
+      axios
+        .post('http://localhost:8080/message/display', {
+          fromUser: store.state.username,
+          toUser: toUser
+        })
+        .then(res => {
+          let code = res.data['code']
+          let msg = res.data['msg']
+          if (res.data['code'] === 500) {
+            // data => page
+            let respMap = res.data['respMap']
+            that.ChatForm = respMap.messages
           } else {
             this.$message({
               message: res.data['msg'],
-              type: 'error',
+              type: 'error'
             })
           }
         })
     },
+
     sendMessages() {
       var that = this
       axios
         .post('http://localhost:8080/message/send', {
           fromUser: store.state.username,
           toUser: that.chatWith,
-          content: that.inputMessage,
+          content: that.inputMessage
         })
-        .then((res) => {
+        .then(res => {
           let code = res.data['code']
           let msg = res.data['msg']
           if (res.data['code'] === 500) {
@@ -539,15 +451,16 @@ export default {
           } else {
             this.$message({
               message: res.data['msg'],
-              type: 'error',
+              type: 'error'
             })
           }
         })
-    },
+    }
   },
+
   mounted() {
     this.getFriendList()
-  },
+  }
 }
 </script>
 

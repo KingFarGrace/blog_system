@@ -210,4 +210,9 @@ export default {
   padding: 50px;
   text-align: center;
 }
+
+body {
+  background: url(../assets/background.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
 </style>

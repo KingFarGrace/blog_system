@@ -39,6 +39,7 @@ export default {
         { id: 2, text: '345', writer: 'cc', time: '3.3' },
         { id: 3, text: '456', writer: 'dd', time: '4.4' },
       ],
+      tableData: [],
     }
   },
   methods: {
@@ -50,7 +51,7 @@ export default {
       this.article = store.state.readingNow
       var markdown = require('markdown-it')
       var md = new markdown()
-      this.article.content = md.render(this.article.content);
+      this.article.content = md.render(this.article.content)
     },
     toAuthor(author) {
       this.$router.push({
@@ -60,29 +61,58 @@ export default {
         },
       })
     },
-    toFavor(bid){
+    toFavor(bid) {
       var that = this
       axios
-        .post('http://localhost:8080/article/addFavor', {
+        .post('http://localhost:8080/article/getFavors', {
           username: store.state.username,
-          bid: bid
         })
-        .then(res => {
+        .then((res) => {
           let code = res.data.code
           let msg = res.data.msg
+          let respMap = res.data.respMap
           if (code === 300) {
-            this.$message({
-              message: msg,
-              type: 'success'
-            })
+            that.tableData = respMap.articles
           } else {
             this.$message({
               message: msg,
-              type: 'error'
+              type: 'error',
             })
           }
+          var favorAlready = 0
+          for (var i of this.tableData) {
+            if (i.bid === bid) {
+              this.$message({
+                message: '文章已收藏',
+                type: 'info',
+              })
+              favorAlready = 1
+            }
+          }
+          if (favorAlready === 0) {
+            axios
+              .post('http://localhost:8080/article/addFavor', {
+                username: store.state.username,
+                bid: bid,
+              })
+              .then((res) => {
+                let code = res.data.code
+                let msg = res.data.msg
+                if (code === 300) {
+                  this.$message({
+                    message: msg,
+                    type: 'success',
+                  })
+                } else {
+                  this.$message({
+                    message: msg,
+                    type: 'error',
+                  })
+                }
+              })
+          }
         })
-    }
+    },
   },
   mounted() {
     this.getArticle()
@@ -130,5 +160,10 @@ export default {
 
 #textpage-author p {
   display: inline;
+}
+
+body {
+  background: url(../assets/background.jpg) no-repeat center center fixed;
+  background-size: cover;
 }
 </style>

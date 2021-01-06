@@ -13,7 +13,7 @@ public interface GroupService {
 
     void addGroup(String owner, String gname);
 
-    void addFriend(String owner, String username);
+    void addFriend(int gid, String username);
 
     void deleteGroup(int gid);
 

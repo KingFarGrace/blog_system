@@ -56,10 +56,10 @@ public class GroupController {
 
     @PostMapping("/addFriend")
     Response addFriend(@RequestBody JSONObject jsonObject) {
-        String username = jsonObject.getString("username");
+        int gid = jsonObject.getInteger("gid");
         String name = jsonObject.getString("name");
         try {
-            groupService.addFriend(username, name);
+            groupService.addFriend(gid, name);
         } catch (Exception e) {
             e.printStackTrace();
             return new GroupResponse(3, "failed to add friend", null);

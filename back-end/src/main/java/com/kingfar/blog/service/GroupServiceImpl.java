@@ -27,8 +27,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void addFriend(String owner, String username) {
-        int gid = groupMapper.getDefaultGid(owner);
+    public void addFriend(int gid, String username) {
         groupMapper.addFriend(gid, username);
     }
 

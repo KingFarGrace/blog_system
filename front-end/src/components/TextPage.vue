@@ -1,5 +1,5 @@
 <template>
-  <div id="text">
+  <div id="textpage">
     <el-row>
       <el-page-header @back="goBack" content="文章页面"> </el-page-header>
     </el-row>

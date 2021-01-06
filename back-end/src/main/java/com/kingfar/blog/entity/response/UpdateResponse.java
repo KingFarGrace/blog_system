@@ -14,12 +14,12 @@ public class UpdateResponse extends Response {
     public static UpdateResponse wrongPasswordResp = new UpdateResponse(4, "wrong password");
     public static UpdateResponse failedToUpdatePasswordResp = new UpdateResponse(5, "failed to update password");
 
+    public UpdateResponse(int code, String msg) {
+        super(code, msg);
+    }
+
     @Override
     protected int groupCode() {
         return 4;
-    }
-
-    public UpdateResponse(int code, String msg) {
-        super(code, msg);
     }
 }

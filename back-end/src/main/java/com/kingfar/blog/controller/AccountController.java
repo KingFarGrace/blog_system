@@ -14,7 +14,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 /**
  * @author ZHANGKAIHENG
@@ -95,7 +94,7 @@ public class AccountController {
         UserLoginData user;
         try {
             user = accountService.getLoginData(username);
-            if(user.getUid() == 0) {
+            if (user.getUid() == 0) {
                 return new LoginResponse(3, "cannot find user:" + username, null);
             }
         } catch (Exception e) {

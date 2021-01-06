@@ -69,4 +69,19 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleData> getDrafts(String username) {
         return articleMapper.getDraftsByUsername(username);
     }
+
+    @Override
+    public void addFavor(String username, int bid) {
+        articleMapper.addFavor(username, bid);
+    }
+
+    @Override
+    public void deleteFavor(String username, int bid) {
+        articleMapper.deleteFavor(username, bid);
+    }
+
+    @Override
+    public List<ArticleData> getFavors(String username) {
+        return articleMapper.getAllFavor(username);
+    }
 }

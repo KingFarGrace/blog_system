@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author WUHAIYUAN
- *
+ * <p>
  * MessageResponse code
  * 500: success
  * 501: notify error -> failed to notify messages
@@ -33,7 +32,7 @@ public class MessageController {
     MessageService messageService;
 
     @PostMapping("/display")
-    Response display(@RequestBody JSONObject jsonObject){
+    Response display(@RequestBody JSONObject jsonObject) {
         String fromUser = jsonObject.getString("fromUser");
         String toUser = jsonObject.getString("toUser");
         List<MessageData> messageDataList;
@@ -49,7 +48,7 @@ public class MessageController {
     }
 
     @PostMapping("/send")
-    Response send(@RequestBody MessageData messageData){
+    Response send(@RequestBody MessageData messageData) {
         try {
             messageService.sendMessage(messageData);
         } catch (Exception e) {

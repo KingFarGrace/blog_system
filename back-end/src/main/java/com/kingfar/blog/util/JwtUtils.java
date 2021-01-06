@@ -40,7 +40,7 @@ public class JwtUtils {
     }
 
     public static String getUsername(String token) {
-        if(token == null || "".equals(token)) {
+        if (token == null || "".equals(token)) {
             return null;
         }
         try {

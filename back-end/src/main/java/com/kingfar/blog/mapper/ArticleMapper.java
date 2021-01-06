@@ -45,4 +45,12 @@ public interface ArticleMapper {
     int deleteDraft(int bid);
 
     List<ArticleData> getDraftsByUsername(String username);
+
+    int addFavor(@Param("username") String username,
+                 @Param("bid") int bid);
+
+    int deleteFavor(@Param("username") String username,
+                    @Param("bid") int bid);
+
+    List<ArticleData> getAllFavor(String username);
 }

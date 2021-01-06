@@ -4,7 +4,6 @@ import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kingfar.blog.entity.response.Response;
 import com.kingfar.blog.entity.response.TokenResponse;
 import com.kingfar.blog.util.JwtUtils;
 import org.springframework.web.servlet.HandlerInterceptor;

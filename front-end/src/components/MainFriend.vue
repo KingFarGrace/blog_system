@@ -86,7 +86,7 @@
           <el-select
             v-model="ManageGroupForm.name"
             placeholder="请选择"
-            @change="getOldGroup(ManageGroupForm.name)"
+            @change="getOldGid(ManageGroupForm.name)"
           >
             <div v-for="item in friendList" :key="item">
               <el-option
@@ -103,7 +103,7 @@
           <el-select v-model="ManageGroupForm.gname" placeholder="请选择">
             <div v-for="item in friendList" :key="item.gname">
               <el-option
-                v-if="item.gname != oldGroup"
+                v-if="item.gid != oldGid"
                 :key="item"
                 :label="item.gname"
                 :value="item.gid"
@@ -115,7 +115,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="ManageGroup = false">取 消</el-button>
-        <el-button type="primary" @click="changeGroup(ManageGroupForm)">确 定</el-button>
+        <el-button type="primary" @click="changeGroup(ManageGroupForm)"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
 
@@ -126,7 +128,6 @@
       @close="closeDialog"
     >
       <el-form :model="DeleteGroupForm">
-        <!-- TODO 删除分组操作 -->
         <el-form-item label="分组" :label-width="'100px'" prop="value">
           <el-select v-model="DeleteGroupForm.gname" placeholder="请选择">
             <div v-for="item in friendList" :key="item">
@@ -143,7 +144,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="DeleteGroup = false">取 消</el-button>
-        <el-button type="primary">确 定</el-button>
+        <el-button type="primary" @click="deleteGroup(DeleteGroupForm)"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
 
@@ -232,7 +235,7 @@ export default {
     return {
       activeName: '',
       inputSearch: '',
-      oldGroup: '',
+      oldGid: '',
       username: store.state.username,
       chatWith: '',
 
@@ -247,24 +250,23 @@ export default {
 
       Addfriendform: {
         name: '',
+        //gname存的是gid
         gname: '',
-        gid: '',
       },
 
       Addgroupform: {
         gname: '',
-        gid: '',
       },
 
       ManageGroupForm: {
         name: '',
+        //gname存的是新gid
         gname: '',
-        gid: '',
       },
 
       DeleteGroupForm: {
+        //gname存的是gid
         gname: '',
-        gid: '',
       },
 
       ChatForm: {
@@ -295,13 +297,13 @@ export default {
       this.DeleteGroupForm.gname = ''
     },
 
-    addsubmit(Addform) {
+    addsubmit(AddForm) {
       var that = this
       axios
         .post('http://localhost:8080/group/addFriend', {
           username: store.state.username,
-          gid: this.Addfriendform.gid,
-          name: this.Addfriendform.name,
+          gid: AddForm.gname,
+          name: AddForm.name,
         })
         .then((res) => {
           if (res.data['code'] === 600) {
@@ -325,7 +327,7 @@ export default {
       axios
         .post('http://localhost:8080/group/addGroup', {
           username: store.state.username,
-          gname: this.Addgroupform.gname,
+          gname: Addgroupform.gname,
         })
         .then((res) => {
           if (res.data['code'] === 600) {
@@ -362,11 +364,11 @@ export default {
           }
         })
     },
-    getOldGroup(name) {
+    getOldGid(name) {
       for (var i of this.friendList) {
         for (var j of i.friends) {
           if (j == name) {
-            this.oldGroup = i.gname
+            this.oldGid = i.gid
           }
         }
       }
@@ -394,11 +396,74 @@ export default {
         })
     },
     deleteFriend(name) {
+      this.getOldGid(name)
       var that = this
       axios
         .post('http://localhost:8080/group/deleteFriend', {
           username: store.state.username,
-          gid: that.Addgroupform.gid,
+          gid: that.oldGid,
+          name: name,
+        })
+        .then((res) => {
+          if (res.data['code'] === 600) {
+            // data => page
+            that.friendList = res.data['groups']
+            this.$message({
+              message: res.data['msg'],
+              type: 'success',
+            })
+          } else {
+            this.$message({
+              message: res.data['msg'],
+              type: 'error',
+            })
+          }
+        })
+    },
+    deleteGroup(DeleteGroupForm) {
+      for (var i of this.friendList) {
+        if (i.gid === DeleteGroupForm.gname) {
+          if (i.friends === null) {
+            var checkNull = 1
+          } else {
+            this.$message({
+              message: '分组不为空',
+              type: 'error',
+            })
+          }
+        }
+      }
+      if (checkNull === 1) {
+        // var that = this
+        // axios
+        //   .post('http://localhost:8080/group/deleteGroup', {
+        //     username: store.state.username,
+        //     gid: DeleteGroupForm.gname,
+        //   })
+        //   .then((res) => {
+        //     if (res.data['code'] === 600) {
+        //       // data => page
+        //       that.friendList = res.data['groups']
+        //       this.$message({
+        //         message: res.data['msg'],
+        //         type: 'success',
+        //       })
+        //     } else {
+        //       this.$message({
+        //         message: res.data['msg'],
+        //         type: 'error',
+        //       })
+        //     }
+        //   })
+      }
+    },
+    deleteFriend(name) {
+      this.getOldGid(name)
+      var that = this
+      axios
+        .post('http://localhost:8080/group/deleteFriend', {
+          username: store.state.username,
+          gid: that.oldGid,
           name: name,
         })
         .then((res) => {
@@ -420,11 +485,11 @@ export default {
     changeGroup(ManageGroupForm) {
       var that = this
       axios
-        .post('http://localhost:8080/group/deleteFriend', {
+        .post('http://localhost:8080/group/changeGroup', {
           username: store.state.username,
-          name: name,
-          oldGid: '',
-          newGid: '',
+          name: ManageGroupForm.name,
+          oldGid: that.oldGid,
+          newGid: ManageGroupForm.gname,
         })
         .then((res) => {
           if (res.data['code'] === 600) {
@@ -441,7 +506,7 @@ export default {
             })
           }
         })
-    }
+    },
   },
   mounted() {
     this.getFriendList()

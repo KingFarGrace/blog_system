@@ -46,64 +46,78 @@ public class GroupController {
     Response addGroup(@RequestBody JSONObject jsonObject) {
         String username = jsonObject.getString("username");
         String gname = jsonObject.getString("gname");
+        List<GroupData> groups;
         try {
             groupService.addGroup(username, gname);
+            groups = groupService.getGroups(username);
         } catch (Exception e) {
             return new GroupResponse(2, "failed to add group", null);
         }
-        return new GroupResponse(0, "success", null);
+        return new GroupResponse(0, "success", groups);
     }
 
     @PostMapping("/addFriend")
     Response addFriend(@RequestBody JSONObject jsonObject) {
         String username = jsonObject.getString("username");
+        int gid = jsonObject.getInteger("gid");
         String name = jsonObject.getString("name");
+        List<GroupData> groups;
         try {
-            groupService.addFriend(username, name);
+            groupService.addFriend(gid, name);
+            groups = groupService.getGroups(username);
         } catch (Exception e) {
             e.printStackTrace();
             return new GroupResponse(3, "failed to add friend", null);
         }
-        return new GroupResponse(0, "success", null);
+        return new GroupResponse(0, "success", groups);
     }
 
     @PostMapping("/deleteGroup")
     Response deleteGroup(@RequestBody JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
         int gid = jsonObject.getInteger("gid");
+        List<GroupData> groups;
         try {
             groupService.deleteGroup(gid);
+            groups = groupService.getGroups(username);
         } catch (Exception e) {
             e.printStackTrace();
             return new GroupResponse(4, "failed to delete group", null);
         }
-        return new GroupResponse(0, "success", null);
+        return new GroupResponse(0, "success", groups);
     }
 
     @PostMapping("/deleteFriend")
     Response deleteFriend(@RequestBody JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
         int gid = jsonObject.getInteger("gid");
         String name = jsonObject.getString("name");
+        List<GroupData> groups;
         try {
             groupService.deleteFriend(gid, name);
+            groups = groupService.getGroups(username);
         } catch (Exception e) {
             e.printStackTrace();
             return new GroupResponse(5, "failed to delete friend", null);
         }
-        return new GroupResponse(0, "success", null);
+        return new GroupResponse(0, "success", groups);
     }
 
     @PostMapping("/changeGroup")
     Response changeGroup(@RequestBody JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
         int oldGid = jsonObject.getInteger("oldGid");
         int newGid = jsonObject.getInteger("newGid");
         String name = jsonObject.getString("name");
+        List<GroupData> groups;
         try {
             groupService.changeGroup(oldGid, newGid, name);
+            groups = groupService.getGroups(username);
         } catch (Exception e) {
             e.printStackTrace();
             return new GroupResponse(6, "failed to change group", null);
         }
-        return new GroupResponse(0, "success", null);
+        return new GroupResponse(0, "success", groups);
     }
 
 }

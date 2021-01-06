@@ -29,6 +29,4 @@ public interface GroupMapper {
     int changeGroup(@Param("old") int oldGid,
                     @Param("new") int newGid,
                     @Param("username") String username);
-
-    int getDefaultGid(String owner);
 }

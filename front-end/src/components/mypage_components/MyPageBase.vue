@@ -93,37 +93,40 @@ import store from '../../store'
         })
       },
       update(){
-        var that = this
-        axios
-        .post('http://localhost:8080/user/updatePublicInfo', {
-          uid: that.form.id,
-          username: that.form.name,
-          sex: that.form.gender,
-          age: that.form.age,
-          mail: that.form.mailAddress,
-          signature: that.form.signature
-        })
-        .then(res => {
-          let code = res.data.code
-          let msg = res.data.msg
-          if(code === 400) {
-            store.commit('updateUser', that.form)
-            this.$message({
-              message: msg,
-              type: 'success'
-            })
-          } else if (code === 401) {
-            this.$message({
-              message: '用户名已被使用，请更换用户名',
-              type: 'error'
-            })
-          } else {
-            this.$message({
-              message: msg,
-              type: 'error'
-            })
-          }
-        })
+        if(this.checkEmail()){
+          var that = this
+          axios
+          .post('http://localhost:8080/user/updatePublicInfo', {
+            uid: that.form.id,
+            username: that.form.name,
+            sex: that.form.gender,
+            age: that.form.age,
+            mail: that.form.mailAddress,
+            signature: that.form.signature
+          })
+          .then(res => {
+            let code = res.data.code
+            let msg = res.data.msg
+            if(code === 400) {
+              store.commit('updateUser', that.form)
+              this.$message({
+                message: msg,
+                type: 'success'
+              })
+            } else if (code === 401) {
+              this.$message({
+                message: '用户名已被使用，请更换用户名',
+                type: 'error'
+              })
+            } else {
+              this.$message({
+                message: msg,
+                type: 'error'
+              })
+            }
+          })
+        }
+
       },
       checkEmail() {
         var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;

@@ -158,6 +158,25 @@
       <!-- TODO 加载搜索信息 -->
     </el-dialog>
 
+    <el-dialog
+      width="50%"
+      title="聊天界面"
+      :visible.sync="Chat"
+      @close="closeDialog"
+    >
+      <el-form :model="ChatForm"> 
+        <div v-for="item in this.ChatForm" :key="item">
+          <!-- TODO 改样子 -->
+          <div v-if="item.fromUser == username" :key="item.mid">我发的{{item.content}}</div>
+          <div v-if="item.fromUser != username" :key="item.mid">他发的{{item.content}}</div>
+        </div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="Chat = false">取 消</el-button>
+        <el-button type="primary">确 定</el-button>
+      </div>
+    </el-dialog>
+
     <div>
       <el-scrollbar style="height: 100%">
         <el-collapse v-model="activeName" accordion>
@@ -177,6 +196,11 @@
                     type="info"
                     icon="el-icon-message"
                     circle
+                    @click.native="
+                      Chat = true
+                      chatWith = i
+                      chat(i)
+                    "
                   ></el-button
                 ></el-col>
                 <el-col :span="5">
@@ -205,31 +229,46 @@ export default {
       activeName: '',
       inputSearch: '',
       oldGroup: '',
+      username: store.state.username,
+      chatWith: '',
 
       AddFriend: false,
       AddGroup: false,
       ManageGroup: false,
       DeleteGroup: false,
       SearchFriend: false,
+      Chat: false,
 
       friendList: '',
 
       Addfriendform: {
         name: '',
         gname: '',
+        gid: '',
       },
 
       Addgroupform: {
         gname: '',
+        gid: '',
       },
 
       ManageGroupForm: {
         name: '',
         gname: '',
+        gid: '',
       },
 
       DeleteGroupForm: {
         gname: '',
+        gid: '',
+      },
+
+      ChatForm: {
+        mid: '',
+        fromUser: '',
+        toUser: '',
+        content: '',
+        mtime: '',
       },
 
       addRules: {
@@ -311,12 +350,10 @@ export default {
       var that = this
       axios
         .post('http://localhost:8080/group/load', {
-          //地址要改
           username: store.state.username,
         })
         .then((res) => {
           if (res.data['code'] === 600) {
-            //code要改
             // data => page
             that.friendList = res.data['groups']
           } else {
@@ -335,6 +372,28 @@ export default {
           }
         }
       }
+    },
+    chat(toUser) {
+      var that = this
+      axios
+        .post('http://localhost:8080/message/display', {
+          fromUser: store.state.username,
+          toUser: toUser,
+        })
+        .then((res) => {
+          let code = res.data['code']
+          let msg = res.data['msg']
+          if (res.data['code'] === 500) {
+            // data => page
+            let respMap = res.data['respMap']
+            that.ChatForm = respMap.messages
+          } else {
+            this.$message({
+              message: res.data['msg'],
+              type: 'error',
+            })
+          }
+        })
     },
   },
   mounted() {

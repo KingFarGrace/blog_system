@@ -7,10 +7,10 @@ import com.kingfar.blog.entity.response.MessageResponse;
 import com.kingfar.blog.entity.response.Response;
 import com.kingfar.blog.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.Map;
  * 501: notify error -> failed to notify messages
  * 502: change state error -> failed to change is-read state
  */
-@Controller
+@RestController
 @RequestMapping("/message")
 public class MessageController {
 

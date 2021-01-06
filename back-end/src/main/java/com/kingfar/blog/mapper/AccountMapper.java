@@ -31,4 +31,6 @@ public interface AccountMapper {
 
     int updatePassword(@Param("username") String username,
                        @Param("password") String password);
+
+    int setDefaultGroup(String username);
 }

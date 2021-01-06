@@ -1,5 +1,6 @@
 package com.kingfar.blog.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.kingfar.blog.entity.UserLoginData;
 import com.kingfar.blog.entity.UserVerifyData;
 import com.kingfar.blog.entity.response.LoginResponse;
@@ -30,7 +31,7 @@ public class AccountController {
         response.setHeader("Access-Control-Expose-Headers", "status, token");
         UserVerifyData verifyData = accountService.verify(data.getUsername());
         if (verifyData != null) {
-            if (Objects.equals(verifyData.getPassword(), data.getPassword())) {
+            if (accountService.passwordValidator(verifyData.getPassword(), data.getPassword()) == true) {
                 String token = JwtUtils.sign(data.getUsername());
                 response.setHeader("token", token);
                 return new LoginResponse(0, "Successfully login!", accountService.getLoginData(data.getUsername()));
@@ -45,7 +46,12 @@ public class AccountController {
     @PostMapping("/signUp")
     Response signUp(String username, String password) {
         if (accountService.createNewUser(username, password) == true) {
-            // success, return code 200
+            try {
+                accountService.createDefaultGroup(username);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return SignUpResponse.failResp;
+            }
             return SignUpResponse.successfulResp;
         } else {
             // fail, return code 201
@@ -81,5 +87,21 @@ public class AccountController {
             }
             return UpdateResponse.successResp;
         }
+    }
+
+    @PostMapping("/getUser")
+    Response getUser(@RequestBody JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
+        UserLoginData user;
+        try {
+            user = accountService.getLoginData(username);
+            if(user.getUid() == 0) {
+                return new LoginResponse(3, "cannot find user:" + username, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new LoginResponse(4, "failed to get info of user:" + username, null);
+        }
+        return new LoginResponse(0, "success", user);
     }
 }

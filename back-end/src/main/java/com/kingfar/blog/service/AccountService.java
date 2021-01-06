@@ -18,4 +18,6 @@ public interface AccountService {
     void updatePassword(String username, String password);
 
     boolean passwordValidator(String oldPwd, String newPwd);
+
+    void createDefaultGroup(String username);
 }

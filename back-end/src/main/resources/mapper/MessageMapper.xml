@@ -23,7 +23,7 @@
                 t_message(fromuser,
                           content,
                           touser)
-        VALUES
+        VALUE
                 (#{fromUser},
                  #{content},
                  #{toUser})

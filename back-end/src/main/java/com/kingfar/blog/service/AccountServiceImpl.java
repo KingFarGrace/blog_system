@@ -62,6 +62,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean passwordValidator(String oldPwd, String newPwd) {
-        return Objects.equals(oldPwd, newPwd) ? true : false;
+        return Objects.equals(oldPwd, newPwd);
+    }
+
+    @Override
+    public void createDefaultGroup(String username) {
+        accountMapper.setDefaultGroup(username);
     }
 }

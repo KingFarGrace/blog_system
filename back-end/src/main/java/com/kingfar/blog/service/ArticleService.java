@@ -23,4 +23,10 @@ public interface ArticleService {
     void deleteDraft(int bid);
 
     List<ArticleData> getDrafts(String username);
+
+    void addFavor(String username, int bid);
+
+    void deleteFavor(String username, int bid);
+
+    List<ArticleData> getFavors(String username);
 }

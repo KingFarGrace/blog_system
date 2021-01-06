@@ -108,4 +108,38 @@
         WHERE
                 bid=#{bid}
     </update>
+
+    <insert id="addFavor">
+        INSERT INTO
+                t_favor(username,
+                        bid)
+                VALUE (#{username},
+                       #{bid})
+    </insert>
+
+    <delete id="deleteFavor">
+        DELETE FROM
+                t_favor
+        WHERE
+                username=#{username}
+          AND
+                bid=#{bid}
+    </delete>
+
+    <select id="getAllFavor" parameterType="String" resultType="com.kingfar.blog.entity.ArticleData">
+        SELECT
+                *
+        FROM
+                t_article
+        WHERE
+                t_article.bid IN (
+
+                        SELECT
+                                bid
+                        FROM
+                                t_favor
+                        WHERE
+                                t_favor.username=#{username}
+                        )
+    </select>
 </mapper>

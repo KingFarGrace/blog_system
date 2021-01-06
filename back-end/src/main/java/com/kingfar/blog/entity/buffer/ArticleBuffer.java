@@ -14,12 +14,12 @@ import java.util.List;
 @Getter
 @Setter
 public class ArticleBuffer {
+    private static ArticleBuffer buffer;
     private int bufferLen;
     private int pageLen;
     private List<ArticleData> articles;
     private int currentIndexOfArticles;
     private int currentPage;
-    private static ArticleBuffer buffer;
 
     private ArticleBuffer() {
         this.bufferLen = 0;
@@ -30,7 +30,7 @@ public class ArticleBuffer {
     }
 
     public static ArticleBuffer getInstance() {
-        if(buffer == null) {
+        if (buffer == null) {
             buffer = new ArticleBuffer();
         }
         return buffer;

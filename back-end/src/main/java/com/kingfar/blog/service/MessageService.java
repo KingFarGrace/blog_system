@@ -11,7 +11,7 @@ public interface MessageService {
 
     void sendMessage(MessageData messageData);
 
-    List<MessageData> disMessage(String fromUser,String toUser);
+    List<MessageData> disMessage(String fromUser, String toUser);
 
     List<String> notify(String receiver);
 

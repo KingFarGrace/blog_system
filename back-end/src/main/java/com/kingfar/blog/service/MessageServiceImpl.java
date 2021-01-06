@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MessageServiceImpl implements MessageService{
+public class MessageServiceImpl implements MessageService {
 
     @Autowired
     MessageMapper messageMapper;
 
     @Override
     public void sendMessage(MessageData messageData) {
-        messageMapper.insertMessage(messageData.getFromUser(),messageData.getContent(),messageData.getToUser());
+        messageMapper.insertMessage(messageData.getFromUser(), messageData.getContent(), messageData.getToUser());
     }
 
     @Override
     public List<MessageData> disMessage(String fromUser, String toUser) {
-        return messageMapper.queryMessageByToAndFrom(fromUser,toUser);
+        return messageMapper.queryMessageByToAndFrom(fromUser, toUser);
     }
 
     @Override

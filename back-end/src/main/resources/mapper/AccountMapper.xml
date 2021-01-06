@@ -72,4 +72,12 @@
         WHERE
                 username=#{username}
     </update>
+
+    <insert id="setDefaultGroup">
+        INSERT INTO
+                t_group(owner,
+                        gname)
+                VALUE (#{username},
+                       '我的关注')
+    </insert>
 </mapper>

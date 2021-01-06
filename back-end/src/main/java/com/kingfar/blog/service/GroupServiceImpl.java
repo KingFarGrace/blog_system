@@ -21,4 +21,30 @@ public class GroupServiceImpl implements GroupService {
         return groupMapper.getGroups(username);
     }
 
+    @Override
+    public void addGroup(String owner, String gname) {
+        groupMapper.addGroup(owner, gname);
+    }
+
+    @Override
+    public void addFriend(String owner, String username) {
+        int gid = groupMapper.getDefaultGid(owner);
+        groupMapper.addFriend(gid, username);
+    }
+
+    @Override
+    public void deleteGroup(int gid) {
+        groupMapper.deleteGroup(gid);
+    }
+
+    @Override
+    public void deleteFriend(int gid, String username) {
+        groupMapper.deleteFriend(gid, username);
+    }
+
+    @Override
+    public void changeGroup(int oldGid, int newGid, String username) {
+        groupMapper.changeGroup(oldGid, newGid, username);
+    }
+
 }

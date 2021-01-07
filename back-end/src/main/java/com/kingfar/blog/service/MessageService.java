@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * @author WUHAIYUAN
+ * @author ZHANGKAIHENG
  */
 public interface MessageService {
 

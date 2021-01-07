@@ -18,7 +18,8 @@ import java.util.Map;
 
 /**
  * @author WUHAIYUAN
- * <p>
+ * @author ZHANGKAIHENG
+ *
  * MessageResponse code
  * 500: success
  * 501: notify error -> failed to notify messages

@@ -71,7 +71,7 @@
                   v-for="item in senders"
                   :key="item"
                   @click.native="changeState(item)"
-                  >{{ item }}</el-menu-item
+                  >{{ item }} 发来新消息</el-menu-item
                 >
               </div>
             </el-submenu>
@@ -79,7 +79,7 @@
           </el-menu>
         </div></el-col
       >
-      <el-col :span="3" :offset="1" v-if="!$store.state.isLogin"
+      <el-col :span="3" :offset="3" v-if="!$store.state.isLogin"
         ><div class="grid-content bg-purple-dark">
           <el-menu
             :default-active="this.$route.path"
@@ -87,6 +87,9 @@
             mode="horizontal"
             @select="handleSelect"
             router
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
           >
             <el-menu-item index="/login">登录</el-menu-item>
             <el-menu-item index="/signup">注册</el-menu-item>
@@ -115,7 +118,7 @@
 </template>
 
 <script>
-import store from '../store/index'
+import store from '../store'
 import axios from '../axios'
 export default {
   name: 'HelloWorld',

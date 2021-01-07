@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author ZHANGKAIHENG
- *
+ * <p>
  * GroupResponse code
  * 400: success
  * 401: load error -> failed to load groups

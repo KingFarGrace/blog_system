@@ -1,6 +1,6 @@
 package com.kingfar.blog.entity.response;
 
-import lombok.*;
+import lombok.Data;
 
 /**
  * @author ZHANGKAIHENG

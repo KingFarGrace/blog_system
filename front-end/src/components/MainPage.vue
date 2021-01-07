@@ -15,7 +15,7 @@
 
 <script>
 import ArticleList from './mainpage_components/ArticleList'
-import MainFriend from './MainFriend'
+import MainFriend from './mainpage_components/MainFriend'
 
 export default {
   components: {

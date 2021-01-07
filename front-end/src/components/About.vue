@@ -1,7 +1,7 @@
 <template>
   <div id="about">
     <el-col :span="8" :offset="0">
-      <el-collapse v-model="activeNames" @change="handleChange">
+      <el-collapse v-model="activeNames" @change="handleChange" id="profile">
         <el-collapse-item title="关于我们" name="1">
           <div id="about-text">
             开发目的：旨在建立一个可以给用户记录生活感受、展现个性、得到想要信息的平台。
@@ -38,7 +38,7 @@
 
     <el-col :span="16" :offset="0">
       <div class="block">
-        <el-carousel height="500px">
+        <el-carousel height="500px" id="picture">
           <el-carousel-item v-for="item in imgList" :key="item.id">
             <img :src="item.idView" :alt="item.alt" class="img" />
           </el-carousel-item>
@@ -60,10 +60,9 @@ export default {
     return {
       activeNames: ['1'],
       imgList: [
-        { id: 0, idView: require('../assets/logo.png'), alt: 'pic1' },
-        { id: 1, idView: require('../assets/logo.png'), alt: 'pic2' },
-        { id: 2, idView: require('../assets/logo.png'), alt: 'pic3' },
-        { id: 3, idView: require('../assets/logo.png'), alt: 'pic4' },
+        { id: 0, idView: require('../assets/编辑页面.png'), alt: 'pic1' },
+        { id: 1, idView: require('../assets/聊天页面.jpg'), alt: 'pic2' },
+        { id: 2, idView: require('../assets/文章详情页.jpg'), alt: 'pic3' },
       ],
     }
   },
@@ -88,13 +87,23 @@ a,
   text-align: center;
   font-size: 20px;
 }
+#picture {
+  padding: 10px;
+  background: #333;
+  border: solid 1px black;
+}
+#profile {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 5px;
+  background: #333;
+  border: solid 1px black;
+}
 .el-footer {
   background-color: #b3c0d1;
   color: #333;
   text-align: center;
   line-height: 60px;
-  width: 99%;
-  position: absolute;
-  bottom: 0;
+  width: 100%;
 }
 </style>

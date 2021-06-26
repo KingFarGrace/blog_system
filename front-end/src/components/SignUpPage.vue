@@ -95,7 +95,7 @@ export default {
           form.append('password', this.signUpForm.password)
           axios
             .post(
-              'http://localhost:8080/user/signUp',
+              '/user/signUp',
               new URLSearchParams(form)
             )
             .then((res) => {

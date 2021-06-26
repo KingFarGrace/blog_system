@@ -152,7 +152,7 @@ export default {
     chat(toUser) {
       var that = this
       axios
-        .post('http://localhost:8080/message/display', {
+        .post('/message/display', {
           fromUser: store.state.username,
           toUser: toUser,
         })
@@ -174,7 +174,7 @@ export default {
     sendMessages() {
       var that = this
       axios
-        .post('http://localhost:8080/message/send', {
+        .post('/message/send', {
           fromUser: store.state.username,
           toUser: that.chatWith,
           content: that.inputMessage,
@@ -198,7 +198,7 @@ export default {
     notify() {
       var that = this
       axios
-        .post('http://localhost:8080/message/notify', {
+        .post('/message/notify', {
           username: store.state.username,
         })
         .then((res) => {
@@ -219,7 +219,7 @@ export default {
     changeState(fromUser) {
       var that = this
       axios
-        .post('http://localhost:8080/message/changeState', {
+        .post('/message/changeState', {
           toUser: store.state.username,
           fromUser: fromUser,
         })

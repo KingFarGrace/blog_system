@@ -142,7 +142,7 @@ export default {
       store.commit('setCurrentPage', currentPage)
       var that = this
       axios
-        .post('http://localhost:8080/article/getHistoryBlog', {
+        .post('/article/getHistoryBlog', {
           username: this.form.username,
         })
         .then((res) => {
@@ -165,7 +165,7 @@ export default {
           }
         })
       axios
-        .post('http://localhost:8080/user/getUser', {
+        .post('/user/getUser', {
           username: that.form.username,
         })
         .then((res) => {
@@ -195,7 +195,7 @@ export default {
     searchArticle() {
       var that = this
       axios
-        .post('http://localhost:8080/article/search', {
+        .post('/article/search', {
           //要改
           key: this.inputSearchArticle,
         })

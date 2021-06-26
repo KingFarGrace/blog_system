@@ -73,7 +73,7 @@ export default {
       var that = this
       store.commit('setCurrentPage', currentPage)
       axios
-        .post('http://localhost:8080/article/load', {
+        .post('/article/load', {
           pageIndex: store.state.pageIndex
         })
         .then(res => {
@@ -105,7 +105,7 @@ export default {
     searchArticle() {
       var that = this
       axios
-        .post('http://localhost:8080/article/search', {
+        .post('/article/search', {
           key: this.inputSearchArticle
         })
         .then(res => {

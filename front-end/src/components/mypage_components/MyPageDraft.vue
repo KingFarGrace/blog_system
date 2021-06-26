@@ -59,7 +59,7 @@ export default {
       }).then(() => {
         var that = this
         axios
-          .post('http://localhost:8080/article/deleteDraft', {
+          .post('/article/deleteDraft', {
             bid: row.bid,
           })
           .then((res) => {
@@ -83,7 +83,7 @@ export default {
     load() {
       var that = this
       axios
-        .post('http://localhost:8080/article/getDrafts', {
+        .post('/article/getDrafts', {
           username: store.state.username,
         })
         .then((res) => {

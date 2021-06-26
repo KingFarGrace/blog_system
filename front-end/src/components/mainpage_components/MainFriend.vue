@@ -314,7 +314,7 @@ export default {
     },
 
     addsubmit(AddForm) {
-      this.friendAxios('http://localhost:8080/group/addFriend', {
+      this.friendAxios('/group/addFriend', {
         username: store.state.username,
         gid: AddForm.gid,
         name: AddForm.name
@@ -322,7 +322,7 @@ export default {
     },
 
     getFriendList() {
-      this.friendAxios('http://localhost:8080/group/load', {
+      this.friendAxios('/group/load', {
         username: store.state.username
       })
     },
@@ -347,7 +347,7 @@ export default {
           return
         }
       }
-      this.friendAxios('http://localhost:8080/group/addGroup', {
+      this.friendAxios('/group/addGroup', {
         username: store.state.username,
         gname: Addgroupform.gname
       })
@@ -373,7 +373,7 @@ export default {
           }
         }
         if (checkNull === 1) {
-          this.friendAxios('http://localhost:8080/group/deleteGroup', {
+          this.friendAxios('/group/deleteGroup', {
             username: store.state.username,
             gid: DeleteGroupForm.gid
           })
@@ -388,7 +388,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.getOldGid(name)
-        this.friendAxios('http://localhost:8080/group/deleteFriend', {
+        this.friendAxios('/group/deleteFriend', {
           username: store.state.username,
           gid: this.oldGid,
           name: name
@@ -397,7 +397,7 @@ export default {
     },
 
     changeGroup(ManageGroupForm) {
-      this.friendAxios('http://localhost:8080/group/changeGroup', {
+      this.friendAxios('/group/changeGroup', {
         username: store.state.username,
         name: ManageGroupForm.name,
         oldGid: this.oldGid,
@@ -410,7 +410,7 @@ export default {
     chat(toUser) {
       var that = this
       axios
-        .post('http://localhost:8080/message/display', {
+        .post('/message/display', {
           fromUser: store.state.username,
           toUser: toUser
         })
@@ -433,7 +433,7 @@ export default {
     sendMessages() {
       var that = this
       axios
-        .post('http://localhost:8080/message/send', {
+        .post('/message/send', {
           fromUser: store.state.username,
           toUser: that.chatWith,
           content: that.inputMessage

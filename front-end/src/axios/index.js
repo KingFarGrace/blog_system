@@ -4,6 +4,7 @@ import router from '../router'
 
 let axios = Axios.create()
 
+axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.timeout = 6000
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 

@@ -86,7 +86,7 @@ export default {
           form.append('newPwd', this.signUpForm.password)
           axios
             .post(
-              'http://localhost:8080/user/updatePassword',
+              '/user/updatePassword',
               new URLSearchParams(form)
             )
             .then(res => {

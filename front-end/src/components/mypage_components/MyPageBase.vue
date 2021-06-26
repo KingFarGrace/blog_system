@@ -96,7 +96,7 @@ import store from '../../store'
         if(this.checkEmail()){
           var that = this
           axios
-          .post('http://localhost:8080/user/updatePublicInfo', {
+          .post('/user/updatePublicInfo', {
             uid: that.form.id,
             username: that.form.name,
             sex: that.form.gender,

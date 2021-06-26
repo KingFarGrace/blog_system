@@ -49,7 +49,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios
-            .post('http://localhost:8080/article/submit', {
+            .post('/article/submit', {
               title: this.ruleForm.title,
               content: this.ruleForm.body,
               author: store.state.username,
@@ -83,7 +83,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios
-            .post('http://localhost:8080/article/saveAsDraft', {
+            .post('/article/saveAsDraft', {
               bid: this.ruleForm.bid,
               title: this.ruleForm.title,
               content: this.ruleForm.body,

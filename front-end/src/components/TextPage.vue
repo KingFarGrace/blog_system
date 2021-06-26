@@ -64,7 +64,7 @@ export default {
     toFavor(bid) {
       var that = this
       axios
-        .post('http://localhost:8080/article/getFavors', {
+        .post('/article/getFavors', {
           username: store.state.username,
         })
         .then((res) => {
@@ -91,7 +91,7 @@ export default {
           }
           if (favorAlready === 0) {
             axios
-              .post('http://localhost:8080/article/addFavor', {
+              .post('/article/addFavor', {
                 username: store.state.username,
                 bid: bid,
               })

@@ -51,7 +51,7 @@ export default {
       }).then(() => {
         var that = this
         axios
-          .post('http://localhost:8080/article/deleteFavor', {
+          .post('/article/deleteFavor', {
             username: store.state.username,
             bid: row.bid,
           })
@@ -76,7 +76,7 @@ export default {
     init() {
       var that = this
       axios
-        .post('http://localhost:8080/article/getFavors', {
+        .post('/article/getFavors', {
           username: store.state.username,
         })
         .then((res) => {

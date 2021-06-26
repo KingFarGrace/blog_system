@@ -80,7 +80,7 @@ export default {
         this.checkPassword(this.loginForm.password)
       ) {
         axios
-          .post('http://localhost:8080/user/verify', {
+          .post('/user/verify', {
             username: this.loginForm.username,
             password: this.loginForm.password,
           })

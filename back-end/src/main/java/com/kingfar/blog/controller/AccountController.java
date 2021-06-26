@@ -64,7 +64,7 @@ public class AccountController {
             accountService.updatePublicInfo(userLoginData);
         } catch (DuplicateKeyException dke) {
             dke.printStackTrace();
-            return UpdateResponse.UsernameDuplicatedResp;
+            return UpdateResponse.usernameDuplicatedResp;
         } catch (Exception e) {
             return UpdateResponse.failedToUpdatePublicInfoResp;
         }
